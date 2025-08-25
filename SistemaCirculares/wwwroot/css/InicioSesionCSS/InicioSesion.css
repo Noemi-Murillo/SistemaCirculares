@@ -1,14 +1,29 @@
 ﻿
 body {
-    background: url('../../recursos/FondoLiso.svg') no-repeat center center fixed;
     background-size: cover;
     height: 100vh
 }
 
 .InicioSesion {
-    background: rgba(255, 255, 255, 0.95);
-    color: blue;
+    background: rgba(255, 255, 255, 0.95) padding-box, linear-gradient(to right, #0099ff, #66ff66) border-box;
+    color: black;
     padding: 2rem;
-    border-radius: 15px;
     box-shadow: 0 0 20px rgba(0,0,0,.15);
+    border: 6px solid transparent;
+    border-image: linear-gradient(to right, #0099ff, #66ff66) 3;
+    border-radius: 20px; /* opcional, bordes redondeados */
+}
+
+
+.merriweather-textfont {
+    font-family: "Merriweather", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+.contenedor {
+    margin-top: 6%;
+}
+
+.ptext {
+    font-size: 150%;
 }
