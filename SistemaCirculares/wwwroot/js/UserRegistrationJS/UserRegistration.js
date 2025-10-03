@@ -40,57 +40,63 @@ jslogin = {
 
             event.preventDefault();
 
-            let User = $(jslogin.controles.InputEmail).val().trim();
-            let Password = $(jslogin.controles.InputPassword).val().trim();
+            try {
 
-            console.log(User)
-            console.log(Password)
-            
+                let User = $(jslogin.controles.InputEmail).val().trim();
+                let Password = $(jslogin.controles.InputPassword).val().trim();
 
 
-            // Realizar la solicitud AJAX
-            $.ajax({
-                url: '../Inicio/LogIn',
-                type: 'POST',
-                data: { Email: User, Password: Password },
-                success: function (result) {
 
-                    if (result.ok) {
-                        
-                        //Swal.fire({
-                        //    title: "Éxito",
-                        //    text: `${result.mensaje}`,
-                        //    icon: "success"
-                        //});
 
-                        // Redirigir a la página principal después de 2 segundos
-                        setTimeout(function () {
-                            window.location.href = '/UserRegistration/UserRegistration';
-                        }, 2100);
+                // Realizar la solicitud AJAX
+                $.ajax({
+                    url: '../Inicio/LogIn',
+                    type: 'POST',
+                    data: { Email: User, Password: Password },
+                    success: function (result) {
 
-                    } else {
-                        alert("error")
-                        //Swal.fire({
-                        //    title: "Advertencia",
-                        //    text: `${result.mensaje}`,
-                        //    icon: "warning"
-                        //});
+                        if (result.ok) {
+
+                            Swal.fire({
+                                title: "Éxito",
+                                text: `${result.message}`,
+                                icon: "success"
+                            });
+
+                            // Redirigir a la página principal después de 2 segundos
+                            setTimeout(function () {
+                                window.location.href = '/UserRegistration/UserRegistration';
+                            }, 2100);
+
+                        } else {
+                            Swal.fire({
+                                title: "Advertencia",
+                                text: `${result.message}`,
+                                icon: "warning"
+                            });
+                        }
+
+
+
+                    },
+                    error: function () {
+                        // Manejo de errores si es necesario
+
+                        Swal.fire({
+                            title: "Error",
+                            text: `${result.message}`,
+                            icon: "error"
+                        });
+
                     }
+                });
 
 
+            } catch (e) {
 
-                },
-                error: function () {
-                    // Manejo de errores si es necesario
+                console.error("Ha ocurrido un error en el método LogIn", e)
 
-                    Swal.fire({
-                        title: "Error",
-                        text: `${result.mensaje}`,
-                        icon: "error"
-                    });
-
-                }
-            });
+            }
 
 
         }
