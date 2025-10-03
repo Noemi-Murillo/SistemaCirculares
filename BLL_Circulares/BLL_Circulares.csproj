@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL_Circulares\DAL_Circulares.csproj" />
+    <ProjectReference Include="..\Entities_Circulares\Entities_Circulares.csproj" />
+    <ProjectReference Include="..\Utils_Circulares\Utils_Circulares.csproj" />
+  </ItemGroup>
+
+</Project>

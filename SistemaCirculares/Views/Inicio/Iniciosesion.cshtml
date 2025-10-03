@@ -1,56 +1,137 @@
 ﻿@{
 
-	Layout = null;
-
+    Layout = null;
 }
 
 <head>
-	<link href="~/css/iniciosesioncss/iniciosesion.css" rel="stylesheet" />
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+    <link href="~/css/iniciosesioncss/iniciosesion.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script defer src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script defer src="~/js/userregistrationjs/userregistration.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
 
 </head>
 
 
 <body>
-	<div class="container">
-		<div class="row align-items-center vh-100">
-			<div class="col-md-6 text-center">
-				<img src="~/recursos/LogoEscuela.jpg" />
+    <div class="container merriweather-textfont contenedor">
+        <div class="row align-items-center col-md-12">
+
+            <div class="row">
+                <h1 class="text-center">¡Bienvenido!</h1>
+                <p class="text-center ptext">Sistema para Gestión de Circulares <br />Escuela Lomas de Cocorí</p>
+            </div>
+
+            <div class="InicioSesion col-md-8 offset-2">
+                <h3 class="text-center mb-3">Iniciar sesión</h3>
+                <form>
+                    <label class="form-label">Correo:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                        <input id="InputEmail" type="text" class="form-control" placeholder="cedula@mep.go.cr" aria-label="Correo" aria-describedby="basic-addon1">
+                    </div>
 
 
 
-			</div>
-			<div class="col-md-6 InicioSesion">
-				<h3 class="text-center mb-4">Iniciar sesión</h3>
-				<form>
-					<div class="mb-3">
-						<label>Usuario</label>
-						<input type="text" class="form-control" placeholder="Digite su usuario" required>
-					</div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></i></span>
+                            <input id="InputPassword" type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1">
+                        </div>
+                        <a href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
 
-					<div class="mb-3">
-						<label>Contraseña</label>
-						<input type="password" class="form-control" placeholder="Contraseña" required>
-						<a href="#">¿Olvidaste tu contraseña?</a>
-					</div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="recordar">
+                        <label class="form-check-label" for="recordar">Recordarme</label>
+                    </div>
 
-					<div class="mb-3 form-check">
-						<input type="checkbox" class="form-check-input" id="recordar">
-						<label class="form-check-label" for="recordar">Recordarme</label>
-					</div>
+                    <button id="btnLogin" type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Ingresar</button>
 
-					<button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                    <div class="enlaces">
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Registrarse</a>
+                    </div>
+                </form>
 
-					<div class="enlaces">
-						<a href="#">Registrarse</a>
-					</div>
-				</form>
-
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<!-- Modal -->
+@* <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <!-- modal más grande -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="staticBackdropLabel">Registro al Sistema de Gestión de Circulares</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="row">
+                        <!-- Columna izquierda -->
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Nombre">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Primer apellido">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Segundo apellido">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Contraseña">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Confirmar contraseña">
+                            </div>
+                        </div>
+
+                        <!-- Columna derecha -->
+                        <div class="col-md-4">
+                            <label class="form-label">Código de autorización</label>
+                            <input type="text" class="form-control" placeholder="Código">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+
