@@ -1,0 +1,11 @@
+﻿namespace Entities_Circulares.UserRegistration
+{
+    public class UserRegistration
+    {
+
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+
+
+    }
+}
