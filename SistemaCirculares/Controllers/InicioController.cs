@@ -1,11 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Entities.Reply;
 using Entities.UserLogin;
+using SistemaCirculares.Models;
 
 namespace SistemaCirculares.Controllers
 {
     public class InicioController : Controller
     {
+
+        //Instancias del model
+
+        private readonly InicioModel _AccesoInicioModel;
+
+        // <<< Constructor con DI >>>
+        public InicioController(InicioModel accesoInicioModel)
+        {
+            _AccesoInicioModel = accesoInicioModel;
+        }
         public IActionResult Iniciosesion()
         {
             return View();
@@ -19,23 +30,10 @@ namespace SistemaCirculares.Controllers
 
             try
             {
-                if (Email != "" && Email != null && Password != "" && Password != null)
-                {
+                var respuesta = _AccesoInicioModel.LogIn(Email, Password);
 
-                    reply.Ok = true;
-                    reply.Message = "Ha iniciado sesión de manera correcta";
-
-
-                }
-                else
-                {
-                    reply.Ok = false;
-                    reply.Message = "Error, el usuario o la contraseña no es correcto";
-
-
-
-                }
-
+                reply.Ok = respuesta.Ok;
+                reply.Message = respuesta.Message;
 
             }
             catch (Exception ex)
