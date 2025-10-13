@@ -1,21 +1,17 @@
 ﻿using Entities.Reply;
 using Entities.UserLogin;
 using System;
+using System.Runtime.Intrinsics.Arm;
 
 
 namespace SistemaCirculares.Models
 {
     public class InicioModel : BaseAPI
     {
-
-        private readonly IConfiguration _config;
-
-        public InicioModel(IConfiguration config)
+        public InicioModel(IConfiguration config) : base(config)
         {
-            _config = config;
+
         }
-
-
 
         public Reply<UserRegistration> LogIn(string Email, string Password)
         {
@@ -28,7 +24,7 @@ namespace SistemaCirculares.Models
             };
             try
             {
-                var UrlAPI = _config["UrlAPICirculares"];
+                var UrlAPI = string.Format("{0}/LogIn", UrlApiCirculares);
                 reply.Result = PostAPI<UserRegistration, UserRegistration>(UrlAPI, ObjUsuario);
 
 

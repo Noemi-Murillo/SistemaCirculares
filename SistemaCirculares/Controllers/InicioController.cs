@@ -32,15 +32,19 @@ namespace SistemaCirculares.Controllers
             {
                 var respuesta = _AccesoInicioModel.LogIn(Email, Password);
 
-                reply.Ok = respuesta.Ok;
-                reply.Message = respuesta.Message;
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
 
             }
             catch (Exception ex)
             {
 
                 reply.Ok = false;
-                reply.Message = "Error, " + ex;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador InicioController método LogIn , {ex.Message}";
             }
 
             return reply;
