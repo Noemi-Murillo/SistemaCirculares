@@ -24,7 +24,7 @@ namespace SistemaCirculares.Models
             };
             try
             {
-                var UrlAPI = string.Format("{0}/LogIn", UrlApiCirculares);
+                var UrlAPI = string.Format("{0}/Inicio/LogIn", UrlApiCirculares);
                 reply.Result = PostAPI<UserRegistration, UserRegistration>(UrlAPI, ObjUsuario);
 
 

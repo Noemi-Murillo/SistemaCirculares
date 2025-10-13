@@ -1,5 +1,6 @@
 using BLL_Circulares;
 using DAL_Circulares;
+using Utils_Circulares.GeneradorAleatorio;
 
 var builder = WebApplication.CreateBuilder(args);
 

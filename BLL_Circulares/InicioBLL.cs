@@ -1,6 +1,7 @@
 ﻿using Entities_Circulares.Reply;
 using DAL_Circulares;
 using Entities_Circulares.UserRegistration;
+using Utils_Circulares.GeneradorAleatorio;
 
 namespace BLL_Circulares
 {
