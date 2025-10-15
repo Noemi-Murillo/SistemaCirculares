@@ -4,3 +4,12 @@ GET {{API_Circulares_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+### LogIn
+POST {{API_Circulares_HostAddress}}/api/inicio/LogIn
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Email": "usuario@dominio.com",
+  "Password": "Secreta123!"
+}

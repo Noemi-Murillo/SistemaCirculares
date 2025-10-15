@@ -55,17 +55,18 @@ jslogin = {
                     data: { Email: User, Password: Password },
                     success: function (result) {
 
+
                         if (result.ok) {
 
                             Swal.fire({
                                 title: "Éxito",
-                                text: `${result.message}`,
+                                text: `Bienveni@: ${result.result.nombre}`,
                                 icon: "success"
                             });
 
-                            // Redirigir a la página principal después de 2 segundos
+                             //Redirigir a la página principal después de 2 segundos
                             setTimeout(function () {
-                                window.location.href = '/UserRegistration/UserRegistration';
+                                window.location.href = '/Home/Index';
                             }, 2100);
 
                         } else {
