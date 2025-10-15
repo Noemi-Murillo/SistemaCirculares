@@ -36,6 +36,8 @@ namespace DAL_Circulares
                     {
 
                         command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pCorreo", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Email });
+                        command.Parameters.Add(new SqlParameter("@pContrasena", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Password });
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {

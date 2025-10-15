@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Entities.Reply;
-using Entities.UserLogin;
+using Entities_Circulares.Reply;
+using Entities_Circulares.UserRegistration;
 using SistemaCirculares.Models;
 
 namespace SistemaCirculares.Controllers

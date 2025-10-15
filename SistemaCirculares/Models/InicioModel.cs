@@ -1,5 +1,5 @@
-﻿using Entities.Reply;
-using Entities.UserLogin;
+﻿using Entities_Circulares.Reply;
+using Entities_Circulares.UserRegistration;
 using System;
 using System.Runtime.Intrinsics.Arm;
 
@@ -25,7 +25,7 @@ namespace SistemaCirculares.Models
             try
             {
                 var UrlAPI = string.Format("{0}/Inicio/LogIn", UrlApiCirculares);
-                reply.Result = PostAPI<UserRegistration, UserRegistration>(UrlAPI, ObjUsuario);
+                reply = PostAPI <Reply<UserRegistration>, UserRegistration>(UrlAPI, ObjUsuario);
 
 
 
