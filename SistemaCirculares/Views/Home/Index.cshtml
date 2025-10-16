@@ -1,10 +1,12 @@
-﻿<table class="table">
+﻿<table id="tblCirculares" class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Título</th>
+            <th>Circular</th>
+            <th>Comité</th>
+            <th>Evento</th>
         </tr>
     </thead>
     <tbody>
@@ -12,19 +14,64 @@
             <th scope="row">1</th>
             <td>Mark</td>
             <td>Otto</td>
-            <td>3mdo</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3mdo">
+                    Ver circular
+                </button>
+            </td>
+            <td>-</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
+                    Ver evento
+                </button>
+            </td>
         </tr>
         <tr>
             <th scope="row">2</th>
             <td>Jacob</td>
             <td>Thornton</td>
-            <td>3fat</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3fat">
+                    Ver circular
+                </button>
+            </td>
+            <td>-</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
+                    Ver evento
+                </button>
+            </td>
         </tr>
         <tr>
             <th scope="row">3</th>
             <td>John</td>
             <td>Doe</td>
-            <td>3social</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
+                    Ver circular
+                </button>
+            </td>
+            <td>-</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
+                    Ver evento
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>
+
+<script>
+    // Delegación de eventos (sirve para filas futuras también)
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.ver-circular');
+      if (!btn) return;
+
+      const id = btn.dataset.circular; // p.ej. "3mdo"
+      console.log('Abrir circular:', id);
+
+      // Ejemplos de acción:
+      // window.location.href = `/circulares/${encodeURIComponent(id)}`;
+      // abrirModalCircular(id);
+    });
+</script>
