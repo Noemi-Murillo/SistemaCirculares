@@ -1,0 +1,114 @@
+﻿body {
+    background: #f7f7f7;
+}
+
+/* Marco con borde degradado (morado->verde) como el mockup */
+.frame {
+    background: linear-gradient(135deg,#23a1f2,#3ddc84);
+    padding: 10px;
+    border-radius: 28px;
+    box-shadow: 0 10px 26px rgba(0,0,0,.08);
+    max-width: 980px;
+    margin: 28px auto;
+}
+
+.frame-inner {
+    background: #fff;
+    border-radius: 22px;
+    padding: 26px 24px;
+}
+
+/* Inputs tipo píldora */
+.pill .form-control,
+.pill .form-select {
+    border-radius: 999px;
+    border: 2px solid #9fb9c2;
+    background: #e6fbfe;
+    font-weight: 700;
+    color: #2b2b2b;
+    padding: .9rem 1.2rem;
+}
+
+.pill .input-group-text {
+    background: #e6fbfe;
+    border: 2px solid #9fb9c2;
+    border-left: 0;
+    border-radius: 0 999px 999px 0;
+}
+
+.pill .form-control:focus {
+    box-shadow: 0 0 0 .2rem rgba(0,0,0,.06);
+}
+
+/* Caja de subir archivo */
+.dropbox {
+    border: 3px solid #5e6a72;
+    border-radius: 22px;
+    background: #fff;
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5rem;
+    cursor: pointer;
+    transition: transform .05s ease-in;
+}
+
+    .dropbox:active {
+        transform: scale(.997);
+    }
+
+    .dropbox .bi-cloud-arrow-up {
+        font-size: 76px;
+        color: #555;
+    }
+
+    .dropbox .label {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #3b3b3b;
+    }
+
+/* Switch grande */
+.form-switch.switch-lg .form-check-input {
+    width: 3.4rem;
+    height: 1.9rem;
+}
+
+    .form-switch.switch-lg .form-check-input:checked {
+        background-color: #1fd866;
+        border-color: #1fd866;
+    }
+
+.switch-card {
+    background: #e6fbfe;
+    border: 2px solid #9fb9c2;
+    border-radius: 18px;
+    padding: 12px 16px;
+    width: 220px;
+}
+
+    .switch-card small {
+        font-weight: 800;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+/* Botón Publicar en degradado */
+.btn-grad {
+    color: #0b1b12;
+    background-image: linear-gradient(135deg,#37c1ff,#6fe28c);
+    font-weight: 900;
+    font-size: 1.8rem;
+    border: 0;
+    border-radius: 18px;
+    padding: .8rem 2.2rem;
+    box-shadow: 0 10px 22px rgba(0,0,0,.12);
+}
+
+@media (max-width: 992px) {
+    .switch-card {
+        width: 100%;
+    }
+}

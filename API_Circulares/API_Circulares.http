@@ -13,3 +13,14 @@ Content-Type: application/json
   "Email": "usuario@dominio.com",
   "Password": "Secreta123!"
 }
+###
+### ObtenerUsuariosGestionComite
+POST {{API_Circulares_HostAddress}}/api/gestionusuarios/ObtenerUsuariosGestionComite
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Email": "usuario@dominio.com",
+  "Password": "Secreta123!"
+}
+###

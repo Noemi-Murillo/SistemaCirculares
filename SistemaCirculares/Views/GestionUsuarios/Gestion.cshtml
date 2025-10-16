@@ -1,0 +1,281 @@
+﻿@{
+
+    var ListaUsuarios = ViewBag.Usuarios;
+}
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de Usuarios</title>
+    <link href="~/css/gestionusuarioscss/gestionusuarios.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <div class="container py-4">
+        <div class="page-card">
+            <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+                <h1 class="m-0">Gestión de Usuarios</h1>
+                <div class="d-flex gap-2">
+                    <button data-bs-toggle="modal" data-bs-target="#modalCodigo" class="btn btn-grad btn-teal">Generar código<br class="d-none d-md-inline"> para registro</button>
+                    <button class="btn btn-grad btn-blue">Códigos<br class="d-none d-md-inline"> generados</button>
+                    <button class="btn btn-grad btn-green">Guardar<br class="d-none d-md-inline"> cambios</button>
+                </div>
+            </div>
+
+            <div class="table-responsive mt-4">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="col-nombre">Nombre</th>
+                            <th class="col-comite">Comité</th>
+                            <th class="col-coord">Coordinador</th>
+                            <th class="col-activo">Activo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ListaUsuarios == null || ListaUsuarios.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    No hay registros
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var Usuario in ListaUsuarios)
+                            {
+                                <tr>
+                                    <td>@Usuario.Nombre</td>
+                                    <td>
+                                        <div class="select-pill">
+                                            <select class="form-select">
+                                                <option selected>@Usuario.NombreComite</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch switch-lg d-inline-block m-0">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   role="switch"
+                                                   id="coord_@Usuario.Id"
+                                                   name="EsCoordinador_@Usuario.Id"
+                                                   @(Usuario.EsCordinador ? "checked" : null) />
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch switch-lg d-inline-block m-0">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   role="switch"
+                                                   id="activo_@Usuario.Id"
+                                                   name="Activo_@Usuario.Id"
+                                                   @(Usuario.Activo ? "checked" : null) />
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+@* <!-- BOTÓN QUE ABRE EL MODAL -->
+<button class="btn btn-grad btn-teal" data-bs-toggle="modal" data-bs-target="#modalCodigo">
+    Generar código<br class="d-none d-md-inline"> para registro
+</button> *@
+
+<!-- MODAL -->
+<div class="modal fade" id="modalCodigo" tabindex="-1" aria-labelledby="modalCodigoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-soft rounded-4 p-2">
+
+            <!-- Borde degradado exterior -->
+            <div class="gradient-frame rounded-4 p-3">
+                <div class="modal-body text-center px-3 px-md-4">
+
+                    <h2 id="modalCodigoLabel" class="fw-bold display-6 mb-3">Código para registro</h2>
+
+                    <!-- Fecha límite en estilo píldora -->
+                    <div class="mx-auto mb-3" style="max-width: 380px;">
+                        <div class="input-group pill">
+                            <span class="input-group-text fw-bold">Seleccione una fecha límite</span>
+                            <input type="date" id="fechaLimite" class="form-control">
+                            <span class="input-group-text"><span class="bi bi-calendar3"></span></span>
+                        </div>
+                    </div>
+
+                    <!-- Botón Generar -->
+                    <button id="btnGenerar" class="btn btn-grad btn-green px-5 py-2 fs-5 mb-3">Generar</button>
+
+                    <h3 class="fw-bold mb-2">Código:</h3>
+
+                    <!-- Caja de código -->
+                    <div class="mx-auto mb-4" style="max-width: 360px;">
+                        <input id="txtCodigo" class="form-control form-control-lg code-box text-center fw-bold"
+                               type="text" placeholder="ABC124" readonly>
+                        <small id="msgCopiado" class="text-success d-none">¡Copiado al portapapeles!</small>
+                    </div>
+
+                    <!-- Enviar por correo -->
+                    <div class="row g-2 align-items-center justify-content-center">
+                        <div class="col-auto">
+                            <label for="emailDestino" class="col-form-label fs-5">Enviar a:</label>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <input type="email" id="emailDestino" class="form-control pill-input"
+                                   placeholder="correo@dirección.com">
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <button id="btnEnviar" class="btn btn-grad btn-teal px-4">Enviar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons (opcional para el ícono de calendario) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<style>
+    /* Fondo y sombra suave del modal */
+    .modal-soft {
+        box-shadow: 0 18px 45px rgba(0,0,0,.2);
+        border: 0;
+    }
+
+    /* Marco degradado alrededor del contenido (como tu borde verde/azul) */
+    .gradient-frame {
+        background: linear-gradient(135deg,#0db2ef,#2bdc6c);
+        padding: .5rem;
+    }
+
+        .gradient-frame > .modal-body {
+            background: #ffffff;
+            border-radius: 18px;
+        }
+
+    /* Botones degradados reutilizando los de tu página */
+    .btn-grad {
+        color: #fff;
+        border: 0;
+        font-weight: 800;
+        border-radius: 16px;
+        box-shadow: 0 8px 18px rgba(0,0,0,.12);
+    }
+
+    .btn-teal {
+        background-image: linear-gradient(135deg,#00a78f,#7be495);
+    }
+
+    .btn-green {
+        background-image: linear-gradient(135deg,#0ac048,#3ae374);
+    }
+
+    /* Input grupo “píldora” */
+    .input-group.pill .input-group-text,
+    .input-group.pill .form-control {
+        border: 0;
+        background: #dff5f3;
+        font-weight: 700;
+        color: #2b2b2b;
+    }
+
+        .input-group.pill .input-group-text:first-child {
+            border-top-left-radius: 999px;
+            border-bottom-left-radius: 999px;
+            padding-left: 18px;
+        }
+
+    .input-group.pill .form-control {
+        border-radius: 0;
+    }
+
+    .input-group.pill .input-group-text:last-child {
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
+    }
+
+    /* Caja del código */
+    .code-box {
+        height: 64px;
+        border: 3px solid #1c1c1c;
+        border-radius: 16px;
+        font-size: 1.6rem;
+        letter-spacing: .1rem;
+        color: #7aa3b6;
+        background: #f6fbff;
+    }
+
+    .pill-input {
+        border-radius: 999px;
+    }
+</style>
+
+<script>
+    // Genera un código tipo AAA999 o AAA9999 (ajusta formato si quieres)
+    function generarCodigo() {
+      const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const pick = n => Array.from({length:n},()=>letras[Math.floor(Math.random()*letras.length)]).join('');
+      const nums  = n => Array.from({length:n},()=>Math.floor(Math.random()*10)).join('');
+      // 3 letras + 3 números por defecto
+      return pick(3) + nums(3);
+    }
+
+    const btnGenerar = document.getElementById('btnGenerar');
+    const txtCodigo  = document.getElementById('txtCodigo');
+    const msgCopiado = document.getElementById('msgCopiado');
+    const btnEnviar  = document.getElementById('btnEnviar');
+    const emailInput = document.getElementById('emailDestino');
+    const fechaInput = document.getElementById('fechaLimite');
+
+    btnGenerar?.addEventListener('click', async () => {
+      const code = generarCodigo();
+      txtCodigo.value = code;
+
+      // Copiar automáticamente al portapapeles
+      try{
+        await navigator.clipboard.writeText(code);
+        msgCopiado.classList.remove('d-none');
+        setTimeout(()=>msgCopiado.classList.add('d-none'), 1800);
+      }catch(e){ /* Silenciar si no permite copiar */ }
+    });
+
+    // Aquí iría tu integración real para enviar por correo (fetch a tu API)
+    btnEnviar?.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      if(!email){
+        alert('Por favor, escribe un correo de destino.');
+        return;
+      }
+      if(!txtCodigo.value){
+        alert('Primero genera un código.');
+        return;
+      }
+      // Ejemplo de payload (AJÚSTALO a tu backend)
+      const payload = {
+        codigo: txtCodigo.value,
+        vence: fechaInput.value || null,
+        email: email
+      };
+      console.log('Enviar a backend:', payload);
+      // await fetch('/api/codigos/enviar', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      alert('Simulado: código enviado a ' + email);
+    });
+</script>
+
+
+</html>
