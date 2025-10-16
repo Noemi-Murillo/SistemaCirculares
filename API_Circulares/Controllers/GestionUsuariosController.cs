@@ -1,0 +1,57 @@
+﻿using BLL_Circulares;
+using Entities_Circulares.GestionUsuarios;
+using Entities_Circulares.Reply;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace API_Circulares.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class GestionUsuariosController : ControllerBase
+    {
+
+        private readonly GestionUsuariosBLL  _AccesoGestionBLL;
+        private readonly IConfiguration _configuration;
+        public GestionUsuariosController(IConfiguration configuration, GestionUsuariosBLL gestionUsuariosBLL)
+        {
+
+            _configuration = configuration;
+            _AccesoGestionBLL = gestionUsuariosBLL;
+
+        }
+
+        [HttpPost("ObtenerUsuariosGestionComite")]
+        public Reply<List<Usuario>> ObtenerUsuariosGestionComite([FromBody] Usuario ObjUsuario)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionBLL.ObtenerUsuariosGestionComite(_configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
+
+
+    }
+}

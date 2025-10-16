@@ -1,6 +1,6 @@
 ﻿@{
 
-    var NombreUsuario = ViewBag.NombreUsuario;
+    var NombreUsuario = "Prueba";
 
 }
 
@@ -79,7 +79,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapsePages"
+                <a asp-controller="SubirCirculares" asp-action="Publicarcircular" class="nav-link collapsed" data-target="#collapsePages"
                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fa-solid fa-file-arrow-up"></i>
                     <span>Subir circular</span>
@@ -88,7 +88,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a asp-controller="Comites" asp-action="GestionComites" class="nav-link">
                     <i class="fa-solid fa-people-group"></i>
                     <span>Comités</span>
                 </a>
@@ -96,7 +96,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a asp-controller="GestionUsuarios" asp-action="Gestion" class="nav-link">
                     <i class="fa-solid fa-users"></i>
                     <span>Usuarios</span>
                 </a>

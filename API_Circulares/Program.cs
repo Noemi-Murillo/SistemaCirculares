@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<InicioBLL>();
 builder.Services.AddScoped<InicioDAL>();
+builder.Services.AddScoped<GestionUsuariosBLL>();
+builder.Services.AddScoped<GestionUsuariosDAL>();
 
 
 var app = builder.Build();
