@@ -30,6 +30,13 @@ jsGestionUsuarios = {
         BtnEnviarCorreo: '#btnEnviar'
     },
 
+    tablas: {
+
+        TablaGestionUsuarios: '#TbGestionUsuarios'
+
+
+    },
+
     variables: {
 
 
@@ -253,6 +260,47 @@ jsGestionUsuarios = {
 
         },
 
+        CargarDatatableGestionUsuarios: function () {
+            $(jsGestionUsuarios.tablas.TablaGestionUsuarios).DataTable({
+                ordering: true,
+                columnDefs: [
+                    {
+                        targets: [2,3], // Aplica a todas las columnas
+                        orderable: false // Las desactiva...
+                    },
+                    {
+                        //targets: [0, 1], // ...excepto esta
+                        //orderable: true
+                    }
+                ],// 🔒 Desactiva el ordenamiento en todas las columnas
+                paging: true,
+                pageLength: 5,
+                autoWidth: true,
+                dom: 'Brtip',
+                lengthMenu: [
+                    [5, 10, 20, -1],
+                    ['5 elem', '10 elem', '20 elem', 'Mostrar todos']
+                ],
+                buttons: [],
+                language: {
+                    paginate: {
+                        previous: "<i style='font-size: 18px; color:#B2B6BF;' class='fa fa-chevron-left' aria-hidden='true'></i>",
+                        next: "<i style='font-size: 18px; color:#B2B6BF;' class='fa fa-chevron-right' aria-hidden='true'></i>"
+                    },
+                    zeroRecords: 'No se encontraron datos'
+                }
+            });
+        },
+        RealizarBusquedaPersonalizada: function () {
+
+            var valor = $(jsCanastasBasicas.controles.InputBuscar).val();
+            var tabla = $(jsCanastasBasicas.tablas.TbGastosDependencia).DataTable();
+            tabla.search(valor).draw();
+
+
+        },
+
+
 
     },
     eventos:
@@ -272,4 +320,5 @@ jsGestionUsuarios = {
 $(function () {
     jsGestionUsuarios.eventos();
     jsGestionUsuarios.metodos.CargarComites();
+    jsGestionUsuarios.metodos.CargarDatatableGestionUsuarios();
 });
