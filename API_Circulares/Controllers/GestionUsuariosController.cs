@@ -11,7 +11,7 @@ namespace API_Circulares.Controllers
     public class GestionUsuariosController : ControllerBase
     {
 
-        private readonly GestionUsuariosBLL  _AccesoGestionBLL;
+        private readonly GestionUsuariosBLL _AccesoGestionBLL;
         private readonly IConfiguration _configuration;
         public GestionUsuariosController(IConfiguration configuration, GestionUsuariosBLL gestionUsuariosBLL)
         {
@@ -31,6 +31,37 @@ namespace API_Circulares.Controllers
             {
 
                 var respuesta = _AccesoGestionBLL.ObtenerUsuariosGestionComite(_configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
+
+        [HttpPost("GenerarCodigoRegistro")]
+        public Reply<string> GenerarCodigoRegistro([FromBody]Usuario ObjUsuario)
+        {
+
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionBLL.ObtenerCodigoRegistro(ObjUsuario, _configuration.GetConnectionString("Conexion"));
 
                 if (respuesta != null)
                 {

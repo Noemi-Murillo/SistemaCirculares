@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils_Circulares.GeneradorAleatorio;
 
 namespace BLL_Circulares
 {
@@ -13,6 +14,7 @@ namespace BLL_Circulares
     {
 
         private readonly GestionUsuariosDAL _AccesoGestionoDal;
+
 
         public GestionUsuariosBLL(GestionUsuariosDAL gestionUsuariosDAL)
         {
@@ -30,7 +32,7 @@ namespace BLL_Circulares
             {
 
                 var respuesta = _AccesoGestionoDal.ObtenerUsuariosGestionComite(Conexion);
-                
+
                 if (respuesta != null)
                 {
 
@@ -45,6 +47,46 @@ namespace BLL_Circulares
             {
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa BLL {ex.Message}";
+
+            }
+
+            return reply;
+
+        }
+
+
+        public Reply<string> ObtenerCodigoRegistro(Usuario ObjUsuario, string Conexion)
+        {
+
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+
+                var respuesta = GeneradorCodigo.GenerarCodigo();
+                ObjUsuario.CodigoRegistro = respuesta;
+                var respuestaNuevoCodigo = _AccesoGestionoDal.GenerarCodigoRegistro(ObjUsuario,Conexion);
+
+                if (respuesta != null && respuestaNuevoCodigo != null && respuestaNuevoCodigo.Ok)
+                {
+                    reply.Ok = true;
+                    reply.Message = respuestaNuevoCodigo.Message;
+                    reply.Result = respuesta;
+
+                }
+                else
+                {
+                    reply.Ok = false;
+                    reply.Message = respuestaNuevoCodigo.Message;
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerCodigoRegistro en la capa BLL {ex.Message}";
 
             }
 

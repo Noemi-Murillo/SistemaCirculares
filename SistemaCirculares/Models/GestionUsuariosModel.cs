@@ -5,7 +5,7 @@ using System;
 using System.Runtime.Intrinsics.Arm;
 namespace SistemaCirculares.Models
 {
-    public class GestionUsuariosModel: BaseAPI
+    public class GestionUsuariosModel : BaseAPI
     {
 
         public GestionUsuariosModel(IConfiguration config) : base(config)
@@ -13,7 +13,7 @@ namespace SistemaCirculares.Models
 
         }
 
-        public  Reply<List<Usuario>>ObtenerUsuariosGestionComite()
+        public Reply<List<Usuario>> ObtenerUsuariosGestionComite()
         {
 
             Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
@@ -26,6 +26,33 @@ namespace SistemaCirculares.Models
             {
                 var UrlAPI = string.Format("{0}/GestionUsuarios/ObtenerUsuariosGestionComite", UrlApiCirculares);
                 reply = PostAPI<Reply<List<Usuario>>, UserRegistration>(UrlAPI, ObjUsuario);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<string> GenerarCodigoRegistro(Usuario ObjUsuario)
+        {
+
+            Reply<string> reply = new Reply<string>();
+         
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/GestionUsuarios/GenerarCodigoRegistro", UrlApiCirculares);
+                reply = PostAPI<Reply<string>, Usuario>(UrlAPI, ObjUsuario);
 
 
 
