@@ -37,7 +37,7 @@ namespace DAL_Circulares
 
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.Add(new SqlParameter("@pCorreo", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Email });
-                        command.Parameters.Add(new SqlParameter("@pContrasena", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Password });
+                        //command.Parameters.Add(new SqlParameter("@pContrasena", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Password });
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -52,7 +52,7 @@ namespace DAL_Circulares
                                     UserRegistration ObjUsuarioObtenido = new UserRegistration
                                     {
                                         Nombre = (string)reader["NombreCompleto"],
-
+                                        Password = (string)reader["HashContrasena"]
                                     };
 
                                     reply.Result = ObjUsuarioObtenido;
@@ -61,7 +61,14 @@ namespace DAL_Circulares
                                 }
                                 else
                                 {
+                                    UserRegistration ObjUsuarioObtenido = new UserRegistration
+                                    {
+                                        Password = (string)reader["HashContrasena"],
+                                        
+                                    };
+                                    reply.Ok = false;
                                     reply.Message = "El usuario o la contraseña no son correctos";
+                                    reply.Result = ObjUsuarioObtenido;
 
 
                                 }

@@ -62,10 +62,9 @@ namespace BLL_Circulares
 
             try
             {
-
                 var respuesta = GeneradorCodigo.GenerarCodigo();
                 ObjUsuario.CodigoRegistro = respuesta;
-                var respuestaNuevoCodigo = _AccesoGestionoDal.GenerarCodigoRegistro(ObjUsuario,Conexion);
+                var respuestaNuevoCodigo = _AccesoGestionoDal.GenerarCodigoRegistro(ObjUsuario, Conexion);
 
                 if (respuesta != null && respuestaNuevoCodigo != null && respuestaNuevoCodigo.Ok)
                 {
