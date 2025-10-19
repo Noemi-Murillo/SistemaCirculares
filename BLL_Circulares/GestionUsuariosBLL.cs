@@ -1,4 +1,5 @@
 ﻿using DAL_Circulares;
+using Entities_Circulares.Comites;
 using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
 using System;
@@ -86,6 +87,38 @@ namespace BLL_Circulares
             {
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método ObtenerCodigoRegistro en la capa BLL {ex.Message}";
+
+            }
+
+            return reply;
+
+        }
+
+
+        public Reply<List<Comites>> ObtenerComites(int Parametro, string Conexion)
+        {
+
+            Reply<List<Comites>> reply = new Reply<List<Comites>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionoDal.ObtenerComites(Parametro, Conexion);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa BLL {ex.Message}";
 
             }
 

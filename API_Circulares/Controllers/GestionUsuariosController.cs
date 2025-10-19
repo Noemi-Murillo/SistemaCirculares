@@ -1,4 +1,5 @@
 ﻿using BLL_Circulares;
+using Entities_Circulares.Comites;
 using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +54,7 @@ namespace API_Circulares.Controllers
 
 
         [HttpPost("GenerarCodigoRegistro")]
-        public Reply<string> GenerarCodigoRegistro([FromBody]Usuario ObjUsuario)
+        public Reply<string> GenerarCodigoRegistro([FromBody] Usuario ObjUsuario)
         {
 
             Reply<string> reply = new Reply<string>();
@@ -82,6 +83,35 @@ namespace API_Circulares.Controllers
 
         }
 
+        [HttpPost("ObtenerComites")]
+        public Reply<List<Comites>> ObtenerComites([FromBody] int Parametro)
+        {
+
+            Reply<List<Comites>> reply = new Reply<List<Comites>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionBLL.ObtenerComites(Parametro, _configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
 
 
     }

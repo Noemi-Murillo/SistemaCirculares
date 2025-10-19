@@ -1,4 +1,5 @@
-﻿using Entities_Circulares.GestionUsuarios;
+﻿using Entities_Circulares.Comites;
+using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
 using Microsoft.Data.SqlClient;
 using System;
@@ -12,11 +13,13 @@ namespace DAL_Circulares
 {
     public class GestionUsuariosDAL
     {
-
+        //Procedimientos almacenados
         private const string _spObtenerUsuariosGestionComite = "ObtenerUsuariosGestionComite";
         private const string _sp_CrearNuevoCodigo = "sp_CrearNuevoCodigo";
+        private const string _spObtenerComites = "spObtenerComites";
 
-        
+
+
 
         public Reply<List<Usuario>> ObtenerUsuariosGestionComite(string Conexion)
         {
@@ -48,6 +51,7 @@ namespace DAL_Circulares
                                 {
                                     Id = (int)reader["Id"],
                                     Nombre = (string)reader["Nombre"],
+                                    IdComite = (int)reader["IdComite"],
                                     NombreComite = (string)reader["NombreComite"],
                                     EsCordinador = (bool)reader["EsCoordinador"],
                                     Activo = (bool)reader["Activo"]
@@ -123,5 +127,63 @@ namespace DAL_Circulares
         }
 
 
+        public Reply<List<Comites>> ObtenerComites(int Parametro, string Conexion)
+        {
+
+            Reply<List<Comites>> reply = new Reply<List<Comites>>();
+            List<Comites> ListaComites = new List<Comites>();
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(_spObtenerComites, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pParametro", SqlDbType.Int) { Value = Parametro });
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+
+
+                                Comites ObjComite = new Comites
+                                {
+                                    IdComite = (int)reader["IdComite"],
+                                    NombreComite = (string)reader["Nombre"],
+                                    Activo = (bool)reader["Activo"]
+
+
+                                };
+
+                                ListaComites.Add(ObjComite);
+
+
+                            }
+
+                            reply.Ok = true;
+                            reply.Result = ListaComites;
+
+
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = ex.Message;
+            }
+
+            return reply;
+        }
     }
 }

@@ -102,7 +102,7 @@ jsGestionUsuarios = {
                                 // Si el servidor mandó error, intento leer el json del error
                                 return res.json().then(err => { throw err; });
                             }
-                            return res.json(); 
+                            return res.json();
                         })
                         .then(data => {
                             console.log("Respuesta OK:", data);
@@ -195,7 +195,63 @@ jsGestionUsuarios = {
             }
 
 
-        }
+        },
+
+
+        CargarComites: function () {
+
+
+            try {
+
+                fetch("/GestionUsuarios/ObtenerComites", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(1)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            // Si el servidor mandó error, intento leer el json del error
+                            return res.json().then(err => { throw err; });
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        const selects = document.querySelectorAll(".ComitesSelect");
+
+                        for (const select of selects) {
+                            const existentes = new Set([...select.options].map(o => o.value));
+                            for (const { idComite, nombreComite } of data.result) {
+                                const val = String(idComite);
+                                if (val && !existentes.has(val)) {
+                                    select.add(new Option(nombreComite, val));
+                                    existentes.add(val);
+                                }
+                            }
+                        }
+
+
+
+
+                    })
+                    .catch(err => {
+                        console.error("Error del servidor o red:", err);
+                    });
+
+
+
+
+
+            } catch (e) {
+                console.error("Ha ocurrido un error en el método CargarComites", e)
+
+            }
+
+
+
+
+        },
 
 
     },
@@ -215,4 +271,5 @@ jsGestionUsuarios = {
 
 $(function () {
     jsGestionUsuarios.eventos();
+    jsGestionUsuarios.metodos.CargarComites();
 });
