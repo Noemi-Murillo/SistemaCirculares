@@ -14,6 +14,9 @@ namespace Entities_Circulares.GestionUsuarios
         public bool EsCordinador { get; set; }
         public bool Activo {  get; set; }
 
+        public string? CodigoRegistro { get; set; } 
+        public DateTime? FechaExpiracion { get; set; }
+
 
     }
 }

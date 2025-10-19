@@ -22,7 +22,7 @@ namespace SistemaCirculares.Controllers
         }
 
 
-        
+
         public Reply<List<Usuario>> ObtenerUsuariosGestionComite()
         {
 
@@ -46,6 +46,36 @@ namespace SistemaCirculares.Controllers
 
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en la capa web en el controlador InicioController método LogIn , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<string> GenerarCodigoRegistro([FromBody] Usuario ObjUsuario)
+        {
+
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+                var respuesta = _AccesoGestionModel.GenerarCodigoRegistro(ObjUsuario);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador GestionUsuarios método GenerarCodigoRegistro , {ex.Message}";
             }
 
             return reply;

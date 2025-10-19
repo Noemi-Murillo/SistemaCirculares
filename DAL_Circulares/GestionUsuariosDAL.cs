@@ -14,7 +14,9 @@ namespace DAL_Circulares
     {
 
         private const string _spObtenerUsuariosGestionComite = "ObtenerUsuariosGestionComite";
+        private const string _sp_CrearNuevoCodigo = "sp_CrearNuevoCodigo";
 
+        
 
         public Reply<List<Usuario>> ObtenerUsuariosGestionComite(string Conexion)
         {
@@ -74,6 +76,50 @@ namespace DAL_Circulares
 
             return reply;
 
+        }
+
+
+        public Reply<string> GenerarCodigoRegistro(Usuario ObjUsuario, string Conexion)
+        {
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(_sp_CrearNuevoCodigo, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pCodigo", SqlDbType.NVarChar, 10) { Value = ObjUsuario.CodigoRegistro });
+                        command.Parameters.Add(new SqlParameter("@pFechaExpiracion", SqlDbType.DateTime) { Value = ObjUsuario.FechaExpiracion });
+
+                        int RowAfectadas = command.ExecuteNonQuery();
+
+                        if (RowAfectadas > 0)
+                        {
+                            reply.Ok = true;
+                            reply.Message = "Código generado correctamente";
+                        }
+                        else
+                        {
+                            reply.Ok = false;
+                            reply.Message = "Ha ocurrido un error al insertar los datos";
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = string.Format("Error en capa Data.Dapper, en la clase GestionUsuariosDAL: ", ex.Message);
+
+            }
+
+            return reply;
         }
 
 
