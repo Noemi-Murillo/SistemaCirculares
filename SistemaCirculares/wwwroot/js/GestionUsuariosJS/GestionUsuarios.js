@@ -13,6 +13,9 @@ jsGestionUsuarios = {
 
     objetos: {
 
+        ListaUsuarios: []
+
+
 
     },
     controles: {
@@ -27,7 +30,8 @@ jsGestionUsuarios = {
     botones: {
         //Modal Generar código
         BtnGenerarCodigo: '#btnGenerar',
-        BtnEnviarCorreo: '#btnEnviar'
+        BtnEnviarCorreo: '#btnEnviar',
+        BtnGuardarUsuarios: '#btnguardarUsuarios'
     },
 
     tablas: {
@@ -96,7 +100,6 @@ jsGestionUsuarios = {
                 if (FechaLimite !== "" && FechaLimite !== null && FechaLimite !== undefined) {
 
 
-                    console.log(ObjUsuario)
                     fetch("/GestionUsuarios/GenerarCodigoRegistro", {
                         method: "POST",
                         headers: {
@@ -265,7 +268,7 @@ jsGestionUsuarios = {
                 ordering: true,
                 columnDefs: [
                     {
-                        targets: [2,3], // Aplica a todas las columnas
+                        targets: [2, 3], // Aplica a todas las columnas
                         orderable: false // Las desactiva...
                     },
                     {
@@ -300,6 +303,85 @@ jsGestionUsuarios = {
 
         },
 
+        LeerTablaUsuarios: function () {
+            jsGestionUsuarios.objetos.ListaUsuarios = [];
+
+            $('#TbGestionUsuarios tbody tr').each(function () {
+                const $td = $(this).children('td');
+
+                // Saltar la fila "No hay registros" (colspan) u otras filas inválidas
+                if ($td.length < 5) return;
+
+                const Id = $.trim($td.eq(0).text());
+                const Nombre = $.trim($td.eq(1).text());
+
+                const $select = $td.eq(2).find('select.ComitesSelect');
+                const IdComite = $select.val(); // string; usa parseInt si requieres número
+                const NombreComite = ($select.find('option:selected').text() || '').trim();
+
+                const EsCordinador = $td.eq(3).find('input[type=checkbox]').prop('checked') === true;
+                const Activo = $td.eq(4).find('input[type=checkbox]').prop('checked') === true;
+
+                jsGestionUsuarios.objetos.ListaUsuarios.push({
+                    Id,
+                    Nombre,
+                    IdComite,
+                    NombreComite,
+                    EsCordinador,
+                    Activo
+                });
+           
+            });
+
+
+
+
+            fetch("/GestionUsuarios/GuardarUsuario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(jsGestionUsuarios.objetos.ListaUsuarios)
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        // Si el servidor mandó error, intento leer el json del error
+                        return res.json().then(err => { throw err; });
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Respuesta OK:", data);
+                    return;
+                    $(jsGestionUsuarios.controles.InputCodigoGenerado).val(data.result);
+                    navigator.clipboard.writeText(data.result);
+                    msgCopiado.classList.remove('d-none');
+                    setTimeout(() => msgCopiado.classList.add('d-none'), 1800);
+                    console.log(data)
+                    this.MensajeGeneralSweetAlert(
+                        'success',
+                        `${data.message}`,
+                        false,
+                        '#68AB54',
+                        30
+                    );
+
+
+
+                })
+                .catch(err => {
+                    console.error("Error del servidor o red:", err);
+                });
+
+
+
+
+
+
+        },
+
+
+
 
 
     },
@@ -309,6 +391,13 @@ jsGestionUsuarios = {
             $(jsGestionUsuarios.botones.BtnGenerarCodigo).on('click', function () {
 
                 jsGestionUsuarios.metodos.GenerarCodigoRegistro();
+
+            });
+
+
+            $(jsGestionUsuarios.botones.BtnGuardarUsuarios).on('click', function () {
+
+                jsGestionUsuarios.metodos.LeerTablaUsuarios();
 
             });
 

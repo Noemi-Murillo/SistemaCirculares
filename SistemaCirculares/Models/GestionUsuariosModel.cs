@@ -96,5 +96,31 @@ namespace SistemaCirculares.Models
 
 
         }
+
+        public Reply<List<Usuario>> GuardarUsuarios(List<Usuario> ObjUsuario)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+            
+            try
+            {
+                var UrlAPI = string.Format("{0}/GestionUsuarios/GuardarUsuario", UrlApiCirculares);
+                reply = PostAPI<Reply<List<Usuario>>, List<Usuario>>(UrlAPI, ObjUsuario);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
     }
 }

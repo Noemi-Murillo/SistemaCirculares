@@ -126,6 +126,37 @@ namespace BLL_Circulares
 
         }
 
+        public Reply<List<Usuario>> GuardarUsuarios(List<Usuario> ObjUsuario, string Conexion)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionoDal.GuardarUsuarios(ObjUsuario, Conexion);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método GuardarUsuarios en la capa BLL {ex.Message}";
+
+            }
+
+            return reply;
+
+        }
+
 
 
     }

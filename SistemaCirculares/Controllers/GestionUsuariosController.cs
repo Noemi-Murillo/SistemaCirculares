@@ -116,5 +116,37 @@ namespace SistemaCirculares.Controllers
         }
 
 
+
+        public Reply<List<Usuario>> GuardarUsuario([FromBody]List<Usuario> ObjUsuario)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+                var respuesta = _AccesoGestionModel.GuardarUsuarios(ObjUsuario);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador GestionUsuarios método GuardarUsuario , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+
+
     }
 }

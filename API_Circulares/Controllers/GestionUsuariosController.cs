@@ -114,5 +114,36 @@ namespace API_Circulares.Controllers
         }
 
 
+        [HttpPost("GuardarUsuario")]
+        public Reply<List<Usuario>> GuardarUsuario([FromBody] List<Usuario> ObjUsuario)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionBLL.GuardarUsuarios(ObjUsuario, _configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método GuardarUsuario en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
+
     }
 }
