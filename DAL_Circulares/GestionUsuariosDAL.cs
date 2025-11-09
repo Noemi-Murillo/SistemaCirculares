@@ -17,8 +17,10 @@ namespace DAL_Circulares
         private const string _spObtenerUsuariosGestionComite = "ObtenerUsuariosGestionComite";
         private const string _sp_CrearNuevoCodigo = "sp_CrearNuevoCodigo";
         private const string _spObtenerComites = "spObtenerComites";
+        private const string _spCrearEditarUsuarios = "spCrearEditarUsuarios";
 
 
+        
 
 
         public Reply<List<Usuario>> ObtenerUsuariosGestionComite(string Conexion)
@@ -189,54 +191,71 @@ namespace DAL_Circulares
 
         public Reply<List<Usuario>> GuardarUsuarios(List<Usuario> ObjUsuario, string Conexion)
         {
-
             Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
-            List<Usuario> ListaUsuarios = new List<Usuario>();
+            if (ObjUsuario == null || ObjUsuario.Count == 0)
+            {
+                reply.Message = "No hay usuarios para guardar.";
+                return reply;
+            }
 
             try
             {
-
-                using (SqlConnection connection = new SqlConnection(Conexion))
+                using (var connection = new SqlConnection(Conexion))
                 {
-
                     connection.Open();
-
-                    using (SqlCommand command = new SqlCommand(_spObtenerUsuariosGestionComite, connection))
+                    using (var tx = connection.BeginTransaction())
+                    using (var command = new SqlCommand(_spCrearEditarUsuarios, connection, tx))
                     {
-
                         command.CommandType = CommandType.StoredProcedure;
+                        // command.CommandTimeout = 60; // opcional
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        // Declaración de parámetros UNA sola vez (tipos y tamaños)
+                        var pIdUsuario = command.Parameters.Add("@pIdUsuario", SqlDbType.Int);
+
+                        var pNombre = command.Parameters.Add("@pNombre", SqlDbType.NVarChar, 50);
+                        var pApellido1 = command.Parameters.Add("@pApellido1", SqlDbType.NVarChar, 50);
+                        var pApellido2 = command.Parameters.Add("@pApellido2", SqlDbType.NVarChar, 50);
+                        var pCorreo = command.Parameters.Add("@pCorreo", SqlDbType.NVarChar, 50);
+                        var pContrasena = command.Parameters.Add("@pContrasena", SqlDbType.NVarChar, 250);
+
+                        var pIdRol = command.Parameters.Add("@pIdRol", SqlDbType.Int);
+                        var pActivo = command.Parameters.Add("@pActivo", SqlDbType.Bit);
+
+                        // OJO: coincide exactamente con tu SP: @pEscordinador (con "r" antes de "dinador")
+                        var pEscordinador = command.Parameters.Add("@pEscordinador", SqlDbType.Bit);
+
+                        var pIdComite = command.Parameters.Add("@pIdComite", SqlDbType.Int);
+                        foreach (var u in ObjUsuario)
                         {
+                            // Int
+                            pIdUsuario.Value = u.Id;
 
-                            while (reader.Read())
-                            {
+                            // NVARCHARs (usa DBNull.Value si null/ vacío)
+                            pNombre.Value = string.IsNullOrWhiteSpace(u.Nombre) ? (object)DBNull.Value : u.Nombre.Trim();
+                            pApellido1.Value = string.IsNullOrWhiteSpace(u.Apellido1) ? (object)DBNull.Value : u.Apellido1.Trim();
+                            pApellido2.Value = string.IsNullOrWhiteSpace(u.Apellido2) ? (object)DBNull.Value : u.Apellido2.Trim();
+                            pCorreo.Value = string.IsNullOrWhiteSpace(u.Correo) ? (object)DBNull.Value : u.Correo.Trim();
+                            pContrasena.Value = string.IsNullOrWhiteSpace(u.Contrasena) ? (object)DBNull.Value : u.Contrasena; // si no la actualizas, deja null
 
+                            // Ints (nullable)
+                            pIdRol.Value = u.IdRol.HasValue ? (object)u.IdRol.Value : DBNull.Value;
+                            pIdComite.Value = u.IdComite.HasValue ? (object)u.IdComite.Value : DBNull.Value;
 
-                                Usuario ObjUsuarios = new Usuario
-                                {
-                                    Id = (int)reader["Id"],
-                                    Nombre = (string)reader["Nombre"],
-                                    IdComite = (int)reader["IdComite"],
-                                    NombreComite = (string)reader["NombreComite"],
-                                    EsCordinador = (bool)reader["EsCoordinador"],
-                                    Activo = (bool)reader["Activo"]
+                            // Bits
+                            pActivo.Value = u.Activo;
+                            pEscordinador.Value = u.EsCordinador;
 
-                                };
+                            // Ejecuta el SP para este usuario
+                            command.ExecuteNonQuery();
 
-                                ListaUsuarios.Add(ObjUsuarios);
-
-
-                            }
-
-                            reply.Ok = true;
-                            reply.Result = ListaUsuarios;
-
-
+                            // Opcional: acumular para devolver lo aplicado
                         }
+
+                        tx.Commit();
+                        reply.Ok = true;
+                        reply.Message = "Los usuarios se han actualizado de manera correcta";
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -245,8 +264,8 @@ namespace DAL_Circulares
             }
 
             return reply;
-
         }
+
 
     }
 }

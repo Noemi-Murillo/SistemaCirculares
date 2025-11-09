@@ -330,45 +330,75 @@ jsGestionUsuarios = {
                     EsCordinador,
                     Activo
                 });
-           
+
             });
 
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Se actualizarán los datos de los usuarios.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, actualizar',
+                cancelButtonText: 'No, cancelar',
+                confirmButtonColor: '#2ad765',
+                reverseButtons: true,
+                allowOutsideClick: false
+            }).then(result => {
+                if (!result.isConfirmed) return;
 
 
 
-            fetch("/GestionUsuarios/GuardarUsuario", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(jsGestionUsuarios.objetos.ListaUsuarios)
+
+                fetch("/GestionUsuarios/GuardarUsuario", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(jsGestionUsuarios.objetos.ListaUsuarios)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            // Si el servidor mandó error, intento leer el json del error
+                            return res.json().then(err => { throw err; });
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+
+
+                        if (data.ok) {
+
+                            this.MensajeGeneralSweetAlert(
+                                'success',
+                                `${data.message}`,
+                                false,
+                                '#68AB54',
+                                30
+                            );
+
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 2000);
+
+
+                        } else {
+                            this.MensajeGeneralSweetAlert(
+                                'warning',
+                                `${data.message}`,
+                                false,
+                                '#FF0000',
+                                26
+                            );
+
+                        }
+
+                    })
+
+
+
+
+
             })
-                .then(res => {
-                    if (!res.ok) {
-                        // Si el servidor mandó error, intento leer el json del error
-                        return res.json().then(err => { throw err; });
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    console.log("Respuesta OK:", data);
-                    return;
-                    $(jsGestionUsuarios.controles.InputCodigoGenerado).val(data.result);
-                    navigator.clipboard.writeText(data.result);
-                    msgCopiado.classList.remove('d-none');
-                    setTimeout(() => msgCopiado.classList.add('d-none'), 1800);
-                    console.log(data)
-                    this.MensajeGeneralSweetAlert(
-                        'success',
-                        `${data.message}`,
-                        false,
-                        '#68AB54',
-                        30
-                    );
-
-
-
-                })
                 .catch(err => {
                     console.error("Error del servidor o red:", err);
                 });
