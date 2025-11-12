@@ -13,6 +13,9 @@ jsGestionUsuarios = {
 
     objetos: {
 
+        ListaUsuarios: []
+
+
 
     },
     controles: {
@@ -27,7 +30,15 @@ jsGestionUsuarios = {
     botones: {
         //Modal Generar código
         BtnGenerarCodigo: '#btnGenerar',
-        BtnEnviarCorreo: '#btnEnviar'
+        BtnEnviarCorreo: '#btnEnviar',
+        BtnGuardarUsuarios: '#btnguardarUsuarios'
+    },
+
+    tablas: {
+
+        TablaGestionUsuarios: '#TbGestionUsuarios'
+
+
     },
 
     variables: {
@@ -89,7 +100,6 @@ jsGestionUsuarios = {
                 if (FechaLimite !== "" && FechaLimite !== null && FechaLimite !== undefined) {
 
 
-                    console.log(ObjUsuario)
                     fetch("/GestionUsuarios/GenerarCodigoRegistro", {
                         method: "POST",
                         headers: {
@@ -102,7 +112,7 @@ jsGestionUsuarios = {
                                 // Si el servidor mandó error, intento leer el json del error
                                 return res.json().then(err => { throw err; });
                             }
-                            return res.json(); 
+                            return res.json();
                         })
                         .then(data => {
                             console.log("Respuesta OK:", data);
@@ -195,7 +205,213 @@ jsGestionUsuarios = {
             }
 
 
-        }
+        },
+
+
+        CargarComites: function () {
+
+
+            try {
+
+                fetch("/GestionUsuarios/ObtenerComites", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(1)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            // Si el servidor mandó error, intento leer el json del error
+                            return res.json().then(err => { throw err; });
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        const selects = document.querySelectorAll(".ComitesSelect");
+
+                        for (const select of selects) {
+                            const existentes = new Set([...select.options].map(o => o.value));
+                            for (const { idComite, nombreComite } of data.result) {
+                                const val = String(idComite);
+                                if (val && !existentes.has(val)) {
+                                    select.add(new Option(nombreComite, val));
+                                    existentes.add(val);
+                                }
+                            }
+                        }
+
+
+
+
+                    })
+                    .catch(err => {
+                        console.error("Error del servidor o red:", err);
+                    });
+
+
+
+
+
+            } catch (e) {
+                console.error("Ha ocurrido un error en el método CargarComites", e)
+
+            }
+
+
+
+
+        },
+
+        CargarDatatableGestionUsuarios: function () {
+            $(jsGestionUsuarios.tablas.TablaGestionUsuarios).DataTable({
+                ordering: true,
+                columnDefs: [
+                    {
+                        targets: [2, 3], // Aplica a todas las columnas
+                        orderable: false // Las desactiva...
+                    },
+                    {
+                        //targets: [0, 1], // ...excepto esta
+                        //orderable: true
+                    }
+                ],// 🔒 Desactiva el ordenamiento en todas las columnas
+                paging: true,
+                pageLength: 5,
+                autoWidth: true,
+                dom: 'Brtip',
+                lengthMenu: [
+                    [5, 10, 20, -1],
+                    ['5 elem', '10 elem', '20 elem', 'Mostrar todos']
+                ],
+                buttons: [],
+                language: {
+                    paginate: {
+                        previous: "<i style='font-size: 18px; color:#B2B6BF;' class='fa fa-chevron-left' aria-hidden='true'></i>",
+                        next: "<i style='font-size: 18px; color:#B2B6BF;' class='fa fa-chevron-right' aria-hidden='true'></i>"
+                    },
+                    zeroRecords: 'No se encontraron datos'
+                }
+            });
+        },
+        RealizarBusquedaPersonalizada: function () {
+
+            var valor = $(jsCanastasBasicas.controles.InputBuscar).val();
+            var tabla = $(jsCanastasBasicas.tablas.TbGastosDependencia).DataTable();
+            tabla.search(valor).draw();
+
+
+        },
+
+        LeerTablaUsuarios: function () {
+            jsGestionUsuarios.objetos.ListaUsuarios = [];
+
+            $('#TbGestionUsuarios tbody tr').each(function () {
+                const $td = $(this).children('td');
+
+                // Saltar la fila "No hay registros" (colspan) u otras filas inválidas
+                if ($td.length < 5) return;
+
+                const Id = $.trim($td.eq(0).text());
+                const Nombre = $.trim($td.eq(1).text());
+
+                const $select = $td.eq(2).find('select.ComitesSelect');
+                const IdComite = $select.val(); // string; usa parseInt si requieres número
+                const NombreComite = ($select.find('option:selected').text() || '').trim();
+
+                const EsCordinador = $td.eq(3).find('input[type=checkbox]').prop('checked') === true;
+                const Activo = $td.eq(4).find('input[type=checkbox]').prop('checked') === true;
+
+                jsGestionUsuarios.objetos.ListaUsuarios.push({
+                    Id,
+                    Nombre,
+                    IdComite,
+                    NombreComite,
+                    EsCordinador,
+                    Activo
+                });
+
+            });
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Se actualizarán los datos de los usuarios.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, actualizar',
+                cancelButtonText: 'No, cancelar',
+                confirmButtonColor: '#2ad765',
+                reverseButtons: true,
+                allowOutsideClick: false
+            }).then(result => {
+                if (!result.isConfirmed) return;
+
+
+
+
+                fetch("/GestionUsuarios/GuardarUsuario", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(jsGestionUsuarios.objetos.ListaUsuarios)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            // Si el servidor mandó error, intento leer el json del error
+                            return res.json().then(err => { throw err; });
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+
+
+                        if (data.ok) {
+
+                            this.MensajeGeneralSweetAlert(
+                                'success',
+                                `${data.message}`,
+                                false,
+                                '#68AB54',
+                                30
+                            );
+
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 2000);
+
+
+                        } else {
+                            this.MensajeGeneralSweetAlert(
+                                'warning',
+                                `${data.message}`,
+                                false,
+                                '#FF0000',
+                                26
+                            );
+
+                        }
+
+                    })
+
+
+
+
+
+            })
+                .catch(err => {
+                    console.error("Error del servidor o red:", err);
+                });
+
+
+
+
+
+
+        },
+
+
+
 
 
     },
@@ -209,10 +425,19 @@ jsGestionUsuarios = {
             });
 
 
+            $(jsGestionUsuarios.botones.BtnGuardarUsuarios).on('click', function () {
+
+                jsGestionUsuarios.metodos.LeerTablaUsuarios();
+
+            });
+
+
         }
 
 }
 
 $(function () {
     jsGestionUsuarios.eventos();
+    jsGestionUsuarios.metodos.CargarComites();
+    jsGestionUsuarios.metodos.CargarDatatableGestionUsuarios();
 });

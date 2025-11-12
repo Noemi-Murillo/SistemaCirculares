@@ -2,6 +2,7 @@
 using Entities_Circulares.GestionUsuarios;
 using Microsoft.AspNetCore.Mvc;
 using SistemaCirculares.Models;
+using Entities_Circulares.Comites;
 
 namespace SistemaCirculares.Controllers
 {
@@ -76,6 +77,68 @@ namespace SistemaCirculares.Controllers
 
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en la capa web en el controlador GestionUsuarios método GenerarCodigoRegistro , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<List<Comites>> ObtenerComites([FromBody] int Parametro)
+        {
+
+            Reply<List<Comites>> reply = new Reply<List<Comites>>();
+
+            try
+            {
+                var respuesta = _AccesoGestionModel.ObtenerComites(Parametro);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador InicioController método LogIn , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+
+
+
+        public Reply<List<Usuario>> GuardarUsuario([FromBody]List<Usuario> ObjUsuario)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+                var respuesta = _AccesoGestionModel.GuardarUsuarios(ObjUsuario);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador GestionUsuarios método GuardarUsuario , {ex.Message}";
             }
 
             return reply;

@@ -21,14 +21,15 @@
                 <div class="d-flex gap-2">
                     <button data-bs-toggle="modal" data-bs-target="#modalCodigo" class="btn btn-grad btn-teal">Generar código<br class="d-none d-md-inline"> para registro</button>
                     <button class="btn btn-grad btn-blue">Códigos<br class="d-none d-md-inline"> generados</button>
-                    <button class="btn btn-grad btn-green">Guardar<br class="d-none d-md-inline"> cambios</button>
+                    <button id="btnguardarUsuarios" class="btn btn-grad btn-green">Guardar<br class="d-none d-md-inline"> cambios</button>
                 </div>
             </div>
 
             <div class="table-responsive mt-4">
-                <table class="table align-middle mb-0">
+                <table id="TbGestionUsuarios" class="table align-middle mb-0">
                     <thead>
                         <tr>
+                            <th hidden class="col-id">Id</th>
                             <th class="col-nombre">Nombre</th>
                             <th class="col-comite">Comité</th>
                             <th class="col-coord">Coordinador</th>
@@ -49,11 +50,13 @@
                             foreach (var Usuario in ListaUsuarios)
                             {
                                 <tr>
+                                    <td hidden>@Usuario.Id</td>
+
                                     <td>@Usuario.Nombre</td>
                                     <td>
                                         <div class="select-pill">
-                                            <select class="form-select">
-                                                <option selected>@Usuario.NombreComite</option>
+                                            <select class="form-select ComitesSelect">
+                                                <option value="@Usuario.IdComite" selected>@Usuario.NombreComite</option>
                                             </select>
                                         </div>
                                     </td>

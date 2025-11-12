@@ -2,6 +2,7 @@
 using DAL_Circulares;
 using Entities_Circulares.UserRegistration;
 using Utils_Circulares.GeneradorAleatorio;
+using Utils_Circulares.Hashear;
 
 namespace BLL_Circulares
 {
@@ -24,15 +25,24 @@ namespace BLL_Circulares
 
             try
             {
-
+                
                 var respuesta = _AccesoInicioDal.LogIn(ObjUsuario, Conexion);
 
-                if (respuesta != null)
+                var VerificarHash = PasswordHash.Verify(ObjUsuario.Password, respuesta.Result.Password);
+
+
+                if (respuesta != null && respuesta.Ok && VerificarHash)
                 {
-
-                    reply = respuesta;
-
+                    reply.Ok = true;
+                    reply.Message = "Inicio de sesión exitoso.";
+                    reply.Result = respuesta.Result;
                 }
+                else
+                {
+                    reply.Ok = false;
+                    reply.Message = "Correo o contraseña incorrectos.";
+                }
+
 
 
 

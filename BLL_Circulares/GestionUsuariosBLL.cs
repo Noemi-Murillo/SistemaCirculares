@@ -1,4 +1,5 @@
 ﻿using DAL_Circulares;
+using Entities_Circulares.Comites;
 using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
 using System;
@@ -62,10 +63,9 @@ namespace BLL_Circulares
 
             try
             {
-
                 var respuesta = GeneradorCodigo.GenerarCodigo();
                 ObjUsuario.CodigoRegistro = respuesta;
-                var respuestaNuevoCodigo = _AccesoGestionoDal.GenerarCodigoRegistro(ObjUsuario,Conexion);
+                var respuestaNuevoCodigo = _AccesoGestionoDal.GenerarCodigoRegistro(ObjUsuario, Conexion);
 
                 if (respuesta != null && respuestaNuevoCodigo != null && respuestaNuevoCodigo.Ok)
                 {
@@ -87,6 +87,69 @@ namespace BLL_Circulares
             {
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método ObtenerCodigoRegistro en la capa BLL {ex.Message}";
+
+            }
+
+            return reply;
+
+        }
+
+
+        public Reply<List<Comites>> ObtenerComites(int Parametro, string Conexion)
+        {
+
+            Reply<List<Comites>> reply = new Reply<List<Comites>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionoDal.ObtenerComites(Parametro, Conexion);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa BLL {ex.Message}";
+
+            }
+
+            return reply;
+
+        }
+
+        public Reply<List<Usuario>> GuardarUsuarios(List<Usuario> ObjUsuario, string Conexion)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionoDal.GuardarUsuarios(ObjUsuario, Conexion);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método GuardarUsuarios en la capa BLL {ex.Message}";
 
             }
 

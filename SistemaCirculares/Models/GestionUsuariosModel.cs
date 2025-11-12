@@ -1,4 +1,5 @@
-﻿using Entities_Circulares.GestionUsuarios;
+﻿using Entities_Circulares.Comites;
+using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
 using Entities_Circulares.UserRegistration;
 using System;
@@ -47,12 +48,64 @@ namespace SistemaCirculares.Models
         {
 
             Reply<string> reply = new Reply<string>();
-         
+
 
             try
             {
                 var UrlAPI = string.Format("{0}/GestionUsuarios/GenerarCodigoRegistro", UrlApiCirculares);
                 reply = PostAPI<Reply<string>, Usuario>(UrlAPI, ObjUsuario);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<List<Comites>> ObtenerComites(int Parametro)
+        {
+
+            Reply<List<Comites>> reply = new Reply<List<Comites>>();
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/GestionUsuarios/ObtenerComites", UrlApiCirculares);
+                reply = PostAPI<Reply<List<Comites>>, int>(UrlAPI, Parametro);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<List<Usuario>> GuardarUsuarios(List<Usuario> ObjUsuario)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+            
+            try
+            {
+                var UrlAPI = string.Format("{0}/GestionUsuarios/GuardarUsuario", UrlApiCirculares);
+                reply = PostAPI<Reply<List<Usuario>>, List<Usuario>>(UrlAPI, ObjUsuario);
 
 
 
