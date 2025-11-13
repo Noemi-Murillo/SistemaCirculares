@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "API — Sistema de Circulares";
+    Layout = null; // o usa tu _Layout si tienes uno
+}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui,Segoe UI,Inter,Arial;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: grid;
+            place-items: center;
+            min-height: 100vh
+        }
+
+        .card {
+            width: min(960px,95vw);
+            background: #0b1222;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.45);
+            overflow: hidden
+        }
+
+        .hd {
+            padding: 24px 28px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            display: flex;
+            gap: 14px;
+            align-items: center
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg,#2563eb,#60a5fa);
+            display: grid;
+            place-items: center;
+            font-weight: 800
+        }
+
+        .bd {
+            padding: 22px 28px
+        }
+
+        .muted {
+            color: #9ca3af
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.14);
+            text-decoration: none;
+            color: #e5e7eb
+        }
+
+            .btn:hover {
+                border-color: #60a5fa
+            }
+
+        code {
+            background: #0a0f1e;
+            border: 1px solid rgba(255,255,255,.08);
+            padding: 2px 6px;
+            border-radius: 6px
+        }
+
+        footer {
+            padding: 14px 28px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            display: flex;
+            justify-content: space-between;
+            color: #a3a3a3
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="hd">
+            <div class="logo">API</div>
+            <div>
+                <h2 style="margin:0">Sistema de Circulares</h2>
+                <div class="muted">Bienvenido. Esta es la página de inicio de la API.</div>
+            </div>
+        </div>
+        <div class="bd">
+            <p>Endpoints de ejemplo:</p>
+            <p><code>GET /WeatherForecast</code></p>
+            <a class="btn" href="/WeatherForecast" target="_blank">Probar /WeatherForecast</a>
+        </div>
+        <footer>
+            <small>© @DateTime.Now.Year API Circulares</small>
+        </footer>
+    </div>
+</body>
+</html>

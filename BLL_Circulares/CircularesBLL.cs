@@ -51,5 +51,36 @@ namespace BLL_Circulares
 
             return reply;
         }
+
+        public Reply<Circulares> ObtenerCircularPorId(int IdCircular, string Conexion)
+        {
+
+            Reply<Circulares> reply = new Reply<Circulares>();
+
+            try
+            {
+
+                var respuesta = _AccesoCircularesDAL.ObtenerCircularPorId(IdCircular, Conexion);
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerCircularPorId en la capa BLL {ex.Message}";
+
+
+
+            }
+
+            return reply;
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace DAL_Circulares
 
         //Procedimientos almacenados
         private const string _spObtenerCirculares = "spObtenerCirculares";
+        private const string _spObtenerArchivoCircular = "spObtenerArchivoCircular";
+
 
         public Reply<List<Circulares>> ObtenerCirculares(string Conexion)
         {
@@ -60,6 +62,65 @@ namespace DAL_Circulares
 
                             reply.Ok = true;
                             reply.Result = ListaCirculares;
+
+
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = ex.Message;
+            }
+
+            return reply;
+
+        }
+
+        public Reply<Circulares> ObtenerCircularPorId(int IdCircular, string Conexion)
+        {
+
+            Reply<Circulares> reply = new Reply<Circulares>();
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(_spObtenerArchivoCircular, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pIdCircular", SqlDbType.Int) { Value = IdCircular });
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            if (reader.Read())
+                            {
+
+
+                                Circulares ObjCircular = new Circulares
+                                {
+                                    IdCircular = (int)reader["IdCircular"],
+                                    FechaCircular = (DateTime)reader["Fecha"],
+                                    NombreCircular = (string)reader["Titulo"],
+                                    ArchivoBytes = (byte[])reader["Archivo"],
+                                    NombreComite = (string)reader["NombreComite"],
+
+                                };
+
+
+                                reply.Ok = true;
+                                reply.Result = ObjCircular;
+
+                            }
+
 
 
                         }

@@ -5,6 +5,10 @@
 }
 
 
+<head>
+    <script defer src="~/js/homejs/home.js"></script>
+</head>
+
 <table id="tblCirculares" class="table">
     <thead>
         <tr>
@@ -26,7 +30,10 @@
                 <td>@Circular.FechaCircular</td>
                 <td>@Circular.NombreCircular</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3mdo">
+                    <button data-idcircular="@Circular.IdCircular"
+                            data-url="/Circulares/Pdf?id=@Circular.IdCircular"
+                            type="button"
+                            class="btn btn-sm btn-primary ver-circular">
                         Ver circular
                     </button>
                 </td>
@@ -45,17 +52,71 @@
     </tbody>
 </table>
 
+<!-- Modal con visor PDF + Descargar -->
+<style>
+    #pdfModal .modal-dialog {
+        max-width: 90vw;
+    }
+
+    #pdfViewer {
+        width: 100%;
+        height: 70vh;
+        border: 0;
+    }
+</style>
+
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Vista previa PDF</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <iframe id="pdfViewer" title="Visor PDF" src="about:blank"></iframe>
+            </div>
+
+            <div class="modal-footer">
+                <a id="btnDescargarPdf" class="btn btn-outline-primary" href="#" download>
+                    <i class="fa-solid fa-download me-1"></i> Descargar
+                </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Delegación de eventos (sirve para filas futuras también)
-    document.addEventListener('click', function (e) {
-      const btn = e.target.closest('.ver-circular');
-      if (!btn) return;
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalEl   = document.getElementById('pdfModal');
+      const modal     = new bootstrap.Modal(modalEl);
+      const pdfViewer = document.getElementById('pdfViewer');
+      const btnDesc   = document.getElementById('btnDescargarPdf');
 
-      const id = btn.dataset.circular; // p.ej. "3mdo"
-      console.log('Abrir circular:', id);
+      // Limpia al cerrar
+      modalEl.addEventListener('hidden.bs.modal', () => {
+        pdfViewer.src = 'about:blank';
+        btnDesc.href = '#';
+        btnDesc.removeAttribute('download');
+      });
 
-      // Ejemplos de acción:
-      // window.location.href = `/circulares/${encodeURIComponent(id)}`;
-      // abrirModalCircular(id);
+      // Abre el modal al clicar en cualquier botón .ver-circular
+      document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.ver-circular');
+        if (!btn) return;
+
+        const url      = btn.getAttribute('data-url');        // /Circulares/Pdf?id=123
+        const dl       = btn.getAttribute('data-descarga');   // /Circulares/Descargar?id=123 (opcional)
+        const filename = btn.getAttribute('data-filename') || 'circular.pdf';
+
+        if (url) pdfViewer.src = url;
+
+        // Si no hay data-descarga, usamos la misma URL del visor
+        btnDesc.href = dl || url || '#';
+        btnDesc.setAttribute('download', filename);
+
+        modal.show();
+      });
     });
 </script>

@@ -44,13 +44,38 @@ namespace SistemaCirculares.Models
         {
 
             Reply<List<Circulares>> reply = new Reply<List<Circulares>>();
-            Circulares ObjCirculares = new Circulares { IdCircular = 1};
+            Circulares ObjCirculares = new Circulares { IdCircular = 1 };
 
             try
             {
                 var UrlAPI = string.Format("{0}/Circular/ObtenerCirculares", UrlApiCirculares);
                 reply = PostAPI<Reply<List<Circulares>>, Circulares>(UrlAPI, ObjCirculares);
 
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<Circulares> ObtenerCircularPorId(int IdCircular)
+        {
+
+            Reply<Circulares> reply = new Reply<Circulares>();
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/Circular/ObtenerCircularesPorId", UrlApiCirculares);
+                reply = PostAPI<Reply<Circulares>, int>(UrlAPI, IdCircular);
 
 
             }
