@@ -1,4 +1,11 @@
-﻿<table id="tblCirculares" class="table">
+﻿@{
+
+    var ListaCirculares = ViewBag.Circulares;
+
+}
+
+
+<table id="tblCirculares" class="table">
     <thead>
         <tr>
             <th>#</th>
@@ -10,54 +17,31 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3mdo">
-                    Ver circular
-                </button>
-            </td>
-            <td>-</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
-                    Ver evento
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3fat">
-                    Ver circular
-                </button>
-            </td>
-            <td>-</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
-                    Ver evento
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>John</td>
-            <td>Doe</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
-                    Ver circular
-                </button>
-            </td>
-            <td>-</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
-                    Ver evento
-                </button>
-            </td>
-        </tr>
+
+
+        @foreach (var Circular in ListaCirculares)
+        {
+            <tr>
+                <th scope="row">@Circular.IdCircular</th>
+                <td>@Circular.FechaCircular</td>
+                <td>@Circular.NombreCircular</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3mdo">
+                        Ver circular
+                    </button>
+                </td>
+                <td>@Circular.NombreComite</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
+                        Ver evento
+                    </button>
+                </td>
+            </tr>
+        }
+
+
+
+
     </tbody>
 </table>
 
