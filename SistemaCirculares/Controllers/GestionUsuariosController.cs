@@ -147,6 +147,36 @@ namespace SistemaCirculares.Controllers
 
         }
 
+        public Reply<string> CrearUsuario([FromBody] Usuario ObjUsuario)
+        {
+
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+                var respuesta = _AccesoGestionModel.CrearUsuario(ObjUsuario);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador GestionUsuarios método CrearUsuario , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+
 
     }
 }

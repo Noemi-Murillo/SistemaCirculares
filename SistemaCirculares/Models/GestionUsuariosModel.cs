@@ -122,5 +122,32 @@ namespace SistemaCirculares.Models
 
 
         }
+
+        public Reply<string> CrearUsuario(Usuario ObjUsuario)
+        {
+
+            Reply<string> reply = new Reply<string>();
+
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/GestionUsuarios/CrearUsuario", UrlApiCirculares);
+                reply = PostAPI<Reply<string>, Usuario>(UrlAPI, ObjUsuario);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
     }
 }
