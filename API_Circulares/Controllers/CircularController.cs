@@ -84,5 +84,36 @@ namespace API_Circulares.Controllers
         }
 
 
+        [HttpPost("ObtenerCircularesPorId")]
+        public Reply<Circulares> ObtenerCircularesPorId([FromBody] int IdCircular)
+        {
+
+            Reply<Circulares> reply = new Reply<Circulares>();
+
+            try
+            {
+
+                var respuesta = _AccesoCirculaesBLL.ObtenerCircularPorId(IdCircular, _configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerCircularesPorId en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
+
     }
 }

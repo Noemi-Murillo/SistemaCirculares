@@ -64,5 +64,69 @@ namespace SistemaCirculares.Controllers
 
 
         }
+
+        public Reply<Circulares> ObtenerCircularesPorId([FromBody] int IdCircular)
+        {
+
+            Reply<Circulares> reply = new Reply<Circulares>();
+
+            try
+            {
+                var respuesta = _circularesModel.ObtenerCircularPorId(IdCircular);
+
+         
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador HomeController método ObtenerCircularesPorId , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<Circulares> DescargarCircularesPorId([FromBody] int IdCircular)
+        {
+
+            Reply<Circulares> reply = new Reply<Circulares>();
+
+            try
+            {
+                var respuesta = _circularesModel.ObtenerCircularPorId(IdCircular);
+
+
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador HomeController método ObtenerCircularesPorId , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
     }
 }
