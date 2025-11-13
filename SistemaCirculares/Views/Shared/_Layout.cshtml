@@ -1,6 +1,6 @@
 ﻿@{
 
-    var NombreUsuario = "Prueba";
+    var NombreUsuario = "Noemí Murillo";
 
 }
 
@@ -59,21 +59,13 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" asp-controller="Mantenimientos" asp-action="MantenimientoGeneral">
+                <a class="nav-link collapsed" asp-controller="Calendario" asp-action="Calendario">
                     <i class="fa-solid fa-calendar-days fa-fw"></i>
                     <span>Calendario</span>
                 </a>
 
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseUtilities"
-                   aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa-solid fa-box-archive"></i>
-                    <span>Archivos compartidos</span>
-                </a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -162,34 +154,44 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#"
+                               id="userDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@NombreUsuario</span>
                                 <img class="img-profile rounded-circle"
                                      src="~/Recursos/PerfilUsuario.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
+
+                            <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Configuraciones
+                                    </a>
+                                </li>
+
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+
+@*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a> *@
+                                </li>
+                            </ul>
                         </li>
+
 
                     </ul>
 
@@ -228,7 +230,8 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+@*     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -241,11 +244,91 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="@Url.Action("InicioSesion", "Inicio")">Logout</a>
                 </div>
             </div>
         </div>
+    </div> *@
+
+@*     <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" role="dialog"
+         aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content shadow-lg border-0 logout-card">
+
+                <div class="modal-header border-0">
+                    <h5 class="modal-title mx-auto" id="logoutModalLabel">Cerrar sesión</h5>
+
+                    <!-- La X cierra el modal -->
+                    <button type="button" class="close logout-close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body pt-0">
+                    <p class="mb-3 text-center">
+                        ¿Estás seguro de que deseas finalizar tu sesión actual?
+                    </p>
+                    <p class="mb-0 text-center text-muted small">
+                        Podrás volver a iniciar sesión en cualquier momento con tu correo institucional.
+                    </p>
+                </div>
+
+                <div class="modal-footer border-0 flex-column">
+                    <!-- Botón cancelar que también cierra el modal -->
+                    <button class="btn btn-light btn-block mb-2" type="button" data-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <!-- Redirección a inicio/iniciosesion -->
+                    <a class="btn btn-primary btn-block" href='@Url.Action("InicioSesion", "Inicio")'>
+                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div> *@
+
+    <div class="modal fade logout-modal" id="logoutModal" tabindex="-1"
+         aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content shadow-lg border-0 logout-card">
+
+                <div class="modal-header border-0">
+                    <h5 class="modal-title mx-auto" id="logoutModalLabel">Cerrar sesión</h5>
+
+                    <!-- X que cierra el modal -->
+                    <button type="button" class="btn-close logout-close"
+                            data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body pt-0">
+                    <p class="mb-3 text-center">
+                        ¿Estás seguro de que deseas finalizar tu sesión actual?
+                    </p>
+                    <p class="mb-0 text-center text-muted small">
+                        Podrás volver a iniciar sesión en cualquier momento con tu correo institucional.
+                    </p>
+                </div>
+
+                <div class="modal-footer border-0 flex-column">
+                    <!-- Botón cancelar que cierra el modal -->
+                    <button class="btn btn-light btn-block mb-2" type="button" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <!-- Redirección a inicio/iniciosesion -->
+                    <a class="btn btn-primary btn-block" href='@Url.Action("InicioSesion", "Inicio")'>
+                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+                    </a>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+
+
 
 
     <!-- Custom scripts for all pages-->

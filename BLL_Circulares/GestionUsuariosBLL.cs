@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utils_Circulares.GeneradorAleatorio;
+using Utils_Circulares.Hashear;
 
 namespace BLL_Circulares
 {
@@ -157,7 +158,34 @@ namespace BLL_Circulares
 
         }
 
+        public Reply<string> CrearUsuario(Usuario ObjUsuario, string Conexion)
+        {
 
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+                var contrasenaOculta = PasswordHash.Hash(ObjUsuario.Contrasena);
+                ObjUsuario.Contrasena = contrasenaOculta;
+                var respuesta = _AccesoGestionoDal.CrearUsuario(ObjUsuario, Conexion);
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método CrearUsuario en la capa BLL {ex.Message}";
+
+            }
+
+            return reply;
+
+        }
 
     }
 }

@@ -16,6 +16,7 @@ namespace DAL_Circulares
         //Procedimientos almacenados
         private const string _spObtenerUsuariosGestionComite = "ObtenerUsuariosGestionComite";
         private const string _sp_CrearNuevoCodigo = "sp_CrearNuevoCodigo";
+        private const string _sp_CrearUsuario = "usp_crearUsuarios";
         private const string _spObtenerComites = "spObtenerComites";
         private const string _spCrearEditarUsuarios = "spCrearEditarUsuarios";
 
@@ -266,6 +267,53 @@ namespace DAL_Circulares
             return reply;
         }
 
+        public Reply<string> CrearUsuario(Usuario ObjUsuario, string Conexion)
+        {
+            Reply<string> reply = new Reply<string>();
 
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(_sp_CrearUsuario, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pNombre", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Nombre });
+                        command.Parameters.Add(new SqlParameter("@pApellido1", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Apellido1 });
+                        command.Parameters.Add(new SqlParameter("@pApellido2", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Apellido2 });
+                        command.Parameters.Add(new SqlParameter("@pCorreo", SqlDbType.NVarChar, 50) { Value = ObjUsuario.Correo });
+                        command.Parameters.Add(new SqlParameter("@pContrasena", SqlDbType.NVarChar, 250) { Value = ObjUsuario.Contrasena });
+                        command.Parameters.Add(new SqlParameter("@pRol", SqlDbType.Int) { Value = 2 });
+                        command.Parameters.Add(new SqlParameter("@pCodigo", SqlDbType.NVarChar, 10) { Value = ObjUsuario.CodigoRegistro });
+                        command.Parameters.Add(new SqlParameter("@pExito", SqlDbType.Bit) {Value = ParameterDirection.Output});
+
+                        int RowAfectadas = command.ExecuteNonQuery();
+
+                        if (RowAfectadas > 0)
+                        {
+                            reply.Ok = true;
+                            reply.Message = "El usuario ha sido insertado de manera exitosa";
+                        }
+                        else
+                        {
+                            reply.Ok = false;
+                            reply.Message = "Ha ocurrido un error al insertar los datos";
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = string.Format("Error en capa Data.Dapper, en la clase GestionUsuariosDAL: ", ex.Message);
+
+            }
+
+            return reply;
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace API_Circulares.Controllers
             {
 
                 reply.Ok = false;
-                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa API {ex.Message}";
+                reply.Message = $"Ha ocurrido un error en el método GenerarCodigo en la capa API {ex.Message}";
             }
 
 
@@ -104,7 +104,7 @@ namespace API_Circulares.Controllers
             {
 
                 reply.Ok = false;
-                reply.Message = $"Ha ocurrido un error en el método ObtenerUsuariosGestionComite en la capa API {ex.Message}";
+                reply.Message = $"Ha ocurrido un error en el método ObtenerComite en la capa API {ex.Message}";
             }
 
 
@@ -136,6 +136,36 @@ namespace API_Circulares.Controllers
 
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método GuardarUsuario en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
+        [HttpPost("CrearUsuario")]
+        public Reply<string> CrearUsuario([FromBody] Usuario ObjUsuario)
+        {
+
+            Reply<string> reply = new Reply<string>();
+
+            try
+            {
+
+                var respuesta = _AccesoGestionBLL.CrearUsuario(ObjUsuario, _configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método crearUsuario en la capa API {ex.Message}";
             }
 
 
