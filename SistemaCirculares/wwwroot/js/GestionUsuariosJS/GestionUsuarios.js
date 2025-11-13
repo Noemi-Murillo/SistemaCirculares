@@ -213,61 +213,62 @@ jsGestionUsuarios = {
 
         },
 
-
         CargarComites: function () {
-
-
             try {
-
                 fetch("/GestionUsuarios/ObtenerComites", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(1)
                 })
                     .then(res => {
-                        if (!res.ok) {
-                            // Si el servidor mandó error, intento leer el json del error
-                            return res.json().then(err => { throw err; });
-                        }
+                        if (!res.ok) return res.json().then(err => { throw err; });
                         return res.json();
                     })
                     .then(data => {
                         const selects = document.querySelectorAll(".ComitesSelect");
 
                         for (const select of selects) {
-                            const existentes = new Set([...select.options].map(o => o.value));
-                            for (const { idComite, nombreComite } of data.result) {
+                            // 0) Memoriza el valor actual (o un data-atributo que traigas del server)
+                            const currentValue =
+                                (select.value ?? "") ||
+                                select.getAttribute("data-current") || ""; // opcional
+
+                            // 1) Asegura placeholder 0 sin duplicar
+                            let opt0 = select.querySelector('option[value="0"]');
+                            if (!opt0) {
+                                opt0 = new Option("— Seleccione una opción —", "0");
+                                select.insertBefore(opt0, select.firstChild);
+                            }
+
+                            // 2) Índice de opciones existentes para no duplicar
+                            const existentes = new Set([...select.options].map(o => String(o.value)));
+
+                            // 3) Agrega comités
+                            for (const { idComite, nombreComite } of (data?.result ?? [])) {
                                 const val = String(idComite);
                                 if (val && !existentes.has(val)) {
                                     select.add(new Option(nombreComite, val));
                                     existentes.add(val);
                                 }
                             }
+
+                            // 4) Restaurar selección si existe; si no, caer a 0
+                            if (currentValue && existentes.has(String(currentValue))) {
+                                select.value = String(currentValue);
+                            } else if (!select.value || !existentes.has(String(select.value))) {
+                                select.value = "0";
+                            }
                         }
-
-
-
-
                     })
                     .catch(err => {
                         console.error("Error del servidor o red:", err);
                     });
-
-
-
-
-
             } catch (e) {
-                console.error("Ha ocurrido un error en el método CargarComites", e)
-
+                console.error("Ha ocurrido un error en el método CargarComites", e);
             }
-
-
-
-
         },
+
+
 
         CargarDatatableGestionUsuarios: function () {
             $(jsGestionUsuarios.tablas.TablaGestionUsuarios).DataTable({

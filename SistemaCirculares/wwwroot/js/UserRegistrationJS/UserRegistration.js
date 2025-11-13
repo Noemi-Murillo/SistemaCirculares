@@ -186,14 +186,31 @@ jslogin = {
                         .then(data => {
                             console.log("Respuesta OK:", data);
 
-                            console.log(data)
-                            this.MensajeGeneralSweetAlert(
-                                'success',
-                                `${data.message}`,
-                                false,
-                                '#68AB54',
-                                30
-                            );
+                            if (data.ok) {
+
+                                console.log(data)
+                                this.MensajeGeneralSweetAlert(
+                                    'success',
+                                    `${data.message}`,
+                                    false,
+                                    '#68AB54',
+                                    30
+                                );
+
+                            } else {
+                                this.MensajeGeneralSweetAlert(
+                                    'warning',
+                                    `${data.message}`,
+                                    false,
+                                    '#FF0000',
+                                    26
+                                );
+
+
+                            }
+
+
+                           
 
                         })
                         .catch(err => {

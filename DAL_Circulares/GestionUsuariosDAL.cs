@@ -21,7 +21,7 @@ namespace DAL_Circulares
         private const string _spCrearEditarUsuarios = "spCrearEditarUsuarios";
 
 
-        
+
 
 
         public Reply<List<Usuario>> ObtenerUsuariosGestionComite(string Conexion)
@@ -288,11 +288,27 @@ namespace DAL_Circulares
                         command.Parameters.Add(new SqlParameter("@pContrasena", SqlDbType.NVarChar, 250) { Value = ObjUsuario.Contrasena });
                         command.Parameters.Add(new SqlParameter("@pRol", SqlDbType.Int) { Value = 2 });
                         command.Parameters.Add(new SqlParameter("@pCodigo", SqlDbType.NVarChar, 10) { Value = ObjUsuario.CodigoRegistro });
-                        command.Parameters.Add(new SqlParameter("@pExito", SqlDbType.Bit) {Value = ParameterDirection.Output});
+
+                        var pMensajeSalida = new SqlParameter("@pMensaje", SqlDbType.NVarChar, 400)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        var pExito = new SqlParameter("@pExito", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(pMensajeSalida);
+                        command.Parameters.Add(pExito);
 
                         int RowAfectadas = command.ExecuteNonQuery();
 
-                        if (RowAfectadas > 0)
+
+                        bool exito = pExito.Value != DBNull.Value && Convert.ToBoolean(pExito.Value);
+                        string mensajeSalida = pMensajeSalida.Value == DBNull.Value ? null : Convert.ToString(pMensajeSalida.Value);
+
+
+
+                        if (exito)
                         {
                             reply.Ok = true;
                             reply.Message = "El usuario ha sido insertado de manera exitosa";
@@ -300,7 +316,7 @@ namespace DAL_Circulares
                         else
                         {
                             reply.Ok = false;
-                            reply.Message = "Ha ocurrido un error al insertar los datos";
+                            reply.Message = mensajeSalida;
                         }
 
                     }
