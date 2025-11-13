@@ -12,6 +12,10 @@ builder.Services.AddScoped<InicioBLL>();
 builder.Services.AddScoped<InicioDAL>();
 builder.Services.AddScoped<GestionUsuariosBLL>();
 builder.Services.AddScoped<GestionUsuariosDAL>();
+builder.Services.AddScoped<PublicarCircularBLL>();
+builder.Services.AddScoped<PublicarCircularDAL>();
+builder.Services.AddScoped<CircularesBLL>();
+builder.Services.AddScoped<CircularesDAL>();
 
 
 var app = builder.Build();

@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<InicioModel>();
 builder.Services.AddScoped<GestionUsuariosModel>();
+builder.Services.AddScoped<CircularesModel>();
+
 
 var app = builder.Build();
 

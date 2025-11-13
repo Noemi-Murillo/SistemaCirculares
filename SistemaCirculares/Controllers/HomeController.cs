@@ -1,20 +1,25 @@
 using System.Diagnostics;
+using Entities_Circulares.GestionUsuarios;
 using Microsoft.AspNetCore.Mvc;
 using SistemaCirculares.Models;
+using Entities_Circulares.Reply;
+using Entities_Circulares.FileCirculares;
 
 namespace SistemaCirculares.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly CircularesModel _circularesModel;
+        public HomeController(ILogger<HomeController> logger, CircularesModel circularesModel)
         {
             _logger = logger;
+            _circularesModel = circularesModel;
         }
 
         public IActionResult Index()
         {
+            ObtenerCirculares();
             return View();
         }
 
@@ -27,6 +32,37 @@ namespace SistemaCirculares.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public Reply<List<Circulares>> ObtenerCirculares()
+        {
+
+            Reply<List<Circulares>> reply = new Reply<List<Circulares>>();
+
+            try
+            {
+                var respuesta = _circularesModel.ObtenerCirculares();
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+                    ViewBag.Circulares = reply.Result;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador HomeController método ObtenerUsuariosGestionComite , {ex.Message}";
+            }
+
+            return reply;
+
+
+
         }
     }
 }
