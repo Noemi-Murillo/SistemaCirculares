@@ -62,7 +62,7 @@ namespace API_Circulares.Controllers
                                 DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
                             .Replace("{{URL_SISTEMA}}", "http://localhost:5032/");
 
-
+                         
                         await _Email.SendAsync(
                              "Aviso general",
                              html,
