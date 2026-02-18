@@ -17,6 +17,8 @@ namespace DAL_Circulares
         //Procedimientos almacenados
         private const string _spObtenerCirculares = "spObtenerCirculares";
         private const string _spObtenerArchivoCircular = "spObtenerArchivoCircular";
+        private const string _spObtenerCorreosTodosUsuarios = "spObtenerAllCorreos";
+
 
 
         public Reply<List<Circulares>> ObtenerCirculares(string Conexion)
@@ -62,6 +64,65 @@ namespace DAL_Circulares
 
                             reply.Ok = true;
                             reply.Result = ListaCirculares;
+
+
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = ex.Message;
+            }
+
+            return reply;
+
+        }
+
+
+
+        public Reply<List<Usuario>> ObtenerCorreos(string Conexion)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+            List<Usuario> ListaCorreo = new List<Usuario>();
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(_spObtenerCorreosTodosUsuarios, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+
+
+                                Usuario ObjUsuario = new Usuario
+                                {
+                                    Correo = (string)reader["Correo"],
+                               
+
+                                };
+
+                                ListaCorreo.Add(ObjUsuario);
+
+
+                            }
+
+                            reply.Ok = true;
+                            reply.Result = ListaCorreo;
 
 
                         }

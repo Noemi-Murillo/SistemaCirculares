@@ -1,5 +1,7 @@
 ﻿using BLL_Circulares;
 using DAL_Circulares;
+using Entities_Circulares.EmailSettings;
+using Utils_Circulares.Correos;
 using Utils_Circulares.GeneradorAleatorio;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,11 @@ builder.Services.AddScoped<PublicarCircularBLL>();
 builder.Services.AddScoped<PublicarCircularDAL>();
 builder.Services.AddScoped<CircularesBLL>();
 builder.Services.AddScoped<CircularesDAL>();
+
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 

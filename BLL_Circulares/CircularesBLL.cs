@@ -1,5 +1,6 @@
 ﻿using DAL_Circulares;
 using Entities_Circulares.FileCirculares;
+using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,37 @@ namespace BLL_Circulares
 
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método ObtenerCircularese en la capa BLL {ex.Message}";
+
+
+
+            }
+
+            return reply;
+        }
+
+        public Reply<List<Usuario>> ObtenerTodosCorreos(string Conexion)
+        {
+
+            Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
+
+            try
+            {
+
+                var respuesta = _AccesoCircularesDAL.ObtenerCorreos(Conexion);
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerTodosCorreos en la capa BLL {ex.Message}";
 
 
 

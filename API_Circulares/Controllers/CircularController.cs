@@ -1,8 +1,11 @@
 ﻿using BLL_Circulares;
 using Entities_Circulares.FileCirculares;
+using Entities_Circulares.Reply;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities_Circulares.Reply;
+using System.Resources;
+using Utils_Circulares.Correos;
+using Utils_Circulares.PlantillaCorreo;
 
 namespace API_Circulares.Controllers
 {
@@ -14,17 +17,19 @@ namespace API_Circulares.Controllers
         private readonly PublicarCircularBLL _AccesoCircularBLL;
         private readonly CircularesBLL _AccesoCirculaesBLL;
         private readonly IConfiguration _configuration;
-        public CircularController(IConfiguration configuration, PublicarCircularBLL AccesoCircularBLL, CircularesBLL accesoCirculaesBLL)
+        private readonly EmailService _Email;
+        public CircularController(IConfiguration configuration, PublicarCircularBLL AccesoCircularBLL, CircularesBLL accesoCirculaesBLL, EmailService email)
         {
 
             _configuration = configuration;
             _AccesoCircularBLL = AccesoCircularBLL;
             _AccesoCirculaesBLL = accesoCirculaesBLL;
+            _Email = email;
         }
 
 
         [HttpPost("PublicarCircular")]
-        public Reply<bool> PublicarCircular([FromBody] Circulares ObjCirculares)
+        public async Task<Reply<bool>> PublicarCircular([FromBody] Circulares ObjCirculares)
         {
 
             Reply<bool> reply = new Reply<bool>();
@@ -37,6 +42,36 @@ namespace API_Circulares.Controllers
                 if (respuesta != null)
                 {
                     reply = respuesta;
+
+                    if (respuesta.Ok)
+                    {
+
+                        var respuestacorreos = _AccesoCirculaesBLL.ObtenerTodosCorreos(_configuration.GetConnectionString("Conexion"));
+
+                        List<string> correos = respuestacorreos.Result
+                             .Where(u => !string.IsNullOrWhiteSpace(u.Correo))
+                             .Select(u => u.Correo)
+                             .Distinct()
+                             .ToList();
+
+
+                        string html = Plantilla.Plantillas
+                            .Replace("{{TITULO_CIRCULAR}}", "Nueva Circular Publicada")
+                            .Replace("{{RESUMEN}}", "Se ha realizado la publicación de una nueva circular, favor ingresar al sistema de gestión de circulares" ?? "")
+                            .Replace("{{FECHA_PUBLICACION}}",
+                                DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
+                            .Replace("{{URL_SISTEMA}}", "http://localhost:5032/");
+
+
+                        await _Email.SendAsync(
+                             "Aviso general",
+                             html,
+                             true,
+                             correos.ToArray()
+
+                         );
+
+                    }
                 }
 
             }
