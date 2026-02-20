@@ -23,6 +23,8 @@ builder.Services.AddScoped<PublicarCircularBLL>();
 builder.Services.AddScoped<PublicarCircularDAL>();
 builder.Services.AddScoped<CircularesBLL>();
 builder.Services.AddScoped<CircularesDAL>();
+builder.Services.AddScoped<ComiteBLL>();
+builder.Services.AddScoped<ComitesDAL>();
 
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));

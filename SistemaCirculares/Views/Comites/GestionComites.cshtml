@@ -1,4 +1,11 @@
-﻿<!doctype html>
+﻿@{
+
+    var ListaComites = ViewBag.ListaComites;
+}
+
+
+
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -11,147 +18,147 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-        body {
-            background: #f7f7f7;
-        }
-
-        h1 {
-            font-weight: 800;
-            letter-spacing: .2px;
-            margin-bottom: 18px;
-            font-size: clamp(28px,3.3vw,48px);
-        }
-
-        /* Tarjeta envolvente */
-        .page-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,.06);
-        }
-
-        /* Tabla estilo mockup */
-        .table-committees {
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-            border: 3px solid #7d3cff; /* borde morado exterior */
-            border-radius: 10px;
-            overflow: hidden;
-            background: #fff;
-        }
-
-            .table-committees th {
-                background: #bcbcbc;
-                color: #fff;
-                font-weight: 800;
-                text-align: center;
-                border-right: 3px solid #242424;
-                border-bottom: 3px solid #242424;
-                font-size: 1.05rem;
-                padding: 1rem;
+            body {
+                background: #f7f7f7;
             }
 
-                .table-committees th:last-child {
-                    border-right: 0;
-                }
+            h1 {
+                font-weight: 800;
+                letter-spacing: .2px;
+                margin-bottom: 18px;
+                font-size: clamp(28px,3.3vw,48px);
+            }
 
-            .table-committees td {
-                border-top: 3px solid #242424;
-                border-right: 3px solid #242424;
-                font-size: 1.6rem;
-                padding: 1.2rem 1rem;
-                vertical-align: middle;
+            /* Tarjeta envolvente */
+            .page-card {
+                background: #fff;
+                border-radius: 18px;
+                padding: 24px;
+                box-shadow: 0 10px 25px rgba(0,0,0,.06);
+            }
+
+            /* Tabla estilo mockup */
+            .table-committees {
+                border-collapse: separate;
+                border-spacing: 0;
+                width: 100%;
+                border: 3px solid #7d3cff; /* borde morado exterior */
+                border-radius: 10px;
+                overflow: hidden;
                 background: #fff;
             }
 
-            .table-committees tr:first-of-type td {
-                border-top: 3px solid #242424;
+                .table-committees th {
+                    background: #bcbcbc;
+                    color: #fff;
+                    font-weight: 800;
+                    text-align: center;
+                    border-right: 3px solid #242424;
+                    border-bottom: 3px solid #242424;
+                    font-size: 1.05rem;
+                    padding: 1rem;
+                }
+
+                    .table-committees th:last-child {
+                        border-right: 0;
+                    }
+
+                .table-committees td {
+                    border-top: 3px solid #242424;
+                    border-right: 3px solid #242424;
+                    font-size: 1.6rem;
+                    padding: 1.2rem 1rem;
+                    vertical-align: middle;
+                    background: #fff;
+                }
+
+                .table-committees tr:first-of-type td {
+                    border-top: 3px solid #242424;
+                }
+
+                .table-committees td:last-child {
+                    border-right: 0;
+                }
+
+            /* Cols proporciones */
+            .col-comite {
+                width: 60%;
             }
 
-            .table-committees td:last-child {
-                border-right: 0;
+            .col-cant {
+                width: 40%;
             }
 
-        /* Cols proporciones */
-        .col-comite {
-            width: 60%;
-        }
-
-        .col-cant {
-            width: 40%;
-        }
-
-        /* Contador + flechas alineadas a la derecha */
-        .qty-cell {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .75rem;
-        }
-
-        .qty-value {
-            width: 3ch;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        /* Fila seleccionada para eliminar */
-        .row-selected {
-            background: #f2f6ff !important;
-        }
-
-        /* Botones degradados */
-        .btn-grad {
-            color: #fff;
-            border: 0;
-            font-weight: 700;
-            border-radius: 16px;
-            padding: 16px 22px;
-            box-shadow: 0 8px 18px rgba(0,0,0,.12);
-        }
-
-        .btn-bluegreen {
-            background-image: linear-gradient(135deg,#7195ff,#8cdf9b);
-        }
-
-            .btn-bluegreen:hover {
-                filter: brightness(.97);
+            /* Contador + flechas alineadas a la derecha */
+            .qty-cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: .75rem;
             }
 
-        /* Botones flecha verticales */
-        .btn-arrow {
-            border: 0;
-            background: #d7d7d7;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-            .btn-arrow:active {
-                transform: translateY(1px);
+            .qty-value {
+                width: 3ch;
+                text-align: center;
+                font-weight: 700;
             }
 
-            .btn-arrow i {
-                font-size: 1.2rem;
-                color: #6b6b6b;
+            /* Fila seleccionada para eliminar */
+            .row-selected {
+                background: #f2f6ff !important;
             }
 
-            .btn-arrow.up {
-                margin-bottom: .25rem;
+            /* Botones degradados */
+            .btn-grad {
+                color: #fff;
+                border: 0;
+                font-weight: 700;
+                border-radius: 16px;
+                padding: 16px 22px;
+                box-shadow: 0 8px 18px rgba(0,0,0,.12);
             }
 
-            .btn-arrow.down {
+            .btn-bluegreen {
+                background-image: linear-gradient(135deg,#7195ff,#8cdf9b);
             }
 
-        /* Filas altas como el mockup */
-        .table-committees td,
-        .table-committees th {
-            height: 84px;
-        }
+                .btn-bluegreen:hover {
+                    filter: brightness(.97);
+                }
+
+            /* Botones flecha verticales */
+            .btn-arrow {
+                border: 0;
+                background: #d7d7d7;
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .btn-arrow:active {
+                    transform: translateY(1px);
+                }
+
+                .btn-arrow i {
+                    font-size: 1.2rem;
+                    color: #6b6b6b;
+                }
+
+                .btn-arrow.up {
+                    margin-bottom: .25rem;
+                }
+
+                .btn-arrow.down {
+                }
+
+            /* Filas altas como el mockup */
+            .table-committees td,
+            .table-committees th {
+                height: 84px;
+            }
     </style>
 </head>
 <body>
@@ -165,71 +172,35 @@
                         <table class="table-committees" id="tablaComites">
                             <thead>
                                 <tr>
+                                    <th class="col-comite">IdComite</th>
                                     <th class="col-comite">Comité</th>
                                     <th class="col-cant">Cantidad de personas</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="fw-semibold text-center">Actividades</td>
-                                    <td>
-                                        <div class="qty-cell">
-                                            <span class="qty-value">4</span>
-                                            <div class="d-flex flex-column">
-                                                <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
-                                                <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
+
+
+                                @foreach (var item in ListaComites)
+                                {
+
+                                    <tr>
+                                        <td class="fw-semibold text-center">@item.IdComite</td>
+
+                                        <td class="fw-semibold text-center">@item.NombreComite</td>
+                                        <td>
+                                            <div class="qty-cell">
+                                                <span class="qty-value">4</span>
+                                                <div class="d-flex flex-column">
+                                                    <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
+                                                    <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-semibold text-center">Evaluación</td>
-                                    <td>
-                                        <div class="qty-cell">
-                                            <span class="qty-value">5</span>
-                                            <div class="d-flex flex-column">
-                                                <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
-                                                <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-semibold text-center">Emergencias</td>
-                                    <td>
-                                        <div class="qty-cell">
-                                            <span class="qty-value">3</span>
-                                            <div class="d-flex flex-column">
-                                                <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
-                                                <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-semibold text-center">Convivio</td>
-                                    <td>
-                                        <div class="qty-cell">
-                                            <span class="qty-value">4</span>
-                                            <div class="d-flex flex-column">
-                                                <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
-                                                <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-semibold text-center">Graduación</td>
-                                    <td>
-                                        <div class="qty-cell">
-                                            <span class="qty-value">6</span>
-                                            <div class="d-flex flex-column">
-                                                <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
-                                                <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+
+
+                                    </tr>
+                                }
+                        
                             </tbody>
                         </table>
                     </div>
@@ -247,70 +218,70 @@
     </div>
 
     <script>
-        const tabla = document.getElementById('tablaComites').querySelector('tbody');
-        let selectedRow = null;
+            const tabla = document.getElementById('tablaComites').querySelector('tbody');
+            let selectedRow = null;
 
-        // Seleccionar fila con click
-        tabla.addEventListener('click', (e) => {
-          const tr = e.target.closest('tr');
-          if(!tr) return;
+            // Seleccionar fila con click
+            tabla.addEventListener('click', (e) => {
+              const tr = e.target.closest('tr');
+              if(!tr) return;
 
-          if(selectedRow) selectedRow.classList.remove('row-selected');
-          selectedRow = tr;
-          selectedRow.classList.add('row-selected');
-        });
+              if(selectedRow) selectedRow.classList.remove('row-selected');
+              selectedRow = tr;
+              selectedRow.classList.add('row-selected');
+            });
 
-        // Incrementar / decrementar con flechas
-        tabla.addEventListener('click', (e) => {
-          const btn = e.target.closest('button[data-action]');
-          if(!btn) return;
+            // Incrementar / decrementar con flechas
+            tabla.addEventListener('click', (e) => {
+              const btn = e.target.closest('button[data-action]');
+              if(!btn) return;
 
-          const cell = btn.closest('td');
-          const valueEl = cell.querySelector('.qty-value');
-          let val = parseInt(valueEl.textContent || '0', 10);
+              const cell = btn.closest('td');
+              const valueEl = cell.querySelector('.qty-value');
+              let val = parseInt(valueEl.textContent || '0', 10);
 
-          if(btn.dataset.action === 'inc') val++;
-          if(btn.dataset.action === 'dec') val = Math.max(0, val - 1);
+              if(btn.dataset.action === 'inc') val++;
+              if(btn.dataset.action === 'dec') val = Math.max(0, val - 1);
 
-          valueEl.textContent = val;
-        });
+              valueEl.textContent = val;
+            });
 
-        // Agregar comité
-        document.getElementById('btnAgregar').addEventListener('click', () => {
-          const nombre = prompt('Nombre del comité nuevo:');
-          if(!nombre) return;
+            // Agregar comité
+            document.getElementById('btnAgregar').addEventListener('click', () => {
+              const nombre = prompt('Nombre del comité nuevo:');
+              if(!nombre) return;
 
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="fw-semibold text-center"></td>
-            <td>
-              <div class="qty-cell">
-                <span class="qty-value">0</span>
-                <div class="d-flex flex-column">
-                  <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
-                  <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
-                </div>
-              </div>
-            </td>`;
-          tr.children[0].textContent = nombre.trim();
-          tabla.appendChild(tr);
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td class="fw-semibold text-center"></td>
+                <td>
+                  <div class="qty-cell">
+                    <span class="qty-value">0</span>
+                    <div class="d-flex flex-column">
+                      <button class="btn-arrow up" data-action="inc"><i class="bi bi-caret-up-fill"></i></button>
+                      <button class="btn-arrow down" data-action="dec"><i class="bi bi-caret-down-fill"></i></button>
+                    </div>
+                  </div>
+                </td>`;
+              tr.children[0].textContent = nombre.trim();
+              tabla.appendChild(tr);
 
-          if(selectedRow) selectedRow.classList.remove('row-selected');
-          selectedRow = tr; selectedRow.classList.add('row-selected');
-        });
+              if(selectedRow) selectedRow.classList.remove('row-selected');
+              selectedRow = tr; selectedRow.classList.add('row-selected');
+            });
 
-        // Eliminar comité seleccionado
-        document.getElementById('btnEliminar').addEventListener('click', () => {
-          if(!selectedRow){
-            alert('Selecciona una fila para eliminar.');
-            return;
-          }
-          const nombre = selectedRow.children[0].textContent.trim();
-          if(confirm(`¿Eliminar el comité "${nombre}"?`)){
-            selectedRow.remove();
-            selectedRow = null;
-          }
-        });
+            // Eliminar comité seleccionado
+            document.getElementById('btnEliminar').addEventListener('click', () => {
+              if(!selectedRow){
+                alert('Selecciona una fila para eliminar.');
+                return;
+              }
+              const nombre = selectedRow.children[0].textContent.trim();
+              if(confirm(`¿Eliminar el comité "${nombre}"?`)){
+                selectedRow.remove();
+                selectedRow = null;
+              }
+            });
     </script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+using BLL_Circulares;
+using DAL_Circulares;
 using SistemaCirculares.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<InicioModel>();
 builder.Services.AddScoped<GestionUsuariosModel>();
 builder.Services.AddScoped<CircularesModel>();
+builder.Services.AddScoped<ComitesModel>();
+
 
 
 var app = builder.Build();
