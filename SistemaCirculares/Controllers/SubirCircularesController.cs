@@ -57,7 +57,9 @@ namespace SistemaCirculares.Controllers
                     SoloMiembros = SoloMiembros,
                     FechaEvento = FechaEvento, // idealmente en ISO 8601: yyyy-MM-dd o yyyy-MM-ddTHH:mm:ss
                     NombreEvento = NombreEvento,
-                    Archivo = fileDto
+                    Archivo = fileDto,
+                    IdComite = Convert.ToInt32(Request.Cookies["comite"]),
+                    IdUsuario = Convert.ToInt32(Request.Cookies["idUsuario"])
                 };
 
                 var respuesta = _AccesoCircularesModel.PublicarCircular(payload);

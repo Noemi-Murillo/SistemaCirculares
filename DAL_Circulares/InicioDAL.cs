@@ -51,11 +51,27 @@ namespace DAL_Circulares
 
                                     UserRegistration ObjUsuarioObtenido = new UserRegistration
                                     {
-                                        Nombre = (string)reader["NombreCompleto"],
-                                        Password = (string)reader["HashContrasena"],
-                                        IdComite = (int)reader["IdComite"],
-                                        IdRol = (int)reader["IdRol"]
-                                        
+                                        Nombre = reader["NombreCompleto"] != DBNull.Value
+                                            ? reader["NombreCompleto"].ToString()
+                                            : string.Empty,
+
+                                        Password = reader["HashContrasena"] != DBNull.Value
+                                            ? reader["HashContrasena"].ToString()
+                                            : string.Empty,
+
+                                        IdComite = reader["IdComite"] != DBNull.Value
+                                            ? Convert.ToInt32(reader["IdComite"])
+                                            : 0,
+
+                                        IdRol = reader["IdRol"] != DBNull.Value
+                                            ? Convert.ToInt32(reader["IdRol"])
+                                            : 0,
+
+                                        IdUsuario = reader["IdUsuario"] != DBNull.Value
+                                            ? Convert.ToInt32(reader["IdUsuario"])
+                                            : 0
+
+
                                     };
 
                                     reply.Result = ObjUsuarioObtenido;
@@ -67,7 +83,7 @@ namespace DAL_Circulares
                                     UserRegistration ObjUsuarioObtenido = new UserRegistration
                                     {
                                         Password = (string)reader["HashContrasena"],
-                                        
+
                                     };
                                     reply.Ok = false;
                                     reply.Message = "El usuario o la contraseña no son correctos";

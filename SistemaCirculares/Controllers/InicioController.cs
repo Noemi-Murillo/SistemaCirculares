@@ -65,6 +65,12 @@ namespace SistemaCirculares.Controllers
                             opcionesCookie
                         );
 
+                        Response.Cookies.Append(
+                         "idUsuario",
+                         respuesta.Result.IdUsuario.ToString() ?? string.Empty,
+                         opcionesCookie
+                     );
+
 
                     }
 

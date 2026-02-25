@@ -35,7 +35,9 @@ namespace DAL_Circulares
                         command.Parameters.Add(new SqlParameter("@Categoria", SqlDbType.NVarChar, 50) { Value = "Circular" });
                         command.Parameters.Add(new SqlParameter("@Archivo", SqlDbType.VarBinary) { Value = ObjCircular.Archivo.ArchivoBytes });
                         command.Parameters.Add(new SqlParameter("@Fecha", SqlDbType.DateTime) { Value = ObjCircular.FechaEvento });
-                        command.Parameters.Add(new SqlParameter("@IdUsuario", SqlDbType.Int) { Value = 5 });
+                        command.Parameters.Add(new SqlParameter("@IdUsuario", SqlDbType.Int) { Value = ObjCircular.IdUsuario });
+                        command.Parameters.Add(new SqlParameter("@IdComite", SqlDbType.Int) { Value = ObjCircular.IdComite });
+
 
 
                         int RowAfectadas = command.ExecuteNonQuery();

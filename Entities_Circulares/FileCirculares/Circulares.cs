@@ -17,6 +17,9 @@ namespace Entities_Circulares.FileCirculares
         public FileCircular? Archivo { get; set; }
         public byte[]? ArchivoBytes { get; set; }
         public string? NombreComite { get; set; }
+        public int IdComite { get; set; }
+        public int IdUsuario { get; set; }
+
 
     }
 }
