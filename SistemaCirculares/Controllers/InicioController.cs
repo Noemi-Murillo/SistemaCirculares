@@ -37,6 +37,38 @@ namespace SistemaCirculares.Controllers
 
                     reply = respuesta;
 
+                    if (respuesta.Ok)
+                    {
+                        var opcionesCookie = new CookieOptions
+                        {
+                            HttpOnly = true,               
+                            Secure = true,                   
+                            SameSite = SameSiteMode.Strict,  
+                            Expires = DateTime.Now.AddHours(8) 
+                        };
+
+                        Response.Cookies.Append(
+                            "nombreCompleto",
+                            respuesta.Result.Nombre ?? string.Empty,
+                            opcionesCookie
+                        );
+
+                        Response.Cookies.Append(
+                            "rol",
+                            respuesta.Result.IdRol.ToString() ?? string.Empty,
+                            opcionesCookie
+                        );
+
+                        Response.Cookies.Append(
+                            "comite",
+                            respuesta.Result.IdComite.ToString() ?? string.Empty,
+                            opcionesCookie
+                        );
+
+
+                    }
+
+
                 }
 
             }

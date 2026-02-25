@@ -18,6 +18,7 @@ namespace SistemaCirculares.Controllers
 
         public IActionResult Gestion()
         {
+            ObtenerCookie();
             ObtenerUsuariosGestionComite();
             return View();
         }
@@ -117,7 +118,7 @@ namespace SistemaCirculares.Controllers
 
 
 
-        public Reply<List<Usuario>> GuardarUsuario([FromBody]List<Usuario> ObjUsuario)
+        public Reply<List<Usuario>> GuardarUsuario([FromBody] List<Usuario> ObjUsuario)
         {
 
             Reply<List<Usuario>> reply = new Reply<List<Usuario>>();
@@ -173,6 +174,51 @@ namespace SistemaCirculares.Controllers
 
             return reply;
 
+
+
+        }
+
+        public void ObtenerCookie()
+        {
+
+            try
+            {
+
+                string ValorCookieNombre = Request.Cookies["nombreCompleto"];
+
+                if (ValorCookieNombre != null)
+                {
+
+                    ViewBag.NombreUsuario = ValorCookieNombre;
+
+                }
+
+                string ValorCookieComite = Request.Cookies["comite"];
+
+                if (ValorCookieComite != null)
+                {
+
+                    ViewBag.Comite = ValorCookieComite;
+
+                }
+
+
+                string ValorCookieRol = Request.Cookies["rol"];
+
+                if (ValorCookieRol != null)
+                {
+
+                    ViewBag.Rol = ValorCookieRol;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
         }

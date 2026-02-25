@@ -1,4 +1,5 @@
 ﻿using BLL_Circulares;
+using Entities_Circulares.Eventos;
 using Entities_Circulares.FileCirculares;
 using Entities_Circulares.Reply;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +49,7 @@ namespace API_Circulares.Controllers
 
                         var respuestacorreos = _AccesoCirculaesBLL.ObtenerTodosCorreos(_configuration.GetConnectionString("Conexion"));
 
-                        List<string> correos = respuestacorreos.Result
+                        List<string?> correos = respuestacorreos.Result
                              .Where(u => !string.IsNullOrWhiteSpace(u.Correo))
                              .Select(u => u.Correo)
                              .Distinct()
@@ -110,6 +111,36 @@ namespace API_Circulares.Controllers
 
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método ObtenerCirculares en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
+        [HttpPost("ObtenerEventosCalendario")]
+        public Reply<List<Eventos>> ObtenerEventosCalendario([FromBody] Eventos ObjCirculares)
+        {
+
+            Reply<List<Eventos>> reply = new Reply<List<Eventos>>();
+
+            try
+            {
+
+                var respuesta = _AccesoCirculaesBLL.ObtenerEventosCalendario(_configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerEventosCalendario en la capa API {ex.Message}";
             }
 
 

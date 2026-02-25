@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities_Circulares.Eventos;
+using Entities_Circulares.Reply;
+using Microsoft.AspNetCore.Mvc;
+using SistemaCirculares.Models;
 using System;
 using System.Collections.Generic;
 
@@ -6,54 +9,96 @@ namespace SistemaCirculares.Controllers
 {
     public class CalendarioController : Controller
     {
+
+        private readonly CircularesModel _AccesoCircularesModel;
+
+        public CalendarioController(CircularesModel CircularesModel)
+        {
+            _AccesoCircularesModel = CircularesModel;
+        }
+
+
+
         public IActionResult Calendario()
         {
+            ObtenerCookie();
             return View();
         }
 
         [HttpPost]
         public IActionResult ObtenerEventos()
         {
+
+            Reply<List<Eventos>> respuesta = new Reply<List<Eventos>>();
+
             try
             {
-                // Aquí obtienes los eventos de tu base de datos o servicio
-                var eventos = new List<object>
-                {
-                    new
-                    {
-                        id = 1,
-                        titulo = "Reunión de comité",
-                        fechaInicio = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm:ss"),
-                        fechaFin = DateTime.Now.AddDays(1).AddHours(2).ToString("yyyy-MM-ddTHH:mm:ss"),
-                        descripcion = "Reunión mensual del comité de calidad",
-                        ubicacion = "Sala de juntas",
-                        color = "#3788d8",
-                        todoElDia = false,
-                        idComite = 1,
-                        nombreComite = "Comité de Calidad"
-                    },
-                    new
-                    {
-                        id = 2,
-                        titulo = "Capacitación",
-                        fechaInicio = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"),
-                        fechaFin = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"),
-                        descripcion = "Capacitación en nuevas tecnologías",
-                        ubicacion = "Auditorio principal",
-                        color = "#28a745",
-                        todoElDia = true,
-                        idComite = 2,
-                        nombreComite = "Comité de Tecnología"
-                    }
-                };
 
-                return Json(new { ok = true, result = eventos, message = "Eventos obtenidos correctamente" });
+
+                var reply = _AccesoCircularesModel.ObtenerEventosCalendario();
+
+                if (reply != null)
+                {
+
+                    respuesta = reply;
+
+
+                }       
+
+                return Json(new { ok = true, result = reply?.Result, message = "Eventos obtenidos correctamente" });
             }
             catch (Exception ex)
             {
                 return Json(new { ok = false, result = new List<object>(), message = $"Error: {ex.Message}" });
             }
         }
+
+        public void ObtenerCookie()
+        {
+
+            try
+            {
+
+                string ValorCookieNombre = Request.Cookies["nombreCompleto"];
+
+                if (ValorCookieNombre != null)
+                {
+
+                    ViewBag.NombreUsuario = ValorCookieNombre;
+
+                }
+
+                string ValorCookieComite = Request.Cookies["comite"];
+
+                if (ValorCookieComite != null)
+                {
+
+                    ViewBag.Comite = ValorCookieComite;
+
+                }
+
+
+                string ValorCookieRol = Request.Cookies["rol"];
+
+                if (ValorCookieRol != null)
+                {
+
+                    ViewBag.Rol = ValorCookieRol;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
 
 
     }

@@ -52,7 +52,10 @@ namespace DAL_Circulares
                                     UserRegistration ObjUsuarioObtenido = new UserRegistration
                                     {
                                         Nombre = (string)reader["NombreCompleto"],
-                                        Password = (string)reader["HashContrasena"]
+                                        Password = (string)reader["HashContrasena"],
+                                        IdComite = (int)reader["IdComite"],
+                                        IdRol = (int)reader["IdRol"]
+                                        
                                     };
 
                                     reply.Result = ObjUsuarioObtenido;
