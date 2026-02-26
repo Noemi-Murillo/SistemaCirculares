@@ -243,7 +243,17 @@ jsGestionUsuarios = {
                     ['5 elem', '10 elem', '20 elem', 'Mostrar todos']
                 ],
                 buttons: [],
+
                 language: {
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    zeroRecords: "No se encontraron resultados",
+                    emptyTable: "No hay datos disponibles en la tabla",
+                    loadingRecords: "Cargando...",
+                    processing: "Procesando...",
                     paginate: {
                         previous: "<i style='font-size: 18px; color:#B2B6BF;' class='fa fa-chevron-left' aria-hidden='true'></i>",
                         next: "<i style='font-size: 18px; color:#B2B6BF;' class='fa fa-chevron-right' aria-hidden='true'></i>"

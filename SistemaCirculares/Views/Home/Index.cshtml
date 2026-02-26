@@ -10,7 +10,7 @@
     <script defer src="~/js/homejs/home.js"></script>
 </head>
 
-<table id="tblCirculares" class="table">
+<table id="tblCirculares" class="table-light table-hover">
     <thead>
         <tr>
             <th>#</th>
@@ -18,7 +18,7 @@
             <th>Título</th>
             <th>Circular</th>
             <th>Comité</th>
-            <th>Evento</th>
+         @*    <th>Evento</th> *@
         </tr>
     </thead>
     <tbody>
@@ -45,11 +45,11 @@
                 <td data-order="@Circular.NombreComite">
                     @Circular.NombreComite
                 </td>
-                <td>
+             @*    <td>
                     <button type="button" class="btn btn-sm btn-primary ver-circular btn-teal" data-circular="3social">
                         Ver evento
                     </button>
-                </td>
+                </td> *@
             </tr>
         }
 
