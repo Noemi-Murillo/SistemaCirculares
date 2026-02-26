@@ -111,23 +111,32 @@ jsCalendario = {
          */
         FormatearEventosParaCalendario: function (eventos) {
             try {
-                return eventos.map(evento => ({
-                    id: evento.id || evento.idEvento,
-                    title: evento.titulo || evento.title,
-                    start: evento.fechaInicio || evento.start,
-                    end: evento.fechaFin || evento.end,
-                    backgroundColor: evento.color || '#3788d8',
-                    borderColor: evento.color || '#3788d8',
-                    allDay: evento.todoElDia || false,
-                    extendedProps: {
-                        descripcion: evento.descripcion || '',
-                        ubicacion: evento.ubicacion || '',
-                        idComite: evento.idComite || null,
-                        nombreComite: evento.nombreComite || ''
-                    }
-                }));
+                if (!Array.isArray(eventos)) return [];
+
+                return eventos
+                    .filter(e => e && e.fecha && e.titulo) // evita eventos incompletos
+                    .map(e => {
+                        // FullCalendar acepta Date, ISO string, o "YYYY-MM-DD"
+                        // Aquí tu fecha viene como "2026-02-28T00:00:00"
+                        const start = e.fecha;
+
+                        return {
+                            id: e.idCircular,                 // ✅ camelCase
+                            title: e.titulo,                  // ✅ camelCase
+                            start: start,                     // ✅ camelCase
+                            // Si son eventos de 1 día, puedes omitir end.
+                            // Si quisieras end, lo calculas o lo agregas desde tu API.
+                            backgroundColor: e.color || '#3788d8',
+                            borderColor: e.color || '#3788d8',
+                            allDay: true, // como es 00:00:00, normalmente es todo el día
+                            extendedProps: {
+                                nombreComite: e.nombreComite || '',
+                                idCircular: e.idCircular
+                            }
+                        };
+                    });
             } catch (e) {
-                console.error("Error al formatear eventos:", e);
+                console.error("Error al formatear eventos:", e, eventos);
                 return [];
             }
         },

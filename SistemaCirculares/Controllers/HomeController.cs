@@ -19,6 +19,7 @@ namespace SistemaCirculares.Controllers
 
         public IActionResult Index()
         {
+            ObtenerCookie();
             ObtenerCirculares();
             return View();
         }
@@ -125,6 +126,50 @@ namespace SistemaCirculares.Controllers
 
             return reply;
 
+
+
+        }
+        public void ObtenerCookie()
+        {
+
+            try
+            {
+
+                string ValorCookieNombre = Request.Cookies["nombreCompleto"];
+
+                if (ValorCookieNombre != null)
+                {
+
+                    ViewBag.NombreUsuario = ValorCookieNombre;
+
+                }
+
+                string ValorCookieComite = Request.Cookies["comite"];
+
+                if (ValorCookieComite != null)
+                {
+
+                    ViewBag.Comite = ValorCookieComite;
+
+                }
+
+
+                string ValorCookieRol = Request.Cookies["rol"];
+
+                if (ValorCookieRol != null)
+                {
+
+                    ViewBag.Rol = ValorCookieRol;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
         }

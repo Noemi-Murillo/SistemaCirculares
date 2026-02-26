@@ -1,4 +1,5 @@
 ﻿using DAL_Circulares;
+using Entities_Circulares.Eventos;
 using Entities_Circulares.FileCirculares;
 using Entities_Circulares.GestionUsuarios;
 using Entities_Circulares.Reply;
@@ -45,6 +46,37 @@ namespace BLL_Circulares
 
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método ObtenerCircularese en la capa BLL {ex.Message}";
+
+
+
+            }
+
+            return reply;
+        }
+
+        public Reply<List<Eventos>> ObtenerEventosCalendario(string Conexion)
+        {
+
+            Reply<List<Eventos>> reply = new Reply<List<Eventos>>();
+
+            try
+            {
+
+                var respuesta = _AccesoCircularesDAL.ObtenerEventosCalendario(Conexion);
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerEventosCalendario en la capa BLL {ex.Message}";
 
 
 

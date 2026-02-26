@@ -17,6 +17,7 @@ namespace SistemaCirculares.Controllers
 
         public IActionResult Publicarcircular()
         {
+            ObtenerCookie();
             return View();
         }
 
@@ -56,7 +57,9 @@ namespace SistemaCirculares.Controllers
                     SoloMiembros = SoloMiembros,
                     FechaEvento = FechaEvento, // idealmente en ISO 8601: yyyy-MM-dd o yyyy-MM-ddTHH:mm:ss
                     NombreEvento = NombreEvento,
-                    Archivo = fileDto
+                    Archivo = fileDto,
+                    IdComite = Convert.ToInt32(Request.Cookies["comite"]),
+                    IdUsuario = Convert.ToInt32(Request.Cookies["idUsuario"])
                 };
 
                 var respuesta = _AccesoCircularesModel.PublicarCircular(payload);
@@ -85,6 +88,51 @@ namespace SistemaCirculares.Controllers
             return reply;
 
 
+
+
+        }
+
+        public void ObtenerCookie()
+        {
+
+            try
+            {
+
+                string ValorCookieNombre = Request.Cookies["nombreCompleto"];
+
+                if (ValorCookieNombre != null)
+                {
+
+                    ViewBag.NombreUsuario = ValorCookieNombre;
+
+                }
+
+                string ValorCookieComite = Request.Cookies["comite"];
+
+                if (ValorCookieComite != null)
+                {
+
+                    ViewBag.Comite = ValorCookieComite;
+
+                }
+
+
+                string ValorCookieRol = Request.Cookies["rol"];
+
+                if (ValorCookieRol != null)
+                {
+
+                    ViewBag.Rol = ValorCookieRol;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
         }

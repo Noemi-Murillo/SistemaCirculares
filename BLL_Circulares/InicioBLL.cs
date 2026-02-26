@@ -25,10 +25,17 @@ namespace BLL_Circulares
 
             try
             {
-                
+
                 var respuesta = _AccesoInicioDal.LogIn(ObjUsuario, Conexion);
 
-                var VerificarHash = PasswordHash.Verify(ObjUsuario.Password, respuesta.Result.Password);
+                var VerificarHash = false;
+                if (respuesta.Ok)
+                {
+
+                    VerificarHash = PasswordHash.Verify(ObjUsuario.Password, respuesta.Result.Password);
+
+                }
+
 
 
                 if (respuesta != null && respuesta.Ok && VerificarHash)
