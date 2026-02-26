@@ -59,7 +59,35 @@ namespace API_Circulares.Controllers
 
         }
 
+        [HttpPost("EliminarComite")]
+        public Reply<bool> EliminarComite([FromBody] Comites ObjComite)
+        {
 
+            Reply<bool> reply = new Reply<bool>();
+
+            try
+            {
+
+                var respuesta = _ComiteBLL.EliminarComite(ObjComite,_Config.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método EliminarComite en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
 
 
 
