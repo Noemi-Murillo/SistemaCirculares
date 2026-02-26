@@ -23,7 +23,34 @@
     <link href="https://cdn.datatables.net/v/dt/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-pmGS6IIcXhAVIhcnh9X/mxffzZNHbuxboycGuQQoP3pAbb0SwlSUUHn2v22bOenI" crossorigin="anonymous">
     <script defer src="https://cdn.datatables.net/v/dt/dt-2.3.4/datatables.min.js" integrity="sha384-X2pTSfom8FUa+vGQ+DgTCSyBZYkC1RliOduHa0X96D060s7Q//fnOh3LcazRNHyo" crossorigin="anonymous"></script>
 
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../assets/js/config.js"></script>
 </head>
 
 <body id="page-top">
@@ -32,7 +59,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        @*  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Home" asp-action="Index">
@@ -100,8 +127,70 @@
             <hr class="sidebar-divider d-none d-md-block">
 
 
-        </ul>
+        </ul> *@
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a asp-controller="Home" asp-action="Index" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">Circulares</span>
+                </a>
+
+                <a asp-controller="Home" asp-action="Index" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <!-- Dashboard -->
+                <li class="menu-item active">
+                    <a asp-controller="Home" asp-action="Index" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Analytics">Inicio</div>
+                    </a>
+                </li>
+
+                <li class="menu-item active">
+                    <a class="menu-link" asp-controller="Calendario" asp-action="Calendario">
+                        <i class="menu-icon tf-icons bx bx-calendar"></i>
+                        <div data-i18n="Analytics">Calendario</div>
+                    </a>
+                </li>
+                <!-- Layouts -->
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Coordinador</span>
+                </li>
+                <li class="menu-item">
+                   <a asp-controller="SubirCirculares" asp-action="Publicarcircular" class="menu-link" data-target="#collapsePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Subir Circular</div>
+                    </a>
+                </li>
+
+                <!-- Components -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Administrador</span></li>
+                <!-- Cards -->
+                <li class="menu-item">
+                        <a asp-controller="Comites" asp-action="GestionComites" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-collection"></i>
+                        <div data-i18n="Basic">Comités</div>
+                    </a>
+                </li>
+                <!-- User interface -->
+                <li class="menu-item">
+                    <a asp-controller="GestionUsuarios" asp-action="Gestion" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-box"></i>
+                        <div data-i18n="User interface">Usuarios</div>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
         <!-- End of Sidebar -->
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -184,7 +273,7 @@
                                         Logout
                                     </a>
 
-@*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                    @*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a> *@
@@ -196,6 +285,7 @@
                     </ul>
 
                 </nav>
+
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
 
@@ -230,8 +320,7 @@
     </a>
 
     <!-- Logout Modal-->
-
-@*     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    @*     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -250,7 +339,7 @@
         </div>
     </div> *@
 
-@*     <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" role="dialog"
+    @*     <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" role="dialog"
          aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content shadow-lg border-0 logout-card">
