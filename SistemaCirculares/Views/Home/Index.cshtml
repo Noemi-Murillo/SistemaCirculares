@@ -6,6 +6,7 @@
 
 
 <head>
+    <link href="~/css/gestionusuarioscss/gestionusuarios.css" rel="stylesheet" />
     <script defer src="~/js/homejs/home.js"></script>
 </head>
 
@@ -27,19 +28,25 @@
         {
             <tr>
                 <th scope="row">@Circular.IdCircular</th>
-                <td>@Circular.FechaCircular</td>
-                <td>@Circular.NombreCircular</td>
+                <td data-order="@Circular.FechaCircular.ToString("yyyyMMdd")">
+                    @Circular.FechaCircular.ToString("dd/MM/yyyy")
+                </td>
+                <td data-order="@Circular.NombreCircular">
+                    @Circular.NombreCircular
+                </td>
                 <td>
                     <button data-idcircular="@Circular.IdCircular"
                             data-url="/Circulares/Pdf?id=@Circular.IdCircular"
                             type="button"
-                            class="btn btn-sm btn-primary ver-circular">
+                            class="btn btn-sm btn-primary ver-circular btn-green">
                         Ver circular
                     </button>
                 </td>
-                <td>@Circular.NombreComite</td>
+                <td data-order="@Circular.NombreComite">
+                    @Circular.NombreComite
+                </td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-primary ver-circular" data-circular="3social">
+                    <button type="button" class="btn btn-sm btn-primary ver-circular btn-teal" data-circular="3social">
                         Ver evento
                     </button>
                 </td>

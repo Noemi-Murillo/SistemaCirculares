@@ -26,10 +26,6 @@ jsGestionUsuarios = {
         InputCodigoGenerado: '#txtCodigo',
 
 
-
-
-
-
     },
 
     botones: {
@@ -157,51 +153,6 @@ jsGestionUsuarios = {
 
                 }
 
-                //fetch("/GestionUsuarios/GenerarCodigoRegistro", {
-                //    method: "GET",
-                //    cache: "no-store"
-                //})
-                //    .then(respuesta => {
-                //        if (!respuesta.ok) throw new Error("HTTP " + r.status);
-                //        return respuesta.json();
-                //    })
-                //    .then(data => {
-
-                //        $(jsGestionUsuarios.controles.InputCodigoGenerado).val(data.result);
-                //        navigator.clipboard.writeText(data.result);
-                //        msgCopiado.classList.remove('d-none');
-                //        setTimeout(() => msgCopiado.classList.add('d-none'), 1800);
-                //        console.log(data)
-                //        this.MensajeGeneralSweetAlert(
-                //            'success',
-                //            `${data.message}`,
-                //            false,
-                //            '#68AB54',
-                //            30
-                //        );
-
-
-
-                //    })
-                //    .catch((err) => {
-
-
-                //        this.MensajeGeneralSweetAlert(
-                //            'error',
-                //            `Ha ocurrido un error> ${err}`,
-                //            false,
-                //            '#FF0000',
-                //            26
-                //        );
-
-
-
-                //    })
-
-
-
-
-
 
 
             } catch (e) {
@@ -275,7 +226,7 @@ jsGestionUsuarios = {
                 ordering: true,
                 columnDefs: [
                     {
-                        targets: [2, 3], // Aplica a todas las columnas
+                        targets: [3], // Aplica a todas las columnas
                         orderable: false // Las desactiva...
                     },
                     {
@@ -301,6 +252,27 @@ jsGestionUsuarios = {
                 }
             });
         },
+
+        ActualizarOrdenComite: function () {
+
+            $(jsGestionUsuarios.tablas.TablaGestionUsuarios)
+                .on('change', '.ComitesSelect', function () {
+
+                    const $td = $(this).closest('td');
+                    const texto = $(this).find('option:selected').text().trim();
+
+                    // Actualiza el valor por el cual DataTables ordena
+                    $td.attr('data-order', texto);
+
+                    // Fuerza a DataTables a recalcular el orden
+                    $(jsGestionUsuarios.tablas.TablaGestionUsuarios)
+                        .DataTable()
+                        .rows()
+                        .invalidate()
+                        .draw(false);
+                });
+        },
+
         RealizarBusquedaPersonalizada: function () {
 
             var valor = $(jsCanastasBasicas.controles.InputBuscar).val();
@@ -448,4 +420,5 @@ $(function () {
     jsGestionUsuarios.eventos();
     jsGestionUsuarios.metodos.CargarComites();
     jsGestionUsuarios.metodos.CargarDatatableGestionUsuarios();
+    jsGestionUsuarios.metodos.ActualizarOrdenComite();
 });

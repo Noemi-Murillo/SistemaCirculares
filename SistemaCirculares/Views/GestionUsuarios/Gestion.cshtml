@@ -52,13 +52,15 @@
                                     <td hidden>@Usuario.Id</td>
 
                                     <td>@Usuario.Nombre</td>
-                                    <td>
+
+                                    <td data-order="@Usuario.NombreComite">
                                         <div class="select-pill">
                                             <select class="form-select ComitesSelect">
                                                 <option value="@Usuario.IdComite" selected>@Usuario.NombreComite</option>
                                             </select>
                                         </div>
                                     </td>
+
                                     <td class="text-center">
                                         <div class="form-check form-switch switch-lg d-inline-block m-0">
                                             <input class="form-check-input"
