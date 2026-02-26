@@ -67,7 +67,7 @@ namespace SistemaCirculares.Controllers
         }
 
         [HttpPost]
-        public Reply<bool> CrearComite(Comites ObjComite)
+        public Reply<bool> CrearComite([FromBody]Comites ObjComite)
         {
 
             Reply<bool> reply = new Reply<bool>();
@@ -97,7 +97,7 @@ namespace SistemaCirculares.Controllers
 
         }
         [HttpPost]
-        public Reply<bool> EliminarComite(Comites ObjComite)
+        public Reply<bool> EliminarComite([FromBody]Comites ObjComite)
         {
 
             Reply<bool> reply = new Reply<bool>();

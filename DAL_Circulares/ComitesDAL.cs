@@ -18,7 +18,7 @@ namespace DAL_Circulares
         //Procedimientos almacenados
 
         private const string _spObtenerComites = "spObtenerComites";
-        private const string _spCrearComite = "spObtenerComites";
+        private const string _spCrearComite = "spCrearComite";
         private const string _spEliminarComitee = "spEliminarComite";
 
         
@@ -144,7 +144,7 @@ namespace DAL_Circulares
                     using (SqlCommand command = new SqlCommand(_spEliminarComitee, connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.Add(new SqlParameter("@pParametro", SqlDbType.Int) { Value = ObjComite.IdComite });
+                        command.Parameters.Add(new SqlParameter("@pIdComite", SqlDbType.Int) { Value = ObjComite.IdComite });
 
                         int RowAfectadas = command.ExecuteNonQuery();
 
