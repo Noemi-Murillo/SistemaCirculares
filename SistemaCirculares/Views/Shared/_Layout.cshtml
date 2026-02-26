@@ -1,7 +1,7 @@
 ﻿@{
 
     var NombreUsuario = ViewBag.NombreUsuario;
-
+    var RolUsuario = ViewBag.Rol;
 }
 
 
@@ -55,388 +55,616 @@
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+    @if (RolUsuario == "1")
+    {
+        <div id="wrapper">
 
-        <!-- Sidebar -->
-        @*  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Sidebar -->
+     
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Home" asp-action="Index">
-                <div class="sidebar-brand-icon">
-                    <i class="fa-solid fa-book"></i>
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a asp-controller="Home" asp-action="Index" class="app-brand-link">
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Circulares</span>
+                    </a>
+
+                    <a asp-controller="Home" asp-action="Index" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                    </a>
                 </div>
-                <div class="sidebar-brand-text mx-3">Sistema circulares</div>
-            </a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+                <div class="menu-inner-shadow"></div>
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>INICIO</span>
-                </a>
-            </li>
+                <ul class="menu-inner py-1">
+                    <!-- Dashboard -->
+                    <li class="menu-item active">
+                        <a asp-controller="Home" asp-action="Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Inicio</div>
+                        </a>
+                    </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+                    <li class="menu-item active">
+                        <a class="menu-link" asp-controller="Calendario" asp-action="Calendario">
+                            <i class="menu-icon tf-icons bx bx-calendar"></i>
+                            <div data-i18n="Analytics">Calendario</div>
+                        </a>
+                    </li>
+                    <!-- Layouts -->
 
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Coordinador</span>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-controller="SubirCirculares" asp-action="Publicarcircular" class="menu-link" data-target="#collapsePages"
+                               aria-expanded="true" aria-controls="collapsePages">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Subir Circular</div>
+                        </a>
+                    </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-controller="Calendario" asp-action="Calendario">
-                    <i class="fa-solid fa-calendar-days fa-fw"></i>
-                    <span>Calendario</span>
-                </a>
-
-            </li>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a asp-controller="SubirCirculares" asp-action="Publicarcircular" class="nav-link collapsed" data-target="#collapsePages"
-                   aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fa-solid fa-file-arrow-up"></i>
-                    <span>Subir circular</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a asp-controller="Comites" asp-action="GestionComites" class="nav-link">
-                    <i class="fa-solid fa-people-group"></i>
-                    <span>Comités</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a asp-controller="GestionUsuarios" asp-action="Gestion" class="nav-link">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Usuarios</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-
-        </ul> *@
-
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-            <div class="app-brand demo">
-                <a asp-controller="Home" asp-action="Index" class="app-brand-link">
-                    <span class="app-brand-text demo menu-text fw-bolder ms-2">Circulares</span>
-                </a>
-
-                <a asp-controller="Home" asp-action="Index" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                </a>
-            </div>
-
-            <div class="menu-inner-shadow"></div>
-
-            <ul class="menu-inner py-1">
-                <!-- Dashboard -->
-                <li class="menu-item active">
-                    <a asp-controller="Home" asp-action="Index" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Analytics">Inicio</div>
-                    </a>
-                </li>
-
-                <li class="menu-item active">
-                    <a class="menu-link" asp-controller="Calendario" asp-action="Calendario">
-                        <i class="menu-icon tf-icons bx bx-calendar"></i>
-                        <div data-i18n="Analytics">Calendario</div>
-                    </a>
-                </li>
-                <!-- Layouts -->
-
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Coordinador</span>
-                </li>
-                <li class="menu-item">
-                   <a asp-controller="SubirCirculares" asp-action="Publicarcircular" class="menu-link" data-target="#collapsePages"
-                   aria-expanded="true" aria-controls="collapsePages">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Subir Circular</div>
-                    </a>
-                </li>
-
-                <!-- Components -->
-                <li class="menu-header small text-uppercase"><span class="menu-header-text">Administrador</span></li>
-                <!-- Cards -->
-                <li class="menu-item">
+                    <!-- Components -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Administrador</span></li>
+                    <!-- Cards -->
+                    <li class="menu-item">
                         <a asp-controller="Comites" asp-action="GestionComites" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-collection"></i>
-                        <div data-i18n="Basic">Comités</div>
-                    </a>
-                </li>
-                <!-- User interface -->
-                <li class="menu-item">
-                    <a asp-controller="GestionUsuarios" asp-action="Gestion" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-box"></i>
-                        <div data-i18n="User interface">Usuarios</div>
-                    </a>
-                </li>
-            </ul>
-        </aside>
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Comités</div>
+                        </a>
+                    </li>
+                    <!-- User interface -->
+                    <li class="menu-item">
+                        <a asp-controller="GestionUsuarios" asp-action="Gestion" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-box"></i>
+                            <div data-i18n="User interface">Usuarios</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
 
-        <!-- End of Sidebar -->
+            <!-- End of Sidebar -->
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
 
-            <!-- Main Content -->
-            <div id="content">
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                        <span>Usuarios</span>
-                    </button>
-
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                            <span>Usuarios</span>
+                        </button>
 
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                 aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                               placeholder="Search for..." aria-label="Search"
-                                               aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                     aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                   placeholder="Search for..." aria-label="Search"
+                                                   aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                                    </form>
+                                </div>
+                            </li>
 
-                        <!-- Nav Item - Alerts -->
-                        <!-- Nav Item - Messages -->
+                            <!-- Nav Item - Alerts -->
+                            <!-- Nav Item - Messages -->
 
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                            <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#"
-                               id="userDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@NombreUsuario</span>
-                                <img class="img-profile rounded-circle"
-                                     src="~/Recursos/PerfilUsuario.svg">
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Perfil
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Configuraciones
-                                    </a>
-                                </li>
-
-                                <li><hr class="dropdown-divider" /></li>
-                                <li>
-                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                       id="userDropdown" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@NombreUsuario</span>
+                                    <img class="img-profile rounded-circle"
+                                         src="~/Recursos/PerfilUsuario.svg">
                                     </a>
 
-                                    @*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                    <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
+                                        aria-labelledby="userDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Perfil
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Configuraciones
+                                            </a>
+                                        </li>
+
+                                        <li><hr class="dropdown-divider" /></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Logout
+                                            </a>
+
+                                            @*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a> *@
+                                        </li>
+                                    </ul>
                                 </li>
+
+
                             </ul>
+
+                        </nav>
+
+                        <!-- End of Topbar -->
+                        <!-- Begin Page Content -->
+
+                        <div class="container-fluid">
+                            <main role="main" class="pb-3">
+                                @RenderBody()
+                            </main>
+                        </div>
+
+                        <!-- /.container-fluid -->
+
+                    </div>
+                    <!-- End of Main Content -->
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Your Website 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+
+                </div>
+                <!-- End of Content Wrapper -->
+
+            </div>
+        }
+        else if(RolUsuario == "2")
+        {
+            
+            <div id="wrapper">
+
+                <!-- Sidebar -->
+     
+
+                <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                    <div class="app-brand demo">
+                        <a asp-controller="Home" asp-action="Index" class="app-brand-link">
+                            <span class="app-brand-text demo menu-text fw-bolder ms-2">Circulares</span>
+                        </a>
+
+                        <a asp-controller="Home" asp-action="Index" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                        </a>
+                    </div>
+
+                    <div class="menu-inner-shadow"></div>
+
+                    <ul class="menu-inner py-1">
+                        <!-- Dashboard -->
+                        <li class="menu-item active">
+                            <a asp-controller="Home" asp-action="Index" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <div data-i18n="Analytics">Inicio</div>
+                            </a>
                         </li>
 
+                        <li class="menu-item active">
+                            <a class="menu-link" asp-controller="Calendario" asp-action="Calendario">
+                                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                                <div data-i18n="Analytics">Calendario</div>
+                            </a>
+                        </li>
+                        <!-- Layouts -->
 
+                       
+
+                        
+                       
                     </ul>
+                </aside>
 
-                </nav>
+                <!-- End of Sidebar -->
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
 
-                <!-- End of Topbar -->
-                <!-- Begin Page Content -->
+                    <!-- Main Content -->
+                    <div id="content">
 
-                <div class="container-fluid">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
-                </div>
+                        <!-- Topbar -->
+                        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- /.container-fluid -->
+                            <!-- Sidebar Toggle (Topbar) -->
+                            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                                <i class="fa fa-bars"></i>
+                                <span>Usuarios</span>
+                            </button>
 
-            </div>
-            <!-- End of Main Content -->
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+
+
+                            <!-- Topbar Navbar -->
+                            <ul class="navbar-nav ml-auto">
+
+                                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                                <li class="nav-item dropdown no-arrow d-sm-none">
+                                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-search fa-fw"></i>
+                                    </a>
+                                    <!-- Dropdown - Messages -->
+                                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                         aria-labelledby="searchDropdown">
+                                        <form class="form-inline mr-auto w-100 navbar-search">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-light border-0 small"
+                                                       placeholder="Search for..." aria-label="Search"
+                                                       aria-describedby="basic-addon2">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="button">
+                                                        <i class="fas fa-search fa-sm"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+
+                                <!-- Nav Item - Alerts -->
+                                <!-- Nav Item - Messages -->
+
+
+                                <div class="topbar-divider d-none d-sm-block"></div>
+
+                                <!-- Nav Item - User Information -->
+                                <li class="nav-item dropdown no-arrow">
+                                    <a class="nav-link dropdown-toggle" href="#"
+                                           id="userDropdown" role="button"
+                                           data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@NombreUsuario</span>
+                                        <img class="img-profile rounded-circle"
+                                             src="~/Recursos/PerfilUsuario.svg">
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Perfil
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Configuraciones
+                                                </a>
+                                            </li>
+
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li>
+                                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                    Logout
+                                                </a>
+
+                                                @*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a> *@
+                                            </li>
+                                        </ul>
+                                    </li>
+
+
+                                </ul>
+
+                            </nav>
+
+                            <!-- End of Topbar -->
+                            <!-- Begin Page Content -->
+
+                            <div class="container-fluid">
+                                <main role="main" class="pb-3">
+                                    @RenderBody()
+                                </main>
+                            </div>
+
+                            <!-- /.container-fluid -->
+
+                        </div>
+                        <!-- End of Main Content -->
+                        <!-- Footer -->
+                        <footer class="sticky-footer bg-white">
+                            <div class="container my-auto">
+                                <div class="copyright text-center my-auto">
+                                    <span>Copyright &copy; Your Website 2021</span>
+                                </div>
+                            </div>
+                        </footer>
+                        <!-- End of Footer -->
+
                     </div>
+                    <!-- End of Content Wrapper -->
+
                 </div>
-            </footer>
-            <!-- End of Footer -->
 
-        </div>
-        <!-- End of Content Wrapper -->
+        }else if(RolUsuario == "3")
+        {
+            
+                <div id="wrapper">
 
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+                    <!-- Sidebar -->
+     
 
-    <!-- Logout Modal-->
-    @*     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="@Url.Action("InicioSesion", "Inicio")">Logout</a>
+                    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                        <div class="app-brand demo">
+                            <a asp-controller="Home" asp-action="Index" class="app-brand-link">
+                                <span class="app-brand-text demo menu-text fw-bolder ms-2">Circulares</span>
+                            </a>
+
+                            <a asp-controller="Home" asp-action="Index" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                                <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                            </a>
+                        </div>
+
+                        <div class="menu-inner-shadow"></div>
+
+                        <ul class="menu-inner py-1">
+                            <!-- Dashboard -->
+                            <li class="menu-item active">
+                                <a asp-controller="Home" asp-action="Index" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                    <div data-i18n="Analytics">Inicio</div>
+                                </a>
+                            </li>
+
+                            <li class="menu-item active">
+                                <a class="menu-link" asp-controller="Calendario" asp-action="Calendario">
+                                    <i class="menu-icon tf-icons bx bx-calendar"></i>
+                                    <div data-i18n="Analytics">Calendario</div>
+                                </a>
+                            </li>
+                            <!-- Layouts -->
+
+                            <li class="menu-header small text-uppercase">
+                                <span class="menu-header-text">Coordinador</span>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-controller="SubirCirculares" asp-action="Publicarcircular" class="menu-link" data-target="#collapsePages"
+                                       aria-expanded="true" aria-controls="collapsePages">
+                                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                                    <div data-i18n="Account Settings">Subir Circular</div>
+                                </a>
+                            </li>
+
+                            <!-- Components -->
+                            <!-- Cards -->
+                            
+                            <!-- User interface -->
+                            
+                        </ul>
+                    </aside>
+
+                    <!-- End of Sidebar -->
+                    <!-- Content Wrapper -->
+                    <div id="content-wrapper" class="d-flex flex-column">
+
+                        <!-- Main Content -->
+                        <div id="content">
+
+                            <!-- Topbar -->
+                            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                                <!-- Sidebar Toggle (Topbar) -->
+                                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Usuarios</span>
+                                </button>
+
+
+
+                                <!-- Topbar Navbar -->
+                                <ul class="navbar-nav ml-auto">
+
+                                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                                    <li class="nav-item dropdown no-arrow d-sm-none">
+                                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-search fa-fw"></i>
+                                        </a>
+                                        <!-- Dropdown - Messages -->
+                                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                             aria-labelledby="searchDropdown">
+                                            <form class="form-inline mr-auto w-100 navbar-search">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control bg-light border-0 small"
+                                                           placeholder="Search for..." aria-label="Search"
+                                                           aria-describedby="basic-addon2">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="button">
+                                                            <i class="fas fa-search fa-sm"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </li>
+
+                                    <!-- Nav Item - Alerts -->
+                                    <!-- Nav Item - Messages -->
+
+
+                                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                                    <!-- Nav Item - User Information -->
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#"
+                                               id="userDropdown" role="button"
+                                               data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">@NombreUsuario</span>
+                                            <img class="img-profile rounded-circle"
+                                                 src="~/Recursos/PerfilUsuario.svg">
+                                            </a>
+
+                                            <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                        Perfil
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                        Configuraciones
+                                                    </a>
+                                                </li>
+
+                                                <li><hr class="dropdown-divider" /></li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                        Logout
+                                                    </a>
+
+                                                    @*                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a> *@
+                                                </li>
+                                            </ul>
+                                        </li>
+
+
+                                    </ul>
+
+                                </nav>
+
+                                <!-- End of Topbar -->
+                                <!-- Begin Page Content -->
+
+                                <div class="container-fluid">
+                                    <main role="main" class="pb-3">
+                                        @RenderBody()
+                                    </main>
+                                </div>
+
+                                <!-- /.container-fluid -->
+
+                            </div>
+                            <!-- End of Main Content -->
+                            <!-- Footer -->
+                            <footer class="sticky-footer bg-white">
+                                <div class="container my-auto">
+                                    <div class="copyright text-center my-auto">
+                                        <span>Copyright &copy; Your Website 2021</span>
+                                    </div>
+                                </div>
+                            </footer>
+                            <!-- End of Footer -->
+
+                        </div>
+                        <!-- End of Content Wrapper -->
+
+                    </div>
+        }
+
+        <!-- Page Wrapper -->
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+    
+
+        <div class="modal fade logout-modal" id="logoutModal" tabindex="-1"
+             aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content shadow-lg border-0 logout-card">
+
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title mx-auto" id="logoutModalLabel">Cerrar sesión</h5>
+
+                        <!-- X que cierra el modal -->
+                        <button type="button" class="btn-close logout-close"
+                                data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body pt-0">
+                        <p class="mb-3 text-center">
+                            ¿Estás seguro de que deseas finalizar tu sesión actual?
+                        </p>
+                        <p class="mb-0 text-center text-muted small">
+                            Podrás volver a iniciar sesión en cualquier momento con tu correo institucional.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer border-0 flex-column">
+                        <!-- Botón cancelar que cierra el modal -->
+                        <button class="btn btn-light btn-block mb-2" type="button" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <!-- Redirección a inicio/iniciosesion -->
+                        <a class="btn btn-primary btn-block" href='@Url.Action("InicioSesion", "Inicio")'>
+                            <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div> *@
-
-    @*     <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" role="dialog"
-         aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content shadow-lg border-0 logout-card">
-
-                <div class="modal-header border-0">
-                    <h5 class="modal-title mx-auto" id="logoutModalLabel">Cerrar sesión</h5>
-
-                    <!-- La X cierra el modal -->
-                    <button type="button" class="close logout-close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body pt-0">
-                    <p class="mb-3 text-center">
-                        ¿Estás seguro de que deseas finalizar tu sesión actual?
-                    </p>
-                    <p class="mb-0 text-center text-muted small">
-                        Podrás volver a iniciar sesión en cualquier momento con tu correo institucional.
-                    </p>
-                </div>
-
-                <div class="modal-footer border-0 flex-column">
-                    <!-- Botón cancelar que también cierra el modal -->
-                    <button class="btn btn-light btn-block mb-2" type="button" data-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <!-- Redirección a inicio/iniciosesion -->
-                    <a class="btn btn-primary btn-block" href='@Url.Action("InicioSesion", "Inicio")'>
-                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div> *@
-
-    <div class="modal fade logout-modal" id="logoutModal" tabindex="-1"
-         aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content shadow-lg border-0 logout-card">
-
-                <div class="modal-header border-0">
-                    <h5 class="modal-title mx-auto" id="logoutModalLabel">Cerrar sesión</h5>
-
-                    <!-- X que cierra el modal -->
-                    <button type="button" class="btn-close logout-close"
-                            data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-
-                <div class="modal-body pt-0">
-                    <p class="mb-3 text-center">
-                        ¿Estás seguro de que deseas finalizar tu sesión actual?
-                    </p>
-                    <p class="mb-0 text-center text-muted small">
-                        Podrás volver a iniciar sesión en cualquier momento con tu correo institucional.
-                    </p>
-                </div>
-
-                <div class="modal-footer border-0 flex-column">
-                    <!-- Botón cancelar que cierra el modal -->
-                    <button class="btn btn-light btn-block mb-2" type="button" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <!-- Redirección a inicio/iniciosesion -->
-                    <a class="btn btn-primary btn-block" href='@Url.Action("InicioSesion", "Inicio")'>
-                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 
 
 
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/JS_Plantilla/js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="/js/JS_Plantilla/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/js/JS_Plantilla/vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="/js/JS_Plantilla/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="/js/JS_Plantilla/js/demo/chart-area-demo.js"></script>
-    <script src="/js/JS_Plantilla/js/demo/chart-pie-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="/js/JS_Plantilla/js/demo/chart-area-demo.js"></script>
+        <script src="/js/JS_Plantilla/js/demo/chart-pie-demo.js"></script>
 
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 
 
 

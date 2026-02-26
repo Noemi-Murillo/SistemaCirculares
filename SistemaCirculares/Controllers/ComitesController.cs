@@ -66,6 +66,66 @@ namespace SistemaCirculares.Controllers
 
         }
 
+        [HttpPost]
+        public Reply<bool> CrearComite(Comites ObjComite)
+        {
+
+            Reply<bool> reply = new Reply<bool>();
+
+            try
+            {
+                var respuesta = _ComitesModel.CrearComite(ObjComite);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador ComitesController método CrearComite , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
+        [HttpPost]
+        public Reply<bool> EliminarComite(Comites ObjComite)
+        {
+
+            Reply<bool> reply = new Reply<bool>();
+
+            try
+            {
+                var respuesta = _ComitesModel.EliminarComite(ObjComite);
+
+                if (respuesta != null)
+                {
+
+                    reply = respuesta;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador ComitesController método EliminarComite , {ex.Message}";
+            }
+
+            return reply;
+
+
+
+        }
         public void ObtenerCookie()
         {
 

@@ -46,6 +46,59 @@ namespace SistemaCirculares.Models
 
         }
 
+        public Reply<bool> CrearComite(Comites ObjComites)
+        {
+
+            Reply<bool> reply = new Reply<bool>();
+            Comites ObjComitess = new Comites { IdComite = 1 };
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/Comites/CrearComite", UrlApiCirculares);
+                reply = PostAPI<Reply<bool>, Comites>(UrlAPI, ObjComites);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<bool> EliminarComite(Comites ObjComites)
+        {
+
+            Reply<bool> reply = new Reply<bool>();
+            Comites ObjComitess = new Comites { IdComite = 1 };
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/Comites/EliminarComite", UrlApiCirculares);
+                reply = PostAPI<Reply<bool>, Comites>(UrlAPI, ObjComites);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
 
 
 

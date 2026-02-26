@@ -64,6 +64,69 @@ namespace BLL_Circulares
         }
 
 
+        public Reply<bool> CrearComite(Comites ObjComite, string Conexion)
+        {
+
+            Reply<bool> reply = new Reply<bool>();
+
+            try
+            {
+
+                var respuesta = _ComiteDAL.CrearComite(ObjComite, Conexion);
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerComites en la capa BLL {ex.Message}";
+
+
+
+            }
+
+            return reply;
+        }
+
+        public Reply<bool> EliminarComite(Comites ObjComite, string Conexion)
+        {
+
+            Reply<bool> reply = new Reply<bool>();
+
+            try
+            {
+
+                var respuesta = _ComiteDAL.EliminarComite(ObjComite, Conexion);
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerComites en la capa BLL {ex.Message}";
+
+
+
+            }
+
+            return reply;
+        }
+
+
 
 
 
