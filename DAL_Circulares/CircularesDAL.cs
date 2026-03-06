@@ -20,6 +20,8 @@ namespace DAL_Circulares
         private const string _spObtenerArchivoCircular = "spObtenerArchivoCircular";
         private const string _spObtenerCorreosTodosUsuarios = "spObtenerAllCorreos";
         private const string _spObtenerEventos = "spObtenerEventos";
+        private const string spObtenerCircularesParametrizado = "spObtenerCircularesParametrizado";
+        private const string spEliminarCirculares = "spEliminarCirculares";
 
 
 
@@ -42,6 +44,69 @@ namespace DAL_Circulares
                     {
 
                         command.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+
+
+                                Circulares ObjCircular = new Circulares
+                                {
+                                    IdCircular = (int)reader["IdCircular"],
+                                    FechaCircular = (DateTime)reader["Fecha"],
+                                    NombreCircular = (string)reader["Titulo"],
+                                    ArchivoBytes = (byte[])reader["Archivo"],
+                                    NombreComite = (string)reader["NombreComite"],
+
+                                };
+
+                                ListaCirculares.Add(ObjCircular);
+
+
+                            }
+
+                            reply.Ok = true;
+                            reply.Result = ListaCirculares;
+
+
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = ex.Message;
+            }
+
+            return reply;
+
+
+
+        }
+
+        public Reply<List<Circulares>> ObtenerCircularesPorCantidad(string Conexion, int Cantidad)
+        {
+
+            Reply<List<Circulares>> reply = new Reply<List<Circulares>>();
+            List<Circulares> ListaCirculares = new List<Circulares>();
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(spObtenerCircularesParametrizado, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pOpcion", SqlDbType.Int) { Value = Cantidad });
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {

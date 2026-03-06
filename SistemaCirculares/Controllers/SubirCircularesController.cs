@@ -21,6 +21,13 @@ namespace SistemaCirculares.Controllers
             return View();
         }
 
+        public IActionResult AlmacenamientoCirculares()
+        {
+            ObtenerCookie();
+
+            return View();
+        }
+
         [HttpPost]
         public Reply<bool> EnviarCircular([FromForm] string NombreCircular,
                                           [FromForm] bool SoloMiembros,

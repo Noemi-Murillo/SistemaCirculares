@@ -1,9 +1,10 @@
-using System.Diagnostics;
+using Entities_Circulares.FileCirculares;
 using Entities_Circulares.GestionUsuarios;
+using Entities_Circulares.Reply;
 using Microsoft.AspNetCore.Mvc;
 using SistemaCirculares.Models;
-using Entities_Circulares.Reply;
-using Entities_Circulares.FileCirculares;
+using System.Diagnostics;
+using System.IO.Compression;
 
 namespace SistemaCirculares.Controllers
 {
@@ -64,6 +65,61 @@ namespace SistemaCirculares.Controllers
 
 
 
+        }
+        
+        [HttpPost]
+        public IActionResult ObtenerCircularesPorCantidad([FromBody] Circulares ObjCircular)
+        {
+            try
+            {
+                var respuesta = _circularesModel.ObtenerCircularesPorCantidad(ObjCircular.IdComite);
+
+                if (respuesta != null && respuesta.Result != null)
+                {
+                    return DescargarCircularesZip(respuesta.Result);
+                }
+
+                return BadRequest("No hay circulares");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        public IActionResult DescargarCircularesZip(List<Circulares> listaCirculares)
+        {
+            using (var memoria = new MemoryStream())
+            {
+                using (var zip = new ZipArchive(memoria, ZipArchiveMode.Create, true))
+                {
+                    foreach (var circular in listaCirculares)
+                    {
+                        if (circular.ArchivoBytes != null)
+                        {
+                            string nombreArchivo = circular.NombreCircular;
+
+                            // asegurarse que tenga extensión
+                            if (!nombreArchivo.EndsWith(".pdf"))
+                                nombreArchivo += ".pdf";
+
+                            var entrada = zip.CreateEntry(nombreArchivo);
+
+                            using (var streamEntrada = entrada.Open())
+                            {
+                                streamEntrada.Write(circular.ArchivoBytes, 0, circular.ArchivoBytes.Length);
+                            }
+                        }
+                    }
+                }
+
+                memoria.Position = 0;
+
+                return File(memoria.ToArray(),
+                            "application/zip",
+                            "Circulares.zip");
+            }
         }
 
         public Reply<Circulares> ObtenerCircularesPorId([FromBody] int IdCircular)

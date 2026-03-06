@@ -54,6 +54,38 @@ namespace BLL_Circulares
             return reply;
         }
 
+        public Reply<List<Circulares>> ObtenerCircularesPorCantidad(string Conexion, int Cantidad)
+        {
+
+            Reply<List<Circulares>> reply = new Reply<List<Circulares>>();
+
+            try
+            {
+
+                var respuesta = _AccesoCircularesDAL.ObtenerCircularesPorCantidad(Conexion,Cantidad);
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerCircularese en la capa BLL {ex.Message}";
+
+
+
+            }
+
+            return reply;
+        }
+
+
         public Reply<List<Eventos>> ObtenerEventosCalendario(string Conexion)
         {
 

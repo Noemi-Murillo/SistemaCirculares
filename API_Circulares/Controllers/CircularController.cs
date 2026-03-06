@@ -63,7 +63,7 @@ namespace API_Circulares.Controllers
                                 DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
                             .Replace("{{URL_SISTEMA}}", "http://localhost:5032/");
 
-                         
+
                         await _Email.SendAsync(
                              "Aviso general",
                              html,
@@ -118,6 +118,36 @@ namespace API_Circulares.Controllers
 
 
         }
+        [HttpPost("ObtenerCircularesPorCantidad")]
+        public Reply<List<Circulares>> ObtenerCircularesPorCantidad([FromBody] Circulares ObjCirculares)
+        {
+
+            Reply<List<Circulares>> reply = new Reply<List<Circulares>>();
+
+            try
+            {
+                
+                var respuesta = _AccesoCirculaesBLL.ObtenerCircularesPorCantidad(_configuration.GetConnectionString("Conexion"), ObjCirculares.IdComite);
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método ObtenerCirculares en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
 
         [HttpPost("ObtenerEventosCalendario")]
         public Reply<List<Eventos>> ObtenerEventosCalendario([FromBody] Eventos ObjCirculares)

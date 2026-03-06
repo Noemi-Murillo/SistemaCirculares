@@ -68,6 +68,33 @@ namespace SistemaCirculares.Models
 
         }
 
+        public Reply<List<Circulares>> ObtenerCircularesPorCantidad(int cantidad)
+        {
+
+            Reply<List<Circulares>> reply = new Reply<List<Circulares>>();
+            Circulares ObjCirculares = new Circulares { IdComite = cantidad };
+
+            try
+            {
+                var UrlAPI = string.Format("{0}/Circular/ObtenerCircularesPorCantidad", UrlApiCirculares);
+                reply = PostAPI<Reply<List<Circulares>>, Circulares>(UrlAPI, ObjCirculares);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
         public Reply<List<Eventos>> ObtenerEventosCalendario()
         {
 
