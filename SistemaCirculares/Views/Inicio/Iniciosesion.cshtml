@@ -50,15 +50,13 @@
                         </a>
                     </div>
 
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="recordar">
-                        <label class="form-check-label" for="recordar">Recordarme</label>
-                    </div>
-
                     <button id="btnLogin" type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Ingresar</button>
 
-                    <div class="enlaces">
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Registrarse</a>
+                    <div class="enlaces text-center mt-3">
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                           class="btn btn-outline-primary mt-2 px-4 rounded-pill">
+                            <i class="fa-solid fa-user-plus"></i> Crear cuenta
+                        </a>
                     </div>
                 </form>
 
@@ -66,25 +64,6 @@
         </div>
     </div>
 </body>
-
-<!-- Modal -->
-@* <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
-        </div>
-    </div>
-</div> *@
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -97,40 +76,62 @@
             <div class="modal-body">
 
                 <form>
-                    <div class="row">
-                        <!-- Columna izquierda -->
-                        <div class="col-md-8">
-                            <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" placeholder="Nombre" id="txtNombreRegistro">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Primer apellido</label>
-                                <input type="text" class="form-control" placeholder="Primer apellido" id="txtApellido1Registro">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Segundo apellido</label>
-                                <input type="text" class="form-control" placeholder="Segundo apellido" id="txtApellido2Registro">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" placeholder="Email" id="txtCorreoRegistro">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" placeholder="Contraseña" id="txtContrasenaRegistro">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" placeholder="Confirmar contraseña">
+
+                    <div class="row g-3">
+
+                        <!-- Fila 1 -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtNombreRegistro" placeholder="Nombre">
+                                <label>Nombre</label>
                             </div>
                         </div>
 
-                        <!-- Columna derecha -->
-                        <div class="col-md-4">
-                            <label class="form-label">Código de autorización</label>
-                            <input type="text" class="form-control" placeholder="Código" id="txtCodigoRegistro">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control input-modern" id="txtCorreoRegistro" placeholder="Correo">
+                                <label>Correo electrónico</label>
+                            </div>
                         </div>
+
+                        <!-- Fila 2 -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtApellido1Registro" placeholder="Primer apellido">
+                                <label>Primer apellido</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating position-relative">
+                                <input type="password" class="form-control input-modern" id="txtContrasenaRegistro" placeholder="Contraseña">
+                                <label>Contraseña</label>
+                            </div>
+                        </div>
+
+                        <!-- Fila 3 -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtApellido2Registro" placeholder="Segundo apellido">
+                                <label>Segundo apellido</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control input-modern" id="txtConfirmarContrasena" placeholder="Confirmar contraseña">
+                                <label>Confirmar contraseña</label>
+                            </div>
+                        </div>
+
+                        <!-- Código -->
+                        <div class="col-md-12 mt-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtCodigoRegistro" placeholder="Código">
+                                <label>Código de autorización</label>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
 

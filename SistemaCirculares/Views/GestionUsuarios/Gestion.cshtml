@@ -98,52 +98,41 @@
 
 <div class="modal fade" id="modalCodigo" tabindex="-1" aria-labelledby="modalCodigoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content modal-soft rounded-4 p-2">
+        <div class="modal-content rounded-4 border-0 shadow-sm">
 
-            <!-- Borde degradado exterior -->
-            <div class="gradient-frame rounded-4 p-3">
-                <div class="modal-body text-center px-3 px-md-4">
+            <div class="modal-body p-4 p-md-5 text-center">
 
-                    <h2 id="modalCodigoLabel" class="fw-bold display-6 mb-3">Código para registro</h2>
+                <!-- Título -->
+                <h4 id="modalCodigoLabel" class="fw-semibold mb-4">
+                    Generar código de registro
+                </h4>
 
-                    <!-- Fecha límite en estilo píldora -->
-                    <div class="mx-auto mb-3" style="max-width: 380px;">
-                        <div class="input-group pill">
-                            <span class="input-group-text fw-bold">Seleccione una fecha límite</span>
-                            <input type="date" id="fechaLimite" class="form-control">
-                            <span class="input-group-text"><span class="bi bi-calendar3"></span></span>
-                        </div>
-                    </div>
-
-                    <!-- Botón Generar -->
-                    <button id="btnGenerar" class="btn btn-grad btn-green px-5 py-2 fs-5 mb-3">Generar</button>
-
-                    <h3 class="fw-bold mb-2">Código:</h3>
-
-                    <!-- Caja de código -->
-                    <div class="mx-auto mb-4" style="max-width: 360px;">
-                        <input id="txtCodigo" class="form-control form-control-lg code-box text-center fw-bold"
-                               type="text" placeholder="ABC124" readonly>
-                        <small id="msgCopiado" class="text-success d-none">¡Copiado al portapapeles!</small>
-                    </div>
-
-                    <!-- Enviar por correo -->
-                    <div class="row g-2 align-items-center justify-content-center">
-                        <div class="col-auto">
-                            <label for="emailDestino" class="col-form-label fs-5">Enviar a:</label>
-                        </div>
-                        <div class="col-12 col-md-7">
-                            <input type="email" id="emailDestino" class="form-control pill-input"
-                                   placeholder="correo@dirección.com">
-                        </div>
-                        <div class="col-12 col-md-auto">
-                            <button id="btnEnviarCorreo" class="btn btn-grad btn-teal px-4">Enviar</button>
-                        </div>
-                    </div>
-
+                <!-- Fecha -->
+                <div class="mb-4">
+                    <label class="form-label text-muted small">Fecha límite</label>
+                    <input type="date" id="fechaLimite" class="form-control input-clean text-center">
                 </div>
-            </div>
 
+                <!-- Botón -->
+                <button id="btnGenerar" class="btn btn-primary px-4 py-2 mb-4">
+                    Generar código
+                </button>
+
+                <!-- Código -->
+                <div class="mb-4">
+                    <label class="text-muted small">Código generado</label>
+                    <input id="txtCodigo"
+                           class="form-control text-center fw-bold fs-5 input-code"
+                           type="text"
+                           placeholder="ABC123"
+                           readonly>
+
+                    <small id="msgCopiado" class="text-success d-none">
+                        Copiado al portapapeles
+                    </small>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
@@ -151,7 +140,6 @@
 
 
 <script>
-    // Genera un código tipo AAA999 o AAA9999 (ajusta formato si quieres)
     function generarCodigo() {
       const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const pick = n => Array.from({length:n},()=>letras[Math.floor(Math.random()*letras.length)]).join('');
@@ -166,20 +154,6 @@
     const btnEnviar  = document.getElementById('btnEnviar');
     const emailInput = document.getElementById('emailDestino');
     const fechaInput = document.getElementById('fechaLimite');
-
-    // btnGenerar?.addEventListener('click', async () => {
-    //   const code = generarCodigo();
-    //   txtCodigo.value = code;
-
-    //   // Copiar automáticamente al portapapeles
-    //   try{
-    //     await navigator.clipboard.writeText(code);
-    //     msgCopiado.classList.remove('d-none');
-    //     setTimeout(()=>msgCopiado.classList.add('d-none'), 1800);
-    //   }catch(e){ /* Silenciar si no permite copiar */ }
-    // });
-
-    // Aquí iría tu integración real para enviar por correo (fetch a tu API)
     btnEnviar?.addEventListener('click', async () => {
       const email = emailInput.value.trim();
       if(!email){
@@ -190,14 +164,12 @@
         alert('Primero genera un código.');
         return;
       }
-      // Ejemplo de payload (AJÚSTALO a tu backend)
       const payload = {
         codigo: txtCodigo.value,
         vence: fechaInput.value || null,
         email: email
       };
       console.log('Enviar a backend:', payload);
-      // await fetch('/api/codigos/enviar', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
       alert('Simulado: código enviado a ' + email);
     });
 </script>
