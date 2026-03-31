@@ -26,14 +26,18 @@ jslogin = {
         InputApellido2R: '#txtApellido2Registro',
         InputCorreoR: '#txtCorreoRegistro',
         InputContrasenaR: '#txtContrasenaRegistro',
-        InputCodigoR: '#txtCodigoRegistro'
+        InputCodigoR: '#txtCodigoRegistro',
+
+        //Modal Recuperación de contraseña
+        txtCorreoRecuperar: '#txtCorreoRecuperar'
 
     },
 
     botones: {
 
         btnLogin: '#btnLogin',
-        BtnCrearUsuario: '#btnCrearUsuario'
+        BtnCrearUsuario: '#btnCrearUsuario',
+        btnEnviarRecuperacion: '#btnEnviarRecuperacion'
 
     },
 
@@ -102,7 +106,7 @@ jslogin = {
                                 icon: "success"
                             });
 
-                             //Redirigir a la página principal después de 2 segundos
+                            //Redirigir a la página principal después de 2 segundos
                             setTimeout(function () {
                                 window.location.href = '/Home/Index';
                             }, 2100);
@@ -140,6 +144,75 @@ jslogin = {
 
         },
 
+        RestablecerContrasena: function () {
+
+            event.preventDefault();
+
+            try {
+
+                let Correo = $(jslogin.controles.txtCorreoRecuperar).val().trim();
+
+                // Mostrar loader antes del AJAX
+                Swal.fire({
+                    title: 'Procesando...',
+                    text: 'Por favor espera un momento',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                $.ajax({
+                    url: '../Inicio/RestablecerContrasena',
+                    type: 'POST',
+                    data: { Email: Correo },
+
+                    success: function (result) {
+
+                        Swal.close(); // 🔹 cerrar loader
+
+                        if (result.ok) {
+
+                            Swal.fire({
+                                title: "Solicitud procesada",
+                                text: "Si el usuario existe en el sistema, se enviará una contraseña temporal al correo electrónico registrado.",
+                                icon: "success"
+                            });
+
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 2800);
+
+                        } else {
+                            Swal.fire({
+                                title: "Solicitud procesada",
+                                text: "Si el usuario existe en el sistema, se enviará una contraseña temporal al correo electrónico registrado.",
+                                icon: "success"
+                            });
+
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 2800);
+                        }
+                    },
+
+                    error: function () {
+
+                        Swal.close(); // 🔹 cerrar loader
+
+                        Swal.fire({
+                            title: "Error",
+                            text: "Ocurrió un error al procesar la solicitud.",
+                            icon: "error"
+                        });
+                    }
+                });
+
+            } catch (e) {
+                console.error("Ha ocurrido un error en el método RestablecerContrasena", e)
+            }
+        },
 
         CrearUsuario: function () {
 
@@ -210,7 +283,7 @@ jslogin = {
                             }
 
 
-                           
+
 
                         })
                         .catch(err => {
@@ -254,6 +327,13 @@ jslogin = {
             $(jslogin.botones.BtnCrearUsuario).on('click', function () {
 
                 jslogin.metodos.CrearUsuario();
+
+            });
+
+
+            $(jslogin.botones.btnEnviarRecuperacion).on('click', function () {
+
+                jslogin.metodos.RestablecerContrasena();
 
             });
 

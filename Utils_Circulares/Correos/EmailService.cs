@@ -1,18 +1,13 @@
 ﻿using Entities_Circulares.EmailSettings;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Mime;
 
 namespace Utils_Circulares.Correos
 {
     public class EmailService
     {
-
         private readonly EmailSettings _settings;
 
         public EmailService(IOptions<EmailSettings> settings)
@@ -24,7 +19,10 @@ namespace Utils_Circulares.Correos
             string subject,
             string body,
             bool isHtml,
-            params string[] recipients)
+            string[] recipients,
+            byte[]? archivo = null,
+            string? nombreArchivo = null
+        )
         {
             if (recipients == null || recipients.Length == 0)
                 throw new ArgumentException("Debe indicar al menos un destinatario");
@@ -44,6 +42,18 @@ namespace Utils_Circulares.Correos
                 message.To.Add(email);
             }
 
+            if (archivo != null && archivo.Length > 0)
+            {
+                string nombreFinal = !string.IsNullOrEmpty(nombreArchivo)
+                    ? nombreArchivo
+                    : $"Circular_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+
+                var stream = new MemoryStream(archivo);
+                var attachment = new Attachment(stream, nombreFinal, MediaTypeNames.Application.Pdf);
+
+                message.Attachments.Add(attachment);
+            }
+
             using var smtp = new SmtpClient(
                 _settings.SmtpServer,
                 _settings.Port)
@@ -56,6 +66,5 @@ namespace Utils_Circulares.Correos
 
             await smtp.SendMailAsync(message);
         }
-
     }
 }

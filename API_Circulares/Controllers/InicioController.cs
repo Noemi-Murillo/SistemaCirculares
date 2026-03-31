@@ -50,5 +50,36 @@ namespace API_Circulares.Controllers
 
         }
 
+
+        [HttpPost("RestablecerContrasena")]
+        public async Task<Reply<UserRegistration>> RestablecerContrasena([FromBody] UserRegistration ObjUsuario)
+        {
+
+            Reply<UserRegistration> reply = new Reply<UserRegistration>();
+
+            try
+            {
+
+                var respuesta = await _AccesoInicioBLL.RestablecerContrasena(ObjUsuario, _configuration.GetConnectionString("Conexion"));
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en el método RestablecerContrasena en la capa API {ex.Message}";
+            }
+
+
+            return reply;
+
+
+        }
+
     }
 }

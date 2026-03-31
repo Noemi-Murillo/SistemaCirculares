@@ -14,6 +14,7 @@ namespace DAL_Circulares
         #region Procedimientos Almacenados
         //Procedimientos almacenados
         private const string spIniciarSesion = "sp_IniciarSesion";
+        private const string sp_RestableceConstrasenaPorCorreo = "sp_RestableceConstrasenaPorCorreo";
 
         #endregion
 
@@ -110,6 +111,53 @@ namespace DAL_Circulares
             {
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en la función de LogIn en DAL {ex.Message}";
+            }
+
+            return reply;
+
+        }
+
+
+        public Reply<UserRegistration> RestablecerContrasena(UserRegistration ObjUsuario, string Conexion)
+        {
+
+            Reply<UserRegistration> reply = new Reply<UserRegistration>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Conexion))
+                {
+
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(sp_RestableceConstrasenaPorCorreo, connection))
+                    {
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@pCorreo", SqlDbType.NVarChar, 50) {  Value = ObjUsuario.Email });
+                        command.Parameters.Add(new SqlParameter("@pContrasena", SqlDbType.NVarChar, 250) { Value = ObjUsuario.Password });
+
+                        int RowAfectadas = command.ExecuteNonQuery();
+
+                        if (RowAfectadas > 0)
+                        {
+                            reply.Ok = true;
+                            reply.Message = "Se ha restablecido la contraseña de manera correcta";
+                        }
+                        else
+                        {
+                            reply.Ok = false;
+                            reply.Message = "Ha ocurrido un error al restablecer la contraseña";
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la función de RestablecerContrasena en DAL {ex.Message}";
             }
 
             return reply;

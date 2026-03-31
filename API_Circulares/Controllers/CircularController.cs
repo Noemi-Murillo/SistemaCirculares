@@ -32,13 +32,13 @@ namespace API_Circulares.Controllers
         [HttpPost("PublicarCircular")]
         public async Task<Reply<bool>> PublicarCircular([FromBody] Circulares ObjCirculares)
         {
-
             Reply<bool> reply = new Reply<bool>();
 
             try
             {
-
-                var respuesta = _AccesoCircularBLL.PublicarCircular(ObjCirculares, _configuration.GetConnectionString("Conexion"));
+                var respuesta = _AccesoCircularBLL.PublicarCircular(
+                    ObjCirculares,
+                    _configuration.GetConnectionString("Conexion"));
 
                 if (respuesta != null)
                 {
@@ -46,47 +46,49 @@ namespace API_Circulares.Controllers
 
                     if (respuesta.Ok)
                     {
-
-                        var respuestacorreos = _AccesoCirculaesBLL.ObtenerTodosCorreos(_configuration.GetConnectionString("Conexion"));
+                        var respuestacorreos = _AccesoCirculaesBLL.ObtenerTodosCorreos(
+                            _configuration.GetConnectionString("Conexion"));
 
                         List<string?> correos = respuestacorreos.Result
-                             .Where(u => !string.IsNullOrWhiteSpace(u.Correo))
-                             .Select(u => u.Correo)
-                             .Distinct()
-                             .ToList();
+                            .Where(u => !string.IsNullOrWhiteSpace(u.Correo))
+                            .Select(u => u.Correo)
+                            .Distinct()
+                            .ToList();
 
-
-                        string html = Plantilla.Plantillas
+                        string html = Plantilla.Plantilla1
                             .Replace("{{TITULO_CIRCULAR}}", "Nueva Circular Publicada")
-                            .Replace("{{RESUMEN}}", "Se ha realizado la publicación de una nueva circular, favor ingresar al sistema de gestión de circulares" ?? "")
-                            .Replace("{{FECHA_PUBLICACION}}",
-                                DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
+                            .Replace("{{RESUMEN}}", "Se ha realizado la publicación de una nueva circular, favor ingresar al sistema de gestión de circulares")
+                            .Replace("{{FECHA_PUBLICACION}}", DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
                             .Replace("{{URL_SISTEMA}}", "http://localhost:5032/");
 
-
-                        await _Email.SendAsync(
-                             "Aviso general",
-                             html,
-                             true,
-                             correos.ToArray()
-
-                         );
-
+                        foreach (var correo in correos)
+                        {
+                            try
+                            {
+                                await _Email.SendAsync(
+                                    "Aviso general",
+                                    html,
+                                    true,
+                                    new[] { correo! },
+                                    ObjCirculares.Archivo.ArchivoBytes,
+                                    ObjCirculares.Archivo?.FileName ?? "Circular.pdf"
+                                );
+                            }
+                            catch (Exception exCorreo)
+                            {
+                                Console.WriteLine($"Error enviando a {correo}: {exCorreo.Message}");
+                            }
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
-
                 reply.Ok = false;
                 reply.Message = $"Ha ocurrido un error en el método PublicarCircular en la capa API {ex.Message}";
             }
 
-
             return reply;
-
-
         }
 
         [HttpPost("ObtenerCirculares")]
@@ -126,7 +128,7 @@ namespace API_Circulares.Controllers
 
             try
             {
-                
+
                 var respuesta = _AccesoCirculaesBLL.ObtenerCircularesPorCantidad(_configuration.GetConnectionString("Conexion"), ObjCirculares.IdComite);
 
                 if (respuesta != null)

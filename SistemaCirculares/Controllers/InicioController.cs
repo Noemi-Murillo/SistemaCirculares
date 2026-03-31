@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
 using Entities_Circulares.Reply;
 using Entities_Circulares.UserRegistration;
+using Microsoft.AspNetCore.Mvc;
 using SistemaCirculares.Models;
 
 namespace SistemaCirculares.Controllers
@@ -41,10 +42,10 @@ namespace SistemaCirculares.Controllers
                     {
                         var opcionesCookie = new CookieOptions
                         {
-                            HttpOnly = true,               
-                            Secure = true,                   
-                            SameSite = SameSiteMode.Strict,  
-                            Expires = DateTime.Now.AddHours(8) 
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.Strict,
+                            Expires = DateTime.Now.AddHours(8)
                         };
 
                         Response.Cookies.Append(
@@ -88,6 +89,35 @@ namespace SistemaCirculares.Controllers
             return reply;
 
 
+
+        }
+
+
+        [HttpPost]
+        public Reply<UserRegistration> RestablecerContrasena(string Email)
+        {
+
+            Reply<UserRegistration> reply = new Reply<UserRegistration>();
+
+            try
+            {
+
+                var respuesta = _AccesoInicioModel.RestablecerContrasena(Email);
+
+                if (respuesta != null)
+                {
+                    reply = respuesta;
+                }                      
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = $"Ha ocurrido un error en la capa web en el controlador InicioController método RestablecerContrasena , {ex.Message}";
+            }
+
+            return reply;
 
         }
 

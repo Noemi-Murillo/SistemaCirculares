@@ -43,6 +43,35 @@ namespace SistemaCirculares.Models
 
         }
 
+        public Reply<UserRegistration> RestablecerContrasena(string Email)
+        {
+
+            Reply<UserRegistration> reply = new Reply<UserRegistration>();
+            UserRegistration ObjUsuario = new UserRegistration
+            {
+                Email = Email,
+            };
+            try
+            {
+                var UrlAPI = string.Format("{0}/Inicio/RestablecerContrasena", UrlApiCirculares);
+                reply = PostAPI<Reply<UserRegistration>, UserRegistration>(UrlAPI, ObjUsuario);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                reply.Ok = false;
+                reply.Message = "Error, " + ex;
+            }
+
+            return reply;
+
+
+
+        }
+
 
     }
 }

@@ -73,9 +73,38 @@ namespace Utils_Circulares.PlantillaCorreo {
         ///  &lt;div style=&quot;display:none; font-size:1px; color:#f4f6f8; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;&quot;&gt;
         ///    Se ha publicado una nueva circular en el sist [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Plantillas {
+        public static string Plantilla1 {
             get {
                 return ResourceManager.GetString("Plantilla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to string html = @&quot;
+        ///&lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&apos;es&apos;&gt;
+        ///&lt;head&gt;
+        ///&lt;meta charset=&apos;UTF-8&apos;&gt;
+        ///&lt;meta name=&apos;viewport&apos; content=&apos;width=device-width, initial-scale=1.0&apos;&gt;
+        ///&lt;style&gt;
+        ///    body {
+        ///        margin: 0;
+        ///        padding: 0;
+        ///        background-color: #f4f6f9;
+        ///        font-family: &apos;Segoe UI&apos;, Tahoma, Geneva, Verdana, sans-serif;
+        ///    }
+        ///
+        ///    .container {
+        ///        max-width: 600px;
+        ///        margin: 40px auto;
+        ///        background: #ffffff;
+        ///        border-radius: 12px;
+        ///        overflow: hidden;
+        ///        box-shado [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string PlantillaRecuperacionContrasena {
+            get {
+                return ResourceManager.GetString("PlantillaRecuperacionContrasena", resourceCulture);
             }
         }
     }
