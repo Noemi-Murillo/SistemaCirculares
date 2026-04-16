@@ -49,7 +49,7 @@ jslogin = {
     },
     metodos: {
 
-        MensajeGeneralSweetAlert: function (Icono, Mensaje, RecargaPagina, Color, TamanoLetra) {
+        MensajeGeneralSweetAlert: function(Icono, Mensaje, RecargaPagina, Color, TamanoLetra) {
 
             swal.fire({
                 icon: `${Icono}`,
@@ -62,7 +62,7 @@ jslogin = {
                 focusConfirm: false,
                 allowOutsideClick: false,
                 timer: 1400,
-                willClose: function () {
+                willClose: function() {
                 }
             })
 
@@ -78,7 +78,7 @@ jslogin = {
             }
         },
 
-        LogIn: function () {
+        LogIn: function() {
 
             event.preventDefault();
 
@@ -95,7 +95,7 @@ jslogin = {
                     url: '../Inicio/LogIn',
                     type: 'POST',
                     data: { Email: User, Password: Password },
-                    success: function (result) {
+                    success: function(result) {
 
 
                         if (result.ok) {
@@ -107,7 +107,7 @@ jslogin = {
                             });
 
                             //Redirigir a la página principal después de 2 segundos
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 window.location.href = '/Home/Index';
                             }, 2100);
 
@@ -122,7 +122,7 @@ jslogin = {
 
 
                     },
-                    error: function () {
+                    error: function() {
                         // Manejo de errores si es necesario
 
                         Swal.fire({
@@ -144,7 +144,7 @@ jslogin = {
 
         },
 
-        RestablecerContrasena: function () {
+        RestablecerContrasena: function() {
 
             event.preventDefault();
 
@@ -168,7 +168,7 @@ jslogin = {
                     type: 'POST',
                     data: { Email: Correo },
 
-                    success: function (result) {
+                    success: function(result) {
 
                         Swal.close(); // 🔹 cerrar loader
 
@@ -180,7 +180,7 @@ jslogin = {
                                 icon: "success"
                             });
 
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 window.location.reload();
                             }, 2800);
 
@@ -191,13 +191,13 @@ jslogin = {
                                 icon: "success"
                             });
 
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 window.location.reload();
                             }, 2800);
                         }
                     },
 
-                    error: function () {
+                    error: function() {
 
                         Swal.close(); // 🔹 cerrar loader
 
@@ -214,7 +214,7 @@ jslogin = {
             }
         },
 
-        CrearUsuario: function () {
+        CrearUsuario: function() {
 
             event.preventDefault();
 
@@ -238,9 +238,21 @@ jslogin = {
 
                 console.log(ObjUsuario);
 
-
                 if (Nombre !== "" && Apellido1 !== "" && Apellido2 !== "" && Correo !== "" && Contrasena !== "" && Codigo !== "") {
 
+                    
+                    const regexCorreoMEP = /^[a-zA-Z0-9._%+-]+@mep\.go\.cr$/;
+
+                    if (!regexCorreoMEP.test(Correo)) {
+                        this.MensajeGeneralSweetAlert(
+                            'warning',
+                            `El correo debe ser institucional (@mep.go.cr)`,
+                            false,
+                            '#FF0000',
+                            26
+                        );
+                        return;
+                    }
 
                     fetch("/GestionUsuarios/CrearUsuario", {
                         method: "POST",
@@ -251,7 +263,6 @@ jslogin = {
                     })
                         .then(res => {
                             if (!res.ok) {
-                                // Si el servidor mandó error, intento leer el json del error
                                 return res.json().then(err => { throw err; });
                             }
                             return res.json();
@@ -278,12 +289,7 @@ jslogin = {
                                     '#FF0000',
                                     26
                                 );
-
-
                             }
-
-
-
 
                         })
                         .catch(err => {
@@ -291,7 +297,6 @@ jslogin = {
                         });
 
                 } else {
-
 
                     this.MensajeGeneralSweetAlert(
                         'warning',
@@ -301,7 +306,6 @@ jslogin = {
                         26
                     );
 
-
                 }
 
             } catch (e) {
@@ -310,28 +314,26 @@ jslogin = {
 
             }
 
-
         },
-
     },
     eventos:
-        function () {
+        function() {
 
-            $(jslogin.botones.btnLogin).on('click', function () {
+            $(jslogin.botones.btnLogin).on('click', function() {
 
                 jslogin.metodos.LogIn();
 
             });
 
 
-            $(jslogin.botones.BtnCrearUsuario).on('click', function () {
+            $(jslogin.botones.BtnCrearUsuario).on('click', function() {
 
                 jslogin.metodos.CrearUsuario();
 
             });
 
 
-            $(jslogin.botones.btnEnviarRecuperacion).on('click', function () {
+            $(jslogin.botones.btnEnviarRecuperacion).on('click', function() {
 
                 jslogin.metodos.RestablecerContrasena();
 
@@ -342,6 +344,6 @@ jslogin = {
 
 }
 
-$(function () {
+$(function() {
     jslogin.eventos();
 });
