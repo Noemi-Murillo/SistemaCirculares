@@ -73,7 +73,7 @@ namespace Utils_Circulares.PlantillaCorreo {
         ///  &lt;div style=&quot;display:none; font-size:1px; color:#f4f6f8; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;&quot;&gt;
         ///    Se ha publicado una nueva circular en el sist [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Plantilla1 {
+        public static string Plantilla {
             get {
                 return ResourceManager.GetString("Plantilla", resourceCulture);
             }
