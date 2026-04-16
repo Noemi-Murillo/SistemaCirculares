@@ -1,0 +1,83 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Publicar Circular</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="~/js/publicarcircular/circularjs.js"></script>
+    <link href="~/css/gestionusuarioscss/gestionusuarios.css" rel="stylesheet" />
+    <link href="~/css/gestioncircularescss/gestioncirculares.css" rel="stylesheet" />
+
+    <!-- Bootstrap Icons (flechas) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> 
+
+</head>
+<body>
+    <div class="container py-4">
+        <div class="page-card">
+            <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+                <h1 class="m-0">Subir nueva circular</h1>
+            </div>
+
+            <div class="table mt-3">
+                <form id="formCircular" novalidate>
+                    <!-- Nombre + switch -->
+                    <div class="row mt-2 mx-auto align-items-start">
+                    
+                            <div class="">
+                            <div class="mb-1">Nombre de la Circular:</div>
+                                <input type="text" class="form-control center" id="nombreCircular" placeholder="Nombre de la circular" required>
+                            </div>
+                    </div>
+
+                    <!-- Subir archivo + (espaciado) -->
+                    <div class="row g-3 mt-2 mx-auto center border rounded-3 text-center">
+                        <div class=" center">
+                            <label for="archivo" class="w-100 dropbox" id="dropArea">
+                                <i class="fs-big bi-cloud-arrow-up"></i>
+                                <div class="pill label">Subir archivo</div>
+                                <input type="file" id="archivo" class="d-none" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
+                            </label>
+                            <div id="fileInfo" class="text-muted mt-2"></div>
+                        </div>
+                    </div>
+
+                    <!-- Agregar evento (opcional) -->
+                    <div class="row justify-content mt-4">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="border rounded-3 p-3 text-center">
+                                <div class="mt-2">
+                                    <div class="mb-1 fw-bold">Agregar evento (opcional):</div>
+                                    <div class="mb-1">Fecha del evento:</div>
+
+                                    <div class=" input-group mb-3">
+
+                                        <input type="date" class="form-control" id="fechaEvento" placeholder="Seleccione una fecha">
+
+                                    </div>
+
+                                    <div class="pill mb-2">
+                                        <input type="text" class="form-control" id="nombreEvento" placeholder="Nombre del evento">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Publicar -->
+                    <div class="text-center mt-4">
+                        <button id="btnPublicarCircular" type="submit" class="btn btn-grad btn-teal">Publicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

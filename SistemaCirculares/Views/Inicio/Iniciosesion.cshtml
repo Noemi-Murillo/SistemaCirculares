@@ -45,18 +45,18 @@
                             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></i></span>
                             <input id="InputPassword" type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1">
                         </div>
-                        <a href="#">¿Olvidaste tu contraseña?</a>
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="recordar">
-                        <label class="form-check-label" for="recordar">Recordarme</label>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalRecuperar">
+                            ¿Olvidaste tu contraseña?
+                        </a>
                     </div>
 
                     <button id="btnLogin" type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Ingresar</button>
 
-                    <div class="enlaces">
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Registrarse</a>
+                    <div class="enlaces text-center mt-3">
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                           class="btn btn-outline-primary mt-2 px-4 rounded-pill">
+                            <i class="fa-solid fa-user-plus"></i> Crear cuenta
+                        </a>
                     </div>
                 </form>
 
@@ -64,25 +64,6 @@
         </div>
     </div>
 </body>
-
-<!-- Modal -->
-@* <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
-        </div>
-    </div>
-</div> *@
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -95,42 +76,111 @@
             <div class="modal-body">
 
                 <form>
-                    <div class="row">
-                        <!-- Columna izquierda -->
-                        <div class="col-md-8">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Nombre">
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Primer apellido">
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Segundo apellido">
-                            </div>
-                            <div class="mb-3">
-                                <input type="email" class="form-control" placeholder="Email">
-                            </div>
-                            <div class="mb-3">
-                                <input type="password" class="form-control" placeholder="Contraseña">
-                            </div>
-                            <div class="mb-3">
-                                <input type="password" class="form-control" placeholder="Confirmar contraseña">
+
+                    <div class="row g-3">
+
+                        <!-- Fila 1 -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtNombreRegistro" placeholder="Nombre">
+                                <label>Nombre</label>
                             </div>
                         </div>
 
-                        <!-- Columna derecha -->
-                        <div class="col-md-4">
-                            <label class="form-label">Código de autorización</label>
-                            <input type="text" class="form-control" placeholder="Código">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control input-modern" id="txtCorreoRegistro" placeholder="Correo">
+                                <label>Correo electrónico</label>
+                            </div>
                         </div>
+
+                        <!-- Fila 2 -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtApellido1Registro" placeholder="Primer apellido">
+                                <label>Primer apellido</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating position-relative">
+                                <input type="password" class="form-control input-modern" id="txtContrasenaRegistro" placeholder="Contraseña">
+                                <label>Contraseña</label>
+                            </div>
+                        </div>
+
+                        <!-- Fila 3 -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtApellido2Registro" placeholder="Segundo apellido">
+                                <label>Segundo apellido</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control input-modern" id="txtConfirmarContrasena" placeholder="Confirmar contraseña">
+                                <label>Confirmar contraseña</label>
+                            </div>
+                        </div>
+
+                        <!-- Código -->
+                        <div class="col-md-12 mt-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control input-modern" id="txtCodigoRegistro" placeholder="Código">
+                                <label>Código de autorización</label>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="button" id="btnCrearUsuario" class="btn btn-primary">Registrarse</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRecuperar" tabindex="-1" aria-labelledby="modalRecuperarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRecuperarLabel">
+                    Recuperar contraseña
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <p>Ingresa tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña.</p>
+
+                <div class="mb-3">
+                    <label class="form-label">Correo electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" id="txtCorreoRecuperar" class="form-control" placeholder="correo@ejemplo.com">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" id="btnEnviarRecuperacion" class="btn btn-primary">
+                    <i class="fa-solid fa-paper-plane"></i> Enviar
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

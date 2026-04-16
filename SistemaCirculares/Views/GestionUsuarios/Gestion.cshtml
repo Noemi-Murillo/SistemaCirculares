@@ -1,0 +1,178 @@
+﻿@{
+
+    var ListaUsuarios = ViewBag.Usuarios;
+}
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de Usuarios</title>
+    <link href="~/css/gestionusuarioscss/gestionusuarios.css" rel="stylesheet" />
+    <script defer src="~/js/gestionusuariosjs/gestionusuarios.js"></script>
+
+</head>
+<body>
+    <div class="container py-4">
+        <div class="page-card">
+            <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+                <h1 class="m-0">Gestión de Usuarios</h1>
+                <div class="d-flex gap-2">
+                    <button data-bs-toggle="modal" data-bs-target="#modalCodigo" class="btn btn-grad btn-teal">Generar código<br class="d-none d-md-inline"> para registro</button>
+                    <button id="btnguardarUsuarios" class="btn btn-grad btn-green">Guardar<br class="d-none d-md-inline"> cambios</button>
+                </div>
+            </div>
+
+            <div class="table-responsive mt-4">
+                <table id="TbGestionUsuarios" class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th hidden class="col-id">Id</th>
+                            <th class="col-nombre">Nombre</th>
+                            <th class="col-comite">Comité</th>
+                            <th class="col-coord">Coordinador</th>
+                            <th class="col-activo">Activo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ListaUsuarios == null || ListaUsuarios.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    No hay registros
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var Usuario in ListaUsuarios)
+                            {
+                                <tr>
+                                    <td hidden>@Usuario.Id</td>
+
+                                    <td>@Usuario.Nombre</td>
+
+                                    <td data-order="@Usuario.NombreComite">
+                                        <div class="select-pill">
+                                            <select class="form-select ComitesSelect">
+                                                <option value="@Usuario.IdComite" selected>@Usuario.NombreComite</option>
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div class="form-check form-switch switch-lg d-inline-block m-0">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   role="switch"
+                                                   id="coord_@Usuario.Id"
+                                                   name="EsCoordinador_@Usuario.Id"
+                                            @(Usuario.EsCordinador ? "checked" : null) />
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch switch-lg d-inline-block m-0">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   role="switch"
+                                                   id="activo_@Usuario.Id"
+                                                   name="Activo_@Usuario.Id"
+                                            @(Usuario.Activo ? "checked" : null) />
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+<!-- MODAL -->
+
+<div class="modal fade" id="modalCodigo" tabindex="-1" aria-labelledby="modalCodigoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-sm">
+
+            <div class="modal-body p-4 p-md-5 text-center">
+
+                <!-- Título -->
+                <h4 id="modalCodigoLabel" class="fw-semibold mb-4">
+                    Generar código de registro
+                </h4>
+
+                <!-- Fecha -->
+                <div class="mb-4">
+                    <label class="form-label text-muted small">Fecha límite</label>
+                    <input type="date" id="fechaLimite" class="form-control input-clean text-center">
+                </div>
+
+                <!-- Botón -->
+                <button id="btnGenerar" class="btn btn-primary px-4 py-2 mb-4">
+                    Generar código
+                </button>
+
+                <!-- Código -->
+                <div class="mb-4">
+                    <label class="text-muted small">Código generado</label>
+                    <input id="txtCodigo"
+                           class="form-control text-center fw-bold fs-5 input-code"
+                           type="text"
+                           placeholder="ABC123"
+                           readonly>
+
+                    <small id="msgCopiado" class="text-success d-none">
+                        Copiado al portapapeles
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function generarCodigo() {
+      const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const pick = n => Array.from({length:n},()=>letras[Math.floor(Math.random()*letras.length)]).join('');
+      const nums  = n => Array.from({length:n},()=>Math.floor(Math.random()*10)).join('');
+      // 3 letras + 3 números por defecto
+      return pick(3) + nums(3);
+    }
+
+    const btnGenerar = document.getElementById('btnGenerar');
+    const txtCodigo  = document.getElementById('txtCodigo');
+    const msgCopiado = document.getElementById('msgCopiado');
+    const btnEnviar  = document.getElementById('btnEnviar');
+    const emailInput = document.getElementById('emailDestino');
+    const fechaInput = document.getElementById('fechaLimite');
+    btnEnviar?.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      if(!email){
+        alert('Por favor, escribe un correo de destino.');
+        return;
+      }
+      if(!txtCodigo.value){
+        alert('Primero genera un código.');
+        return;
+      }
+      const payload = {
+        codigo: txtCodigo.value,
+        vence: fechaInput.value || null,
+        email: email
+      };
+      console.log('Enviar a backend:', payload);
+      alert('Simulado: código enviado a ' + email);
+    });
+</script>
+
+
+</html>
